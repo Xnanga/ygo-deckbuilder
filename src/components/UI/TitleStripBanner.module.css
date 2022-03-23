@@ -1,0 +1,29 @@
+.title-strip-banner {
+  display: flex;
+  align-items: center;
+
+  height: 6rem;
+  width: 100%;
+
+  padding: 1rem;
+
+  background: var(--monster-card-brown);
+}
+
+.title-strip-banner__primary-img {
+  height: 4rem;
+  width: 4rem;
+}
+
+.title-strip-banner__title {
+}
+
+.title-strip-banner__number {
+}
+
+.title-strip-banner__secondary-img {
+  margin-left: auto;
+
+  height: 4rem;
+  width: 4rem;
+}

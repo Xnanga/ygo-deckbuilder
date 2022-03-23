@@ -1,23 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import styles from "./App.css";
+
+import useHTTP from "./hooks/use-http";
+
+import DeckBuilderMainLayout from "./components/UI/DeckBuilderMainLayout";
+import CardProfile from "./components/CardProfile/CardProfile";
+import DeckHub from "./components/DeckHub/DeckHub";
+import CardCatalogue from "./components/CardCatalogue/CardCatalogue";
 
 function App() {
+  // const { data, loading, error } = useHTTP({
+  //   url: `https://db.ygoprodeck.com/api/v7/cardinfo.php?name=Doomking Balerdroch`,
+  // });
+
+  // console.log(data);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <DeckBuilderMainLayout>
+        <CardProfile />
+        <DeckHub />
+        <CardCatalogue />
+      </DeckBuilderMainLayout>
     </div>
   );
 }

@@ -1,0 +1,7 @@
+.deck-hub {
+  grid-row: 2/ 3;
+  grid-column: 4 / 6;
+
+  border: 2px solid grey;
+  padding: 2px;
+}
