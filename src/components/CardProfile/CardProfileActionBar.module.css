@@ -1,0 +1,11 @@
+.card-profile-action-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+
+  height: 12rem;
+
+  padding: 1rem;
+
+  background-color: var(--background-dark-grey);
+}

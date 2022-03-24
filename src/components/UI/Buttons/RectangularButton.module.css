@@ -1,0 +1,40 @@
+.rectangular-btn {
+  display: flex;
+  align-items: center;
+
+  height: 5rem;
+  width: 14rem;
+  background-color: #000000;
+
+  padding: 1rem;
+  border: 2px solid var(--border-light-grey);
+  border-radius: 10px;
+
+  transition: all 0.2s;
+}
+
+.rectangular-btn:hover {
+  background-color: #161616;
+  border: 2px solid #ffffff;
+}
+
+.rectangular-btn:hover > img {
+  transform: rotate(10deg);
+}
+
+.rectangular-btn__img {
+  justify-self: flex-start;
+
+  height: 3rem;
+  width: 2rem;
+
+  transition: all 0.2s;
+}
+
+.rectangular-btn__text {
+  display: inline-block;
+
+  margin: 0 auto;
+
+  font-size: 2rem;
+}

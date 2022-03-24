@@ -1,11 +1,12 @@
-import styles from "./CardProfile.module.css";
-
+import { useEffect, useState } from "react";
 import useHTTP from "../../hooks/use-http";
 
+import styles from "./CardProfile.module.css";
+
 import TitleStripBanner from "../UI/TitleStripBanner";
+import CardProfileActionBar from "./CardProfileActionBar";
 import CardProfileStats from "./CardProfileStats";
 import CardProfileDescription from "./CardProfileDescription";
-import { useEffect, useState } from "react";
 
 const CardProfile = (props) => {
   const [cardData, setCardData] = useState(null);
@@ -43,6 +44,7 @@ const CardProfile = (props) => {
           />
           <TitleStripBanner title={`${cardData.race}/${cardData.type}`} />
           <CardProfileDescription cardDescription={cardData.desc} />
+          <CardProfileActionBar />
         </>
       )}
     </section>

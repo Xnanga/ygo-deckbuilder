@@ -1,0 +1,25 @@
+.circular-btn {
+  height: 5rem;
+  width: 5rem;
+  background-color: #000000;
+
+  border: 2px solid var(--border-light-grey);
+  border-radius: 50%;
+
+  transition: all 0.2s;
+}
+
+.circular-btn:hover {
+  background-color: #161616;
+  border: 2px solid #ffffff;
+}
+
+.circular-btn:hover > img {
+  transform: rotate(10deg);
+}
+
+.circular-btn__img {
+  height: 2rem;
+  width: 2rem;
+  transition: all 0.2s;
+}
