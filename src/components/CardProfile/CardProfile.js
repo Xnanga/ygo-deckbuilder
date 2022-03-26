@@ -25,8 +25,6 @@ const CardProfile = (props) => {
     };
   };
 
-  console.log(cardData);
-
   return (
     <section className={styles["card-profile"]}>
       {cardData && (

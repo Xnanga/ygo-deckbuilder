@@ -27,6 +27,8 @@ $bp-smallest: 31.25em; // 500px
   --border-light-grey: #7d7b7e;
   --border-dark-grey: #a5a5a3;
   --background-dark-grey: #232c33;
+  --menu-cobalt: #173446;
+  --menu-neon-green: #cbfb0f;
 
   /* Backgrounds */
 }
