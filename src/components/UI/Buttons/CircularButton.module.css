@@ -6,7 +6,7 @@
   border: 2px solid var(--border-light-grey);
   border-radius: 50%;
 
-  transition: all 0.2s;
+  transition: all 0.2s ease-in;
 }
 
 .circular-btn:hover {
@@ -15,7 +15,7 @@
 }
 
 .circular-btn:hover > img {
-  transform: rotate(10deg);
+  transform: scale(1.1);
 }
 
 .circular-btn__img {

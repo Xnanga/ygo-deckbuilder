@@ -1,7 +1,16 @@
 .card-catalogue {
+  display: flex;
+  flex-direction: column;
+
   grid-row: 2/ 3;
   grid-column: 7 / 8;
 
   border: 2px solid grey;
-  padding: 2px;
+  padding: 0.75rem;
+
+  overflow: hidden;
+}
+
+.card-catalogue__action-btns {
+  display: flex;
 }
