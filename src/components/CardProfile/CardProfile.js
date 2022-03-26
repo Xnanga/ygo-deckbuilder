@@ -14,9 +14,9 @@ const CardProfile = (props) => {
     url: `https://db.ygoprodeck.com/api/v7/cardinfo.php?name=Doomking Balerdroch`,
   });
 
-  useEffect(() => {
-    setCardData(data);
-  }, [data]);
+  // useEffect(() => {
+  //   setCardData(data);
+  // }, [data]);
 
   const createImageUrl = (cardId) => {
     return {
