@@ -6,26 +6,61 @@ import CircularButton from "../UI/Buttons/CircularButton";
 import PaginationDisplay from "../UI/PaginationDisplay";
 
 const cardDataReducer = (state, action) => {
-  if ((action.type = "updateFullCardData")) {
+  if (action.type === "updateFullCardData") {
     const firstFifteenCards = action.data.slice(0, 15);
     return {
       allCardData: action.data,
       fifteenCardDataChunk: firstFifteenCards,
     };
   }
-  if ((action.type = "nextFifteenCardDataChunk")) {
-    // Figure out index of last card in data chunk in allcarddata
-    // Slice the next 15 indices
-    // Update fifteenCardDataChunk with these 15 indices
+  if (action.type === "nextFifteenCardDataChunk") {
+    const fifteenCardLastIndexID = state.fifteenCardDataChunk[14]?.id;
+    const fifteenthCardIndexInAllCardData = state.allCardData.findIndex(
+      (card) => card.id === fifteenCardLastIndexID
+    );
 
-    const firstFifteenCards = action.data.slice(0, 15);
+    // Need to find a way to prevent first 15 card chunk being visitable again via here
+
+    const nextFifteenCards = state.allCardData.slice(
+      fifteenthCardIndexInAllCardData + 1,
+      fifteenthCardIndexInAllCardData + 16
+    );
+
+    if (nextFifteenCards.length < 1) {
+      return {
+        allCardData: state.allCardData,
+        fifteenCardDataChunk: state.fifteenCardDataChunk,
+      };
+    }
+
     return {
       allCardData: state.allCardData,
-      fifteenCardDataChunk: firstFifteenCards,
+      fifteenCardDataChunk: nextFifteenCards,
     };
   }
 
-  // "prevFifteenCardDataChunk"
+  if (action.type === "prevFifteenCardDataChunk") {
+    const firstCardIndexID = state.fifteenCardDataChunk[0]?.id;
+    const firstCardIndexInAllCardData = state.allCardData.findIndex(
+      (card) => card.id === firstCardIndexID
+    );
+    const previousFifteenCards = state.allCardData.slice(
+      firstCardIndexInAllCardData - 15,
+      firstCardIndexInAllCardData
+    );
+
+    if (previousFifteenCards.length < 15) {
+      return {
+        allCardData: state.allCardData,
+        fifteenCardDataChunk: state.fifteenCardDataChunk,
+      };
+    } else {
+      return {
+        allCardData: state.allCardData,
+        fifteenCardDataChunk: previousFifteenCards,
+      };
+    }
+  }
 };
 
 const CardGallery = (props) => {
@@ -34,9 +69,21 @@ const CardGallery = (props) => {
     fifteenCardDataChunk: [],
   });
 
+  const paginationHandler = (direction) => {
+    if (direction === "right") {
+      dispatchCardData({
+        type: "nextFifteenCardDataChunk",
+      });
+    }
+    if (direction === "left") {
+      dispatchCardData({
+        type: "prevFifteenCardDataChunk",
+      });
+    }
+  };
+
   useEffect(() => {
-    if (props.currentCards.data) {
-      // setAllCardData(props.currentCards.data);
+    if (props.currentCards.data && props.currentCards.data !== cardData) {
       dispatchCardData({
         type: "updateFullCardData",
         data: props.currentCards.data,
@@ -50,7 +97,7 @@ const CardGallery = (props) => {
       <section className={styles["card-gallery"]}>
         {cardData.fifteenCardDataChunk.map((card) => {
           return (
-            <div className={styles["card-gallery__card"]}>
+            <div key={card.id} className={styles["card-gallery__card"]}>
               <img
                 className={styles["card-gallery__card-img"]}
                 src={`https://storage.googleapis.com/ygoprodeck.com/pics_small/${card.id}.jpg`}
@@ -59,123 +106,17 @@ const CardGallery = (props) => {
             </div>
           );
         })}
-
-        {/* <div className={styles["card-gallery__card"]}>
-          <img
-            className={styles["card-gallery__card-img"]}
-            src="/media/images/Small Card Test.jpg"
-            alt="A Small Card"
-          />
-        </div>
-        <div className={styles["card-gallery__card"]}>
-          <img
-            className={styles["card-gallery__card-img"]}
-            src="/media/images/Small Card Test.jpg"
-            alt="A Small Card"
-          />
-        </div>
-        <div className={styles["card-gallery__card"]}>
-          <img
-            className={styles["card-gallery__card-img"]}
-            src="/media/images/Small Card Test.jpg"
-            alt="A Small Card"
-          />
-        </div>
-        <div className={styles["card-gallery__card"]}>
-          <img
-            className={styles["card-gallery__card-img"]}
-            src="/media/images/Small Card Test.jpg"
-            alt="A Small Card"
-          />
-        </div>
-        <div className={styles["card-gallery__card"]}>
-          <img
-            className={styles["card-gallery__card-img"]}
-            src="/media/images/Small Card Test.jpg"
-            alt="A Small Card"
-          />
-        </div>
-        <div className={styles["card-gallery__card"]}>
-          <img
-            className={styles["card-gallery__card-img"]}
-            src="/media/images/Small Card Test.jpg"
-            alt="A Small Card"
-          />
-        </div>
-        <div className={styles["card-gallery__card"]}>
-          <img
-            className={styles["card-gallery__card-img"]}
-            src="/media/images/Small Card Test.jpg"
-            alt="A Small Card"
-          />
-        </div>
-        <div className={styles["card-gallery__card"]}>
-          <img
-            className={styles["card-gallery__card-img"]}
-            src="/media/images/Small Card Test.jpg"
-            alt="A Small Card"
-          />
-        </div>
-        <div className={styles["card-gallery__card"]}>
-          <img
-            className={styles["card-gallery__card-img"]}
-            src="/media/images/Small Card Test.jpg"
-            alt="A Small Card"
-          />
-        </div>
-        <div className={styles["card-gallery__card"]}>
-          <img
-            className={styles["card-gallery__card-img"]}
-            src="/media/images/Small Card Test.jpg"
-            alt="A Small Card"
-          />
-        </div>
-        <div className={styles["card-gallery__card"]}>
-          <img
-            className={styles["card-gallery__card-img"]}
-            src="/media/images/Small Card Test.jpg"
-            alt="A Small Card"
-          />
-        </div>
-        <div className={styles["card-gallery__card"]}>
-          <img
-            className={styles["card-gallery__card-img"]}
-            src="/media/images/Small Card Test.jpg"
-            alt="A Small Card"
-          />
-        </div>
-        <div className={styles["card-gallery__card"]}>
-          <img
-            className={styles["card-gallery__card-img"]}
-            src="/media/images/Small Card Test.jpg"
-            alt="A Small Card"
-          />
-        </div>
-        <div className={styles["card-gallery__card"]}>
-          <img
-            className={styles["card-gallery__card-img"]}
-            src="/media/images/Small Card Test.jpg"
-            alt="A Small Card"
-          />
-        </div>
-        <div className={styles["card-gallery__card"]}>
-          <img
-            className={styles["card-gallery__card-img"]}
-            src="/media/images/Small Card Test.jpg"
-            alt="A Small Card"
-          />
-        </div> */}
       </section>
       <div className={styles["card-gallery__pagination-controls"]}>
         <CircularButton
           imgSrc="/media/icons/left-icon.png"
           imgAlt="A Left Icon"
-          onClick={() => console.log("Left")}
+          onButtonClick={() => paginationHandler("left")}
         />
         <CircularButton
           imgSrc="/media/icons/right-icon.png"
           imgAlt="A Right Icon"
-          onClick={() => console.log("Right")}
+          onButtonClick={() => paginationHandler("right")}
         />
       </div>
     </div>
