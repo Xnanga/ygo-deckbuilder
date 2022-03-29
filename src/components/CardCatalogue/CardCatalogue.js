@@ -45,7 +45,7 @@ const CardCatalogue = () => {
   };
 
   useEffect(() => {
-    getCardData("?archetype=Blue-Eyes");
+    getCardData("?staple=yes");
   }, []);
 
   return (
