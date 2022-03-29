@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import useHTTP from "../../hooks/use-http";
+import { useContext } from "react";
 
 import styles from "./CardProfile.module.css";
 
@@ -7,16 +6,10 @@ import TitleStripBanner from "../UI/TitleStripBanner";
 import CardProfileActionBar from "./CardProfileActionBar";
 import CardProfileStats from "./CardProfileStats";
 import CardProfileDescription from "./CardProfileDescription";
+import CardsContext from "../../Context/card-context";
 
-const CardProfile = (props) => {
-  const [cardData, setCardData] = useState(null);
-  const { data, loading, error } = useHTTP({
-    url: `https://db.ygoprodeck.com/api/v7/cardinfo.php?name=Doomking Balerdroch`,
-  });
-
-  // useEffect(() => {
-  //   setCardData(data);
-  // }, [data]);
+const CardProfile = () => {
+  const ctx = useContext(CardsContext);
 
   const createImageUrl = (cardId) => {
     return {
@@ -25,26 +18,39 @@ const CardProfile = (props) => {
     };
   };
 
+  const defaultProfileContent = (
+    <>
+      <TitleStripBanner />
+      <CardProfileStats cardImgSrc="/media/icons/card-back-icon.png" />
+      <TitleStripBanner />
+    </>
+  );
+
+  const populatedProfileContent = (
+    <>
+      <TitleStripBanner
+        title={ctx.focusedCard.name}
+        secondaryImgSrc={`/media/icons/${ctx.focusedCard?.attribute?.toLowerCase()}-attribute-symbol.png`}
+      />
+      <CardProfileStats
+        cardImgSrc={createImageUrl(ctx.focusedCard.id).large}
+        cardImgAlt={ctx.focusedCard.name}
+        cardStarLevel={ctx.focusedCard.level}
+        cardAttack={ctx.focusedCard.atk}
+        cardDefense={ctx.focusedCard.def}
+      />
+      <TitleStripBanner
+        title={`${ctx.focusedCard.race}/${ctx.focusedCard.type}`}
+      />
+      <CardProfileDescription cardDescription={ctx.focusedCard.desc} />
+      <CardProfileActionBar />
+    </>
+  );
+
   return (
     <section className={styles["card-profile"]}>
-      {cardData && (
-        <>
-          <TitleStripBanner
-            title={cardData.name}
-            secondaryImgSrc={`/media/icons/${cardData.attribute.toLowerCase()}-attribute-symbol.png`}
-          />
-          <CardProfileStats
-            cardImgSrc={createImageUrl(cardData.id).large}
-            cardImgAlt={cardData.name}
-            cardStarLevel={cardData.level}
-            cardAttack={cardData.atk}
-            cardDefense={cardData.def}
-          />
-          <TitleStripBanner title={`${cardData.race}/${cardData.type}`} />
-          <CardProfileDescription cardDescription={cardData.desc} />
-          <CardProfileActionBar />
-        </>
-      )}
+      {!ctx.focusedCard.id && defaultProfileContent}
+      {ctx.focusedCard.id && populatedProfileContent}
     </section>
   );
 };

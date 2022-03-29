@@ -1,5 +1,27 @@
 .catalogue-form {
+  display: flex;
+  align-items: center;
+
   height: 6rem;
-  background-color: grey;
   margin: 0.5rem 0;
+}
+
+.catalogue-form__input {
+  height: 5rem;
+  width: 90%;
+  max-width: 90%;
+  font-size: 2.75rem;
+  color: #f0f0f0;
+  padding: 0.5rem;
+  background: linear-gradient(
+    0deg,
+    rgba(96, 98, 95, 1) 0%,
+    rgba(52, 52, 52, 1) 100%
+  );
+  outline: none;
+  border: 2px solid #9ea09f;
+}
+
+.catalogue-form > button {
+  margin-left: 1rem;
 }

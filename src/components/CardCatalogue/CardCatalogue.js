@@ -9,6 +9,7 @@ import CardGallery from "./CardGallery";
 
 const CardCatalogue = () => {
   const [currentCards, setCurrentCards] = useState([]);
+  const [searchError, setSearchError] = useState(false);
 
   const tabMenuData = [
     {
@@ -25,6 +26,10 @@ const CardCatalogue = () => {
     },
   ];
 
+  const cardSearchHandler = (cardSearchQuery) => {
+    getCardData(`?fname=${cardSearchQuery}`);
+  };
+
   const getCardData = async (endpParams) => {
     try {
       const url = `https://db.ygoprodeck.com/api/v7/cardinfo.php${endpParams}`;
@@ -32,8 +37,10 @@ const CardCatalogue = () => {
       if (!res.ok) throw new Error("Request Failed!");
       const data = await res.json();
       setCurrentCards(data);
+      setSearchError(false);
     } catch (error) {
       console.error(error);
+      setSearchError(true);
     }
   };
 
@@ -44,7 +51,7 @@ const CardCatalogue = () => {
   return (
     <section className={styles["card-catalogue"]}>
       <TabMenu listData={tabMenuData} />
-      <CatalogueTextSearch />
+      <CatalogueTextSearch cardSearchHandler={cardSearchHandler} />
       <div className={styles["card-catalogue__action-btns"]}>
         <RectangularButton
           onButtonClick={() => console.log("Button Click")}
@@ -65,7 +72,10 @@ const CardCatalogue = () => {
           buttonText="Button"
         />
       </div>
-      <CardGallery currentCards={currentCards} />
+      <CardGallery
+        currentCards={currentCards}
+        searchErrorStatus={searchError}
+      />
     </section>
   );
 };
