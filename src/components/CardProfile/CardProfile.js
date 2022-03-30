@@ -18,6 +18,12 @@ const CardProfile = () => {
     };
   };
 
+  const determineSecondaryImg = (type) => {
+    if (type === "Spell Card") return "spell";
+    if (type === "Trap Card") return "trap";
+    return ctx.focusedCard?.attribute?.toLowerCase();
+  };
+
   const defaultProfileContent = (
     <>
       <TitleStripBanner />
@@ -26,12 +32,6 @@ const CardProfile = () => {
     </>
   );
 
-  const determineSecondaryImg = (type) => {
-    if (type === "Spell Card") return "spell";
-    if (type === "Trap Card") return "trap";
-    return ctx.focusedCard?.attribute?.toLowerCase();
-  };
-
   const populatedProfileContent = (
     <>
       <TitleStripBanner
@@ -39,6 +39,7 @@ const CardProfile = () => {
         secondaryImgSrc={`/media/icons/${determineSecondaryImg(
           ctx.focusedCard.type
         )}-attribute-symbol.png`}
+        cardType={ctx.focusedCard.type}
       />
       <CardProfileStats
         cardImgSrc={createImageUrl(ctx.focusedCard.id).large}
@@ -48,9 +49,11 @@ const CardProfile = () => {
         cardAttack={ctx.focusedCard.atk}
         cardDefense={ctx.focusedCard.def}
         cardType={ctx.focusedCard.type}
+        cardRace={ctx.focusedCard.race}
       />
       <TitleStripBanner
         title={`${ctx.focusedCard.race}/${ctx.focusedCard.type}`}
+        cardType={ctx.focusedCard.type}
       />
       <CardProfileDescription cardDescription={ctx.focusedCard.desc} />
       <CardProfileActionBar />

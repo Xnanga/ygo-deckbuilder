@@ -6,8 +6,35 @@
   width: 100%;
 
   padding: 1rem;
+  background: var(--menu-cobalt);
+}
 
+.title-strip-banner--monster {
   background: var(--monster-card-brown);
+}
+
+.title-strip-banner--spell {
+  background: var(--spell-card-cyan);
+}
+
+.title-strip-banner--trap {
+  background: var(--trap-card-pink);
+}
+
+.title-strip-banner--fusion {
+  background: var(--fusion-card-purple);
+}
+
+.title-strip-banner--xyz {
+  background: var(--xyz-card-dark-grey);
+}
+
+.title-strip-banner--synchro {
+  background: var(--synchro-card-white);
+}
+
+.title-strip-banner--link {
+  background: var(--link-card-light-blue);
 }
 
 .title-strip-banner__primary-img {

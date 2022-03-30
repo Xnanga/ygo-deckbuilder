@@ -22,15 +22,21 @@ $bp-smallest: 31.25em; // 500px
   --default-font-style: "Fredoka", sans-serif;
   --default-font-color: #ffffff;
 
-  /* Colours */
+  /* Card Colours */
   --monster-card-brown: rgba(178, 104, 31, 0.65);
+  --spell-card-cyan: rgba(20, 153, 136, 0.65);
+  --trap-card-pink: rgba(177, 55, 123, 0.65);
+  --fusion-card-purple: rgba(148, 81, 159, 0.65);
+  --xyz-card-dark-grey: rgba(40, 41, 43, 0.65);
+  --synchro-card-white: rgba(226, 222, 219, 0.65);
+  --link-card-light-blue: rgba(39, 89, 150, 0.65);
+
+  /* General Colours */
   --border-light-grey: #7d7b7e;
   --border-dark-grey: #a5a5a3;
   --background-dark-grey: #232c33;
   --menu-cobalt: #173446;
   --menu-neon-green: #cbfb0f;
-
-  /* Backgrounds */
 }
 
 /* Reset */

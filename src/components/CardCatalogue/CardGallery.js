@@ -152,22 +152,24 @@ const CardGallery = (props) => {
           })}
         {props.searchErrorStatus && <p>No cards found - please try again</p>}
       </section>
-      <div className={styles["card-gallery__pagination-controls"]}>
-        <CircularButton
-          imgSrc="/media/icons/left-icon.png"
-          imgAlt="A Left Icon"
-          onButtonClick={() => paginationHandler("left")}
-        />
-        <CircularButton
-          imgSrc="/media/icons/right-icon.png"
-          imgAlt="A Right Icon"
-          onButtonClick={() => paginationHandler("right")}
+      <div className={styles["card-gallery__pagination-controls-container"]}>
+        <div className={styles["card-gallery__pagination-controls"]}>
+          <CircularButton
+            imgSrc="/media/icons/left-icon.png"
+            imgAlt="A Left Icon"
+            onButtonClick={() => paginationHandler("left")}
+          />
+          <CircularButton
+            imgSrc="/media/icons/right-icon.png"
+            imgAlt="A Right Icon"
+            onButtonClick={() => paginationHandler("right")}
+          />
+        </div>
+        <PaginationDisplay
+          currentPage={cardData.currentPaginationpage}
+          totalPages={cardData.totalPaginationPages}
         />
       </div>
-      <PaginationDisplay
-        currentPage={cardData.currentPaginationpage}
-        totalPages={cardData.totalPaginationPages}
-      />
     </div>
   );
 };

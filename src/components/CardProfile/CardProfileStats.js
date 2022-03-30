@@ -1,15 +1,44 @@
 import styles from "./CardProfileStats.module.css";
 
+const isZeroOrAbove = (num) => {
+  if (num >= 0) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
 const CardProfileStats = (props) => {
   const isMonsterCard = props?.cardType?.search("Monster");
 
-  const isZeroOrAbove = (num) => {
-    if (num >= 0) {
-      return true;
-    } else {
-      return false;
+  const determineCardTypeIcon = (raceProperty) => {
+    switch (raceProperty) {
+      case "Continuous":
+        return "/media/icons/continuous-symbol.png";
+      case "Counter":
+        return "/media/icons/counter-trap-symbol.png";
+      case "Equip":
+        return "/media/icons/equip-spell-symbol.png";
+      case "Field":
+        return "/media/icons/field-spell-symbol.png";
+      case "Quick-Play":
+        return "/media/icons/quick-play-spell-symbol.png";
+      case "Ritual":
+        return "/media/icons/ritual-spell-symbol.png";
+      default:
+        return false;
     }
   };
+
+  const determineRaceIconVisibility = determineCardTypeIcon(props.cardRace) ? (
+    <img
+      className={styles["card-profile-stats__icon"]}
+      src={determineCardTypeIcon(props.cardRace)}
+      alt="#"
+    />
+  ) : (
+    ""
+  );
 
   const basicMonsterStats = (
     <div className={styles["card-profile-stats__text-section"]}>
@@ -61,8 +90,7 @@ const CardProfileStats = (props) => {
   const nonMonsterStats = (
     <div className={styles["card-profile-stats__text-section"]}>
       <div className={styles["card-profile-stats__text-section-line"]}>
-        <p>Spell / Trap Type Symbol</p>
-        <img src="#" alt="#" />
+        {determineRaceIconVisibility}
       </div>
     </div>
   );
