@@ -4,7 +4,7 @@ import styles from "./CardCatalogue.module.css";
 
 import TabMenu from "../UI/Menus/TabMenu";
 import CatalogueTextSearch from "./CatalogueTextSearch";
-import RectangularButton from "../UI/Buttons/RectangularButton";
+import CardCatalogueActionButtons from "./CardCatalogueActionButtons";
 import CardGallery from "./CardGallery";
 
 const CardCatalogue = () => {
@@ -44,6 +44,35 @@ const CardCatalogue = () => {
     }
   };
 
+  const filterCurrentCards = (filterSettings) => {
+    console.log("Filter button clicked!");
+
+    // if (filterType === "Only Monsters") {
+    //   const filteredCards = currentCards.data.filter((card) => {
+    //     return card.type.includes("Monster");
+    //   });
+    //   const packagedCards = { data: filteredCards };
+    //   setCurrentCards(packagedCards);
+    // }
+
+    // Filters
+    // cardType: Monster / Spell / Trap
+    // monsterType: Normal / Effect / Ritual / Fusion / Synchro
+    // XYZ, Pendulum, Link, Token
+
+    // Monster Race: Aqua, Beast, Beast-Warrior, Cyberse, Dinosaur,
+    // Divine-Beast, Dragon, Fairy, Fiend, Fish, Insect, Machine, Plant,
+    // Psychic, Pyro, Reptile, Rock, Sea Serpent, Spellcaster, Thunder,
+    // Warrior, Winged Beast, Wyrm, and Zombie.
+
+    // Spell Type: Equip / Field / Quickplay / Continuous / Ritual
+    // Trap Type: Counter / Continuous
+    // Attribute: Dark / Light / Earth / Wind / Fire / Water / Divine
+    // Star Level: 1-12
+    // Rank Level: 1-13
+    // Link Value: 1-6
+  };
+
   useEffect(() => {
     getCardData("?staple=yes");
   }, []);
@@ -53,24 +82,7 @@ const CardCatalogue = () => {
       <TabMenu listData={tabMenuData} />
       <CatalogueTextSearch cardSearchHandler={cardSearchHandler} />
       <div className={styles["card-catalogue__action-btns"]}>
-        <RectangularButton
-          onButtonClick={() => console.log("Button Click")}
-          imgSrc="None"
-          imgAlt="None"
-          buttonText="Button"
-        />
-        <RectangularButton
-          onButtonClick={() => console.log("Button Click")}
-          imgSrc="None"
-          imgAlt="None"
-          buttonText="Button"
-        />
-        <RectangularButton
-          onButtonClick={() => console.log("Button Click")}
-          imgSrc="None"
-          imgAlt="None"
-          buttonText="Button"
-        />
+        <CardCatalogueActionButtons filterCardsHandler={filterCurrentCards} />
       </div>
       <CardGallery
         currentCards={currentCards}

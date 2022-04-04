@@ -30,6 +30,14 @@ const CardProfileStats = (props) => {
     }
   };
 
+  const determineLevelType = (cardType) => {
+    if (cardType.includes("XYZ")) {
+      return "/media/icons/rank-symbol.png";
+    } else {
+      return "/media/icons/star-symbol.png";
+    }
+  };
+
   const determineRaceIconVisibility = determineCardTypeIcon(props.cardRace) ? (
     <img
       className={styles["card-profile-stats__icon"]}
@@ -47,7 +55,7 @@ const CardProfileStats = (props) => {
           <>
             <img
               className={styles["card-profile-stats__icon"]}
-              src="/media/icons/star-symbol.png"
+              src={determineLevelType(props.cardType)}
               alt="Card Level Symbol"
             />
             <span className={styles["card-profile-stats__numbers"]}>
@@ -80,6 +88,20 @@ const CardProfileStats = (props) => {
             />
             <span className={styles["card-profile-stats__numbers"]}>
               {props.cardDefense}
+            </span>
+          </>
+        )}
+      </div>
+      <div className={styles["card-profile-stats__text-section-line"]}>
+        {props.cardLinkValue && (
+          <>
+            {/* <img
+              className={styles["card-profile-stats__icon"]}
+              src="/media/icons/defense-symbol.png"
+              alt="Card Defense Symbol"
+            /> */}
+            <span className={styles["card-profile-stats__numbers"]}>
+              {`Link: ${props.cardLinkValue}`}
             </span>
           </>
         )}

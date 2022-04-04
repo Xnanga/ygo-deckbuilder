@@ -50,6 +50,7 @@ const CardProfile = () => {
         cardDefense={ctx.focusedCard.def}
         cardType={ctx.focusedCard.type}
         cardRace={ctx.focusedCard.race}
+        cardLinkValue={ctx.focusedCard.linkval}
       />
       <TitleStripBanner
         title={`${ctx.focusedCard.race}/${ctx.focusedCard.type}`}
