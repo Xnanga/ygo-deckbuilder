@@ -1,0 +1,14 @@
+.catalogue-filter-menu {
+}
+
+.catalogue-filter-menu__title {
+}
+
+.catalogue-filter-menu__btns {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.catalogue-filter-menu__btns > label:not(:last-child) {
+  margin-right: 1rem;
+}

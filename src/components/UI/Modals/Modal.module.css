@@ -4,8 +4,11 @@
   left: 50%;
   transform: translate(-50%, -50%);
 
-  height: 10rem;
-  width: 10rem;
+  height: calc(100vh - 8rem);
+  width: calc(100vw - 8rem);
 
-  background-color: red;
+  border: 2px solid grey;
+  padding: 2.5rem;
+
+  background-color: RGBA(0, 0, 0, 0.95);
 }

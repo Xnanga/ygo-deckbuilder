@@ -6,8 +6,8 @@ const Modal = (props) => {
   const modalRoot = document.getElementById("modal-root");
   const modalLayout = (
     <aside className={styles.modal}>
-      <h2 className={styles["modal__heading"]}>{props.modalTitle}</h2>
-      <div className={styles["modal__content"]}>{props.modalContent}</div>
+      <h1 className={styles["modal__heading"]}>{props.modalTitle}</h1>
+      <div className={styles["modal__content"]}>{props.children}</div>
     </aside>
   );
 

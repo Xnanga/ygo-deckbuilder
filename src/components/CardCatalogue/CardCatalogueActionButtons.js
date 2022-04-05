@@ -4,6 +4,7 @@ import RectangularButton from "../UI/Buttons/RectangularButton";
 
 import CardsContext from "../../Context/card-context";
 import Modal from "../UI/Modals/Modal";
+import CatalogueFilterMenu from "./CatalogueFilterMenu";
 
 const CardCatalogueActionButtons = (props) => {
   const ctx = useContext(CardsContext);
@@ -19,7 +20,11 @@ const CardCatalogueActionButtons = (props) => {
 
   return (
     <>
-      {ctx.modalVisible && <Modal />}
+      {ctx.modalVisible && (
+        <Modal modalTitle="Card Filters">
+          <CatalogueFilterMenu />
+        </Modal>
+      )}
       <RectangularButton
         onButtonClick={() => modalVisibilityHandler("filters")}
         imgSrc="None"
