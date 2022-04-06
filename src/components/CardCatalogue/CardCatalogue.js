@@ -7,6 +7,8 @@ import CatalogueTextSearch from "./CatalogueTextSearch";
 import CardCatalogueActionButtons from "./CardCatalogueActionButtons";
 import CardGallery from "./CardGallery";
 
+import PaginationControls from "../UI/PaginationControls";
+
 const CardCatalogue = () => {
   const [currentCards, setCurrentCards] = useState([]);
   const [searchError, setSearchError] = useState(false);
@@ -88,6 +90,7 @@ const CardCatalogue = () => {
         currentCards={currentCards}
         searchErrorStatus={searchError}
       />
+      <PaginationControls />
     </section>
   );
 };
