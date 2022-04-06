@@ -4,9 +4,11 @@ const CardsContext = React.createContext({
   focusedCard: {},
   modalVisible: "",
   cardData: [],
+  activeCardFilters: {},
   setFocusedCard: () => {},
   setModalVisible: () => {},
   dispatchCardData: () => {},
+  setActiveCardFilters: () => {},
 });
 
 const cardDataReducer = (state, action) => {
@@ -32,6 +34,7 @@ const cardDataReducer = (state, action) => {
         fifteenCardDataChunk: state.fifteenCardDataChunk,
         totalPaginationPages: state.totalPaginationPages,
         currentPaginationpage: state.currentPaginationpage,
+        activeFilters: state.activeFilters,
       };
     }
 
@@ -52,6 +55,7 @@ const cardDataReducer = (state, action) => {
         fifteenCardDataChunk: state.fifteenCardDataChunk,
         totalPaginationPages: state.totalPaginationPages,
         currentPaginationpage: state.currentPaginationpage,
+        activeFilters: state.activeFilters,
       };
     }
 
@@ -60,6 +64,7 @@ const cardDataReducer = (state, action) => {
       fifteenCardDataChunk: nextFifteenCards,
       totalPaginationPages: state.totalPaginationPages,
       currentPaginationpage: state.currentPaginationpage + 1,
+      activeFilters: state.activeFilters,
     };
   }
 
@@ -80,6 +85,7 @@ const cardDataReducer = (state, action) => {
         fifteenCardDataChunk: state.fifteenCardDataChunk,
         totalPaginationPages: state.totalPaginationPages,
         currentPaginationpage: state.currentPaginationpage,
+        activeFilters: state.activeFilters,
       };
     }
 
@@ -88,6 +94,40 @@ const cardDataReducer = (state, action) => {
       fifteenCardDataChunk: previousFifteenCards,
       totalPaginationPages: state.totalPaginationPages,
       currentPaginationpage: state.currentPaginationpage - 1,
+      activeFilters: state.activeFilters,
+    };
+  }
+
+  if (action.type === "applyCardFilters") {
+    const currentCardData = state.allCardData.slice();
+    let filteredCardData = [];
+
+    // Key: cardType
+    // Value: "trap-card"
+
+    for (const key in action.data) {
+      if (!action.data[key]) return;
+
+      // Does this need done conditionally for all fields?
+      currentCardData.forEach((card) => {
+        console.log(`card.type:${card.type}`);
+        console.log(`key.value:${action.data[key]}`);
+
+        // Will names need to be changed to match things up?
+        if (card.type.includes(action.data[key])) {
+          filteredCardData.push(card);
+        }
+      });
+    }
+
+    console.log(filteredCardData);
+
+    return {
+      allCardData: state.allCardData,
+      fifteenCardDataChunk: state.fifteenCardDataChunk,
+      totalPaginationPages: state.totalPaginationPages,
+      currentPaginationpage: state.currentPaginationpage,
+      activeFilters: state.activeFilters,
     };
   }
 };
@@ -95,12 +135,14 @@ const cardDataReducer = (state, action) => {
 export const CardsContextProvider = (props) => {
   const [focusedCard, setFocusedCard] = useState({});
   const [modalVisible, setModalVisible] = useState(null);
+  const [activeCardFilters, setActiveCardFilters] = useState({});
 
   const [cardData, dispatchCardData] = useReducer(cardDataReducer, {
     allCardData: [],
     fifteenCardDataChunk: [],
     totalPaginationPages: 0,
     currentPaginationpage: 0,
+    activeFilters: {},
   });
 
   return (
@@ -109,9 +151,11 @@ export const CardsContextProvider = (props) => {
         focusedCard: focusedCard,
         modalVisible: modalVisible,
         cardData: cardData,
+        activeCardFilters: activeCardFilters,
         setFocusedCard: setFocusedCard,
         setModalVisible: setModalVisible,
         dispatchCardData: dispatchCardData,
+        setActiveCardFilters: setActiveCardFilters,
       }}
     >
       {props.children}

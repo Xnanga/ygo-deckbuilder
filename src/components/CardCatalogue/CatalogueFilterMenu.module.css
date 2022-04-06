@@ -4,6 +4,11 @@
 .catalogue-filter-menu__title {
 }
 
+.catalogue-filter-menu__tagline {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
 .catalogue-filter-menu__btns {
   display: flex;
   flex-wrap: wrap;
@@ -11,4 +16,26 @@
 
 .catalogue-filter-menu__btns > label:not(:last-child) {
   margin-right: 1rem;
+}
+
+.catalogue-filter-menu__submit-container {
+  position: sticky;
+  bottom: 0;
+
+  display: flex;
+  justify-content: center;
+
+  max-width: 34rem;
+
+  margin: 0 auto;
+  margin-top: 15rem;
+  padding: 1rem;
+
+  border-radius: 5px;
+
+  background-color: var(--background-dark-grey);
+}
+
+.catalogue-filter-menu__submit-container > button:not(:last-child) {
+  margin-right: 1.5rem;
 }

@@ -1,21 +1,24 @@
-import styles from "./CheckBox.module.css";
+import styles from "./RadioButton.module.css";
 
-const CheckBox = (props) => {
+const RadioButton = (props) => {
   return (
     <>
       <label className={styles["checkbox-label"]} htmlFor={props.id}>
         <input
           className={styles["checkbox-input"]}
-          type="checkbox"
+          type="radio"
           id={props.id}
           name={props.name}
-          checked={props.checked}
         />
         <span className={styles["checkbox-text"]}>{props.label}</span>
-        <span className={styles["checkbox-checkmark"]}></span>
+        <img
+          className={styles["checkbox-img"]}
+          src="/media/icons/green-tick-icon.png"
+          alt="A Green Tick Icon"
+        />
       </label>
     </>
   );
 };
 
-export default CheckBox;
+export default RadioButton;

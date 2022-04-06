@@ -29,7 +29,7 @@ const CardGallery = (props) => {
     <div className={styles["card-gallery-container"]}>
       <section className={styles["card-gallery"]}>
         {!props.searchErrorStatus &&
-          ctx.cardData.fifteenCardDataChunk.map((card) => {
+          ctx.cardData?.fifteenCardDataChunk.map((card) => {
             return (
               <div
                 key={card.id}

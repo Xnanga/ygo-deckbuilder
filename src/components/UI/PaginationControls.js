@@ -37,8 +37,8 @@ const PaginationControls = () => {
         />
       </div>
       <PaginationDisplay
-        currentPage={ctx.cardData.currentPaginationpage}
-        totalPages={ctx.cardData.totalPaginationPages}
+        currentPage={ctx.cardData?.currentPaginationpage}
+        totalPages={ctx.cardData?.totalPaginationPages}
       />
     </div>
   );

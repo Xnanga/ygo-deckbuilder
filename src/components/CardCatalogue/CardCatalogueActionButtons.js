@@ -6,7 +6,7 @@ import CardsContext from "../../Context/card-context";
 import Modal from "../UI/Modals/Modal";
 import CatalogueFilterMenu from "./CatalogueFilterMenu";
 
-const CardCatalogueActionButtons = (props) => {
+const CardCatalogueActionButtons = () => {
   const ctx = useContext(CardsContext);
 
   const modalVisibilityHandler = (modalType) => {

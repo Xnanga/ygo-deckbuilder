@@ -2,6 +2,7 @@
   position: absolute;
   top: 50%;
   left: 50%;
+  z-index: 50;
   transform: translate(-50%, -50%);
 
   height: calc(100vh - 8rem);
@@ -11,4 +12,25 @@
   padding: 2.5rem;
 
   background-color: RGBA(0, 0, 0, 0.95);
+
+  overflow-y: auto;
+}
+
+.modal__close-btn {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 1rem;
+
+  background-color: var(--menu-cobalt);
+}
+
+.modal__close-btn > img {
+  height: 4rem;
+  width: 4rem;
 }

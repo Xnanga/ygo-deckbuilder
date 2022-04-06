@@ -17,8 +17,16 @@
   width: 0;
 }
 
-.checkbox-text {
-  transition: all 0.1s ease-in;
+.checkbox-img {
+  height: 2rem;
+  width: 2rem;
+  margin-left: 1rem;
+
+  transform: translateX(-4rem);
+
+  opacity: 0;
+
+  transition: all 0.2s ease-in;
 }
 
 .checkbox-checkmark {
@@ -26,17 +34,13 @@
   transition: all 0.2s;
 }
 
-.checkbox-checkmark:after {
-  content: "";
-  display: none;
-}
-
 .checkbox-label input:checked + .checkbox-text {
   color: var(--menu-neon-green);
   font-weight: 500;
 }
 
-.checkbox-label input:checked ~ .checkbox-checkmark:after {
-  content: "\2713";
+.checkbox-label input:checked ~ .checkbox-img {
   display: inline-block;
+  opacity: 1;
+  transform: translateX(0);
 }
