@@ -37,12 +37,6 @@ const CardCatalogueActionButtons = () => {
         imgAlt="None"
         buttonText="Sort"
       />
-      <RectangularButton
-        onButtonClick={() => console.log("Button Click")}
-        imgSrc="None"
-        imgAlt="None"
-        buttonText="Remove Filters"
-      />
     </>
   );
 };

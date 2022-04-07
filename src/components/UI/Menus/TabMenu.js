@@ -1,16 +1,8 @@
-import { useState } from "react";
-
 import styles from "./TabMenu.module.css";
 
 const TabMenu = (props) => {
-  const [activeTab, setActiveTab] = useState("catalogue");
-
-  const activeTabHandler = (listItemId) => {
-    setActiveTab(listItemId);
-  };
-
   const determineTabClass = (listItemId) => {
-    if (listItemId === activeTab) {
+    if (listItemId === props.activeTab) {
       return `${styles["nav__list-item"]} ${styles["nav__list-item--active"]}`;
     } else {
       return styles["nav__list-item"];
@@ -22,7 +14,7 @@ const TabMenu = (props) => {
       <li
         className={determineTabClass(listItem.id)}
         key={listItem.id}
-        onClick={() => activeTabHandler(listItem.id)}
+        onClick={() => props.activeTabHandler(listItem.id)}
       >
         <img
           className={styles["nav__list-item__img"]}

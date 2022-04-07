@@ -5,10 +5,12 @@ const CardsContext = React.createContext({
   modalVisible: "",
   cardData: [],
   activeCardFilters: {},
+  bookmarkedCards: [],
   setFocusedCard: () => {},
   setModalVisible: () => {},
   dispatchCardData: () => {},
   setActiveCardFilters: () => {},
+  setBookmarkedCards: () => {},
 });
 
 const cardDataReducer = (state, action) => {
@@ -136,6 +138,7 @@ export const CardsContextProvider = (props) => {
   const [focusedCard, setFocusedCard] = useState({});
   const [modalVisible, setModalVisible] = useState(null);
   const [activeCardFilters, setActiveCardFilters] = useState({});
+  const [bookmarkedCards, setBookmarkedCards] = useState([]);
 
   const [cardData, dispatchCardData] = useReducer(cardDataReducer, {
     allCardData: [],
@@ -152,10 +155,12 @@ export const CardsContextProvider = (props) => {
         modalVisible: modalVisible,
         cardData: cardData,
         activeCardFilters: activeCardFilters,
+        bookmarkedCards: bookmarkedCards,
         setFocusedCard: setFocusedCard,
         setModalVisible: setModalVisible,
         dispatchCardData: dispatchCardData,
         setActiveCardFilters: setActiveCardFilters,
+        setBookmarkedCards: setBookmarkedCards,
       }}
     >
       {props.children}

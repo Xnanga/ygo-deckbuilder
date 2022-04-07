@@ -25,6 +25,8 @@ const CardGallery = (props) => {
     }
   }, [props.currentCards.data]);
 
+  // Change the below to use props
+
   return (
     <div className={styles["card-gallery-container"]}>
       <section className={styles["card-gallery"]}>

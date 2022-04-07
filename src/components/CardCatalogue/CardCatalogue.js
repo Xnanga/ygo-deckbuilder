@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 
 import styles from "./CardCatalogue.module.css";
 
@@ -6,12 +6,20 @@ import TabMenu from "../UI/Menus/TabMenu";
 import CatalogueTextSearch from "./CatalogueTextSearch";
 import CardCatalogueActionButtons from "./CardCatalogueActionButtons";
 import CardGallery from "./CardGallery";
+import CardsContext from "../../Context/card-context";
 
 import PaginationControls from "../UI/PaginationControls";
 
 const CardCatalogue = () => {
+  const ctx = useContext(CardsContext);
+
+  const [activeTab, setActiveTab] = useState("catalogue");
   const [currentCards, setCurrentCards] = useState([]);
   const [searchError, setSearchError] = useState(false);
+
+  const activeTabHandler = (listItemId) => {
+    setActiveTab(listItemId);
+  };
 
   const tabMenuData = [
     {
@@ -50,9 +58,8 @@ const CardCatalogue = () => {
     getCardData("?staple=yes");
   }, []);
 
-  return (
-    <section className={styles["card-catalogue"]}>
-      <TabMenu listData={tabMenuData} />
+  const cardList = (
+    <>
       <CatalogueTextSearch cardSearchHandler={cardSearchHandler} />
       <div className={styles["card-catalogue__action-btns"]}>
         <CardCatalogueActionButtons />
@@ -62,6 +69,25 @@ const CardCatalogue = () => {
         searchErrorStatus={searchError}
       />
       <PaginationControls />
+    </>
+  );
+
+  const bookmarks = (
+    <>
+      <CardGallery currentCards={ctx.bookmarkedCards} />
+      <PaginationControls />
+    </>
+  );
+
+  return (
+    <section className={styles["card-catalogue"]}>
+      <TabMenu
+        listData={tabMenuData}
+        activeTab={activeTab}
+        activeTabHandler={activeTabHandler}
+      />
+      {activeTab === "catalogue" && cardList}
+      {activeTab === "bookmarks" && bookmarks}
     </section>
   );
 };
