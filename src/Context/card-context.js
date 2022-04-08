@@ -13,6 +13,38 @@ const CardsContext = React.createContext({
   setBookmarkedCards: () => {},
 });
 
+const noCardDataStateChange = (state) => {
+  return {
+    allCardData: state.allCardData,
+    fifteenCardDataChunk: state.fifteenCardDataChunk,
+    totalPaginationPages: state.totalPaginationPages,
+    currentPaginationpage: state.currentPaginationpage,
+    activeFilters: state.activeFilters,
+  };
+};
+
+const paginationStateChange = (state, plusMinus, fifteenCards) => {
+  let paginationChange;
+  if (plusMinus === "plus") paginationChange = state.currentPaginationpage + 1;
+  if (plusMinus === "minus") paginationChange = state.currentPaginationpage - 1;
+  return {
+    allCardData: state.allCardData,
+    fifteenCardDataChunk: fifteenCards,
+    totalPaginationPages: state.totalPaginationPages,
+    currentPaginationpage: paginationChange,
+    activeFilters: state.activeFilters,
+  };
+};
+
+const getFifteenCardChunk = (data, plusMinus, index) => {
+  if (plusMinus === "plus") {
+    return data.slice(index + 1, index + 16);
+  }
+  if (plusMinus === "minus") {
+    return data.slice(index - 15, index);
+  }
+};
+
 const cardDataReducer = (state, action) => {
   // New set of searched card data
   if (action.type === "updateFullCardData") {
@@ -31,13 +63,7 @@ const cardDataReducer = (state, action) => {
   if (action.type === "nextFifteenCardDataChunk") {
     // If on last pagination page, no state changes
     if (state.currentPaginationpage === state.totalPaginationPages) {
-      return {
-        allCardData: state.allCardData,
-        fifteenCardDataChunk: state.fifteenCardDataChunk,
-        totalPaginationPages: state.totalPaginationPages,
-        currentPaginationpage: state.currentPaginationpage,
-        activeFilters: state.activeFilters,
-      };
+      return noCardDataStateChange(state);
     }
 
     const fifteenCardLastIndexID = state.fifteenCardDataChunk[14]?.id;
@@ -45,29 +71,26 @@ const cardDataReducer = (state, action) => {
       (card) => card.id === fifteenCardLastIndexID
     );
 
-    const nextFifteenCards = state.allCardData.slice(
-      fifteenthCardIndexInAllCardData + 1,
-      fifteenthCardIndexInAllCardData + 16
+    const nextFifteenCards = getFifteenCardChunk(
+      state.allCardData,
+      "plus",
+      fifteenthCardIndexInAllCardData
     );
 
     // If no cards in newest fifteen chunk, no state changes
     if (nextFifteenCards.length < 1) {
-      return {
-        allCardData: state.allCardData,
-        fifteenCardDataChunk: state.fifteenCardDataChunk,
-        totalPaginationPages: state.totalPaginationPages,
-        currentPaginationpage: state.currentPaginationpage,
-        activeFilters: state.activeFilters,
-      };
+      return noCardDataStateChange(state);
     }
 
-    return {
-      allCardData: state.allCardData,
-      fifteenCardDataChunk: nextFifteenCards,
-      totalPaginationPages: state.totalPaginationPages,
-      currentPaginationpage: state.currentPaginationpage + 1,
-      activeFilters: state.activeFilters,
-    };
+    return paginationStateChange(state, "plus", nextFifteenCards);
+
+    // return {
+    //   allCardData: state.allCardData,
+    //   fifteenCardDataChunk: nextFifteenCards,
+    //   totalPaginationPages: state.totalPaginationPages,
+    //   currentPaginationpage: state.currentPaginationpage + 1,
+    //   activeFilters: state.activeFilters,
+    // };
   }
 
   // Show previous 15 card chunk when moving one page backwards
@@ -76,28 +99,17 @@ const cardDataReducer = (state, action) => {
     const firstCardIndexInAllCardData = state.allCardData.findIndex(
       (card) => card.id === firstCardIndexID
     );
-    const previousFifteenCards = state.allCardData.slice(
-      firstCardIndexInAllCardData - 15,
+    const previousFifteenCards = getFifteenCardChunk(
+      state.allCardData,
+      "minus",
       firstCardIndexInAllCardData
     );
 
     if (previousFifteenCards.length < 15) {
-      return {
-        allCardData: state.allCardData,
-        fifteenCardDataChunk: state.fifteenCardDataChunk,
-        totalPaginationPages: state.totalPaginationPages,
-        currentPaginationpage: state.currentPaginationpage,
-        activeFilters: state.activeFilters,
-      };
+      return noCardDataStateChange(state);
     }
 
-    return {
-      allCardData: state.allCardData,
-      fifteenCardDataChunk: previousFifteenCards,
-      totalPaginationPages: state.totalPaginationPages,
-      currentPaginationpage: state.currentPaginationpage - 1,
-      activeFilters: state.activeFilters,
-    };
+    return paginationStateChange(state, "minus", previousFifteenCards);
   }
 
   if (action.type === "applyCardFilters") {
@@ -122,15 +134,7 @@ const cardDataReducer = (state, action) => {
       });
     }
 
-    console.log(filteredCardData);
-
-    return {
-      allCardData: state.allCardData,
-      fifteenCardDataChunk: state.fifteenCardDataChunk,
-      totalPaginationPages: state.totalPaginationPages,
-      currentPaginationpage: state.currentPaginationpage,
-      activeFilters: state.activeFilters,
-    };
+    return noCardDataStateChange(state);
   }
 };
 
