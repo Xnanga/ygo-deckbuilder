@@ -1,4 +1,4 @@
-import { useEffect, useContext } from "react";
+import { useContext } from "react";
 
 import styles from "./CardGallery.module.css";
 
@@ -15,23 +15,11 @@ const CardGallery = (props) => {
     ctx.setFocusedCard(clickedCardData);
   };
 
-  useEffect(() => {
-    if (props.currentCards.data && props.currentCards.data !== ctx.cardData) {
-      ctx.dispatchCardData({
-        type: "updateFullCardData",
-        data: props.currentCards.data,
-      });
-      console.log("UseEffect Fired");
-    }
-  }, [props.currentCards.data]);
-
-  // Change the below to use props
-
   return (
     <div className={styles["card-gallery-container"]}>
       <section className={styles["card-gallery"]}>
         {!props.searchErrorStatus &&
-          ctx.cardData?.fifteenCardDataChunk.map((card) => {
+          props.currentCards.map((card) => {
             return (
               <div
                 key={card.id}

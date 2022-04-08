@@ -1,16 +1,14 @@
-import React, { useState, useReducer } from "react";
+import React, { useState, useReducer, useEffect } from "react";
 
 const CardsContext = React.createContext({
   focusedCard: {},
   modalVisible: "",
   cardData: [],
   activeCardFilters: {},
-  bookmarkedCards: [],
   setFocusedCard: () => {},
   setModalVisible: () => {},
   dispatchCardData: () => {},
   setActiveCardFilters: () => {},
-  setBookmarkedCards: () => {},
 });
 
 const noCardDataStateChange = (state) => {
@@ -20,6 +18,7 @@ const noCardDataStateChange = (state) => {
     totalPaginationPages: state.totalPaginationPages,
     currentPaginationpage: state.currentPaginationpage,
     activeFilters: state.activeFilters,
+    bookmarkedCardsData: state.bookmarkedCardsData,
   };
 };
 
@@ -33,6 +32,7 @@ const paginationStateChange = (state, plusMinus, fifteenCards) => {
     totalPaginationPages: state.totalPaginationPages,
     currentPaginationpage: paginationChange,
     activeFilters: state.activeFilters,
+    bookmarkedCardsData: state.bookmarkedCardsData,
   };
 };
 
@@ -56,6 +56,7 @@ const cardDataReducer = (state, action) => {
       fifteenCardDataChunk: firstFifteenCards,
       totalPaginationPages: requiredPages,
       currentPaginationpage: 1,
+      bookmarkedCardsData: state.bookmarkedCardsData,
     };
   }
 
@@ -83,14 +84,6 @@ const cardDataReducer = (state, action) => {
     }
 
     return paginationStateChange(state, "plus", nextFifteenCards);
-
-    // return {
-    //   allCardData: state.allCardData,
-    //   fifteenCardDataChunk: nextFifteenCards,
-    //   totalPaginationPages: state.totalPaginationPages,
-    //   currentPaginationpage: state.currentPaginationpage + 1,
-    //   activeFilters: state.activeFilters,
-    // };
   }
 
   // Show previous 15 card chunk when moving one page backwards
@@ -110,6 +103,52 @@ const cardDataReducer = (state, action) => {
     }
 
     return paginationStateChange(state, "minus", previousFifteenCards);
+  }
+
+  // Update bookmarks
+  if (action.type === "updateBookmarkedCards") {
+    if (action.update === "getLocalStorage") {
+      const sourcedBookmarkData = action.data;
+
+      return {
+        allCardData: state.allCardData,
+        fifteenCardDataChunk: state.fifteenCardDataChunk,
+        totalPaginationPages: state.totalPaginationPages,
+        currentPaginationpage: state.currentPaginationpage,
+        activeFilters: state.activeFilters,
+        bookmarkedCardsData: sourcedBookmarkData,
+      };
+    }
+
+    if (action.update === "add") {
+      const bookmarkedCards = state.bookmarkedCardsData.slice();
+      bookmarkedCards.push(action.data);
+
+      return {
+        allCardData: state.allCardData,
+        fifteenCardDataChunk: state.fifteenCardDataChunk,
+        totalPaginationPages: state.totalPaginationPages,
+        currentPaginationpage: state.currentPaginationpage,
+        activeFilters: state.activeFilters,
+        bookmarkedCardsData: bookmarkedCards,
+      };
+    }
+
+    if (action.update === "remove") {
+      const currentBookmarks = state.bookmarkedCardsData.slice();
+      const updatedBookmarks = currentBookmarks.filter(
+        (card) => card.id !== action.data.id
+      );
+
+      return {
+        allCardData: state.allCardData,
+        fifteenCardDataChunk: state.fifteenCardDataChunk,
+        totalPaginationPages: state.totalPaginationPages,
+        currentPaginationpage: state.currentPaginationpage,
+        activeFilters: state.activeFilters,
+        bookmarkedCardsData: updatedBookmarks,
+      };
+    }
   }
 
   if (action.type === "applyCardFilters") {
@@ -142,7 +181,6 @@ export const CardsContextProvider = (props) => {
   const [focusedCard, setFocusedCard] = useState({});
   const [modalVisible, setModalVisible] = useState(null);
   const [activeCardFilters, setActiveCardFilters] = useState({});
-  const [bookmarkedCards, setBookmarkedCards] = useState([]);
 
   const [cardData, dispatchCardData] = useReducer(cardDataReducer, {
     allCardData: [],
@@ -150,7 +188,29 @@ export const CardsContextProvider = (props) => {
     totalPaginationPages: 0,
     currentPaginationpage: 0,
     activeFilters: {},
+    bookmarkedCardsData: [],
   });
+
+  useEffect(() => {
+    const localStorageBookmarkData = localStorage.getItem("cardBookmarks");
+    if (localStorageBookmarkData) {
+      const parsedData = JSON.parse(localStorageBookmarkData);
+      dispatchCardData({
+        type: "updateBookmarkedCards",
+        update: "getLocalStorage",
+        data: parsedData,
+      });
+    }
+    console.log("useEffect Fired");
+  }, []);
+
+  useEffect(() => {
+    const stringifiedBookmarkData = JSON.stringify(
+      cardData.bookmarkedCardsData
+    );
+    localStorage.setItem("cardBookmarks", stringifiedBookmarkData);
+    console.log("useEffect Fired");
+  }, [cardData.bookmarkedCardsData]);
 
   return (
     <CardsContext.Provider
@@ -159,12 +219,10 @@ export const CardsContextProvider = (props) => {
         modalVisible: modalVisible,
         cardData: cardData,
         activeCardFilters: activeCardFilters,
-        bookmarkedCards: bookmarkedCards,
         setFocusedCard: setFocusedCard,
         setModalVisible: setModalVisible,
         dispatchCardData: dispatchCardData,
         setActiveCardFilters: setActiveCardFilters,
-        setBookmarkedCards: setBookmarkedCards,
       }}
     >
       {props.children}

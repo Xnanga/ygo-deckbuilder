@@ -67,7 +67,6 @@ const CardCatalogue = () => {
         <CardCatalogueActionButtons />
       </div>
       <CardGallery
-        // currentCards={currentCards}
         currentCards={ctx.cardData.fifteenCardDataChunk}
         searchErrorStatus={searchError}
       />
@@ -75,12 +74,9 @@ const CardCatalogue = () => {
     </>
   );
 
-  // console.log(currentCards);
-  // console.log(ctx.cardData.allCardData);
-
   const bookmarks = (
     <>
-      <CardGallery currentCards={ctx.bookmarkedCards} />
+      <CardGallery currentCards={ctx.cardData.bookmarkedCardsData} />
       <PaginationControls />
     </>
   );
