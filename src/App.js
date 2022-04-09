@@ -1,22 +1,34 @@
 import styles from "./App.css";
 
-import { CardsContextProvider } from "./Context/card-context";
+import useCardData from "./hooks/use-card-data";
 import DeckBuilderMainLayout from "./components/UI/DeckBuilderMainLayout";
 import CardProfile from "./components/CardProfile/CardProfile";
 import DeckHub from "./components/DeckHub/DeckHub";
 import CardCatalogue from "./components/CardCatalogue/CardCatalogue";
 
 function App() {
+  const [cardData, dispatchCardData] = useCardData();
+
   return (
-    <CardsContextProvider>
-      <div className="app">
-        <DeckBuilderMainLayout>
-          <CardProfile />
-          <DeckHub />
-          <CardCatalogue />
-        </DeckBuilderMainLayout>
-      </div>
-    </CardsContextProvider>
+    <div className="app">
+      <DeckBuilderMainLayout>
+        <CardProfile
+          focusedCard={cardData.focusedCard}
+          bookmarkedCards={cardData.bookmarkedCardsData}
+          dispatchCardData={dispatchCardData}
+        />
+        <DeckHub />
+        <CardCatalogue
+          focusedCard={cardData.focusedCard}
+          setFocusedCard={cardData.setFocusedCard}
+          bookmarkedCards={cardData.bookmarkedCardsData}
+          fifteenCards={cardData.fifteenCardDataChunk}
+          dispatchCardData={dispatchCardData}
+          currentPage={cardData.currentPaginationpage}
+          totalPages={cardData.totalPaginationPages}
+        />
+      </DeckBuilderMainLayout>
+    </div>
   );
 }
 

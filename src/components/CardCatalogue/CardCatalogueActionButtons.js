@@ -1,38 +1,36 @@
-import { useContext } from "react";
-
+import { useState } from "react";
 import RectangularButton from "../UI/Buttons/RectangularButton";
-
-import CardsContext from "../../Context/card-context";
 import Modal from "../UI/Modals/Modal";
 import CatalogueFilterMenu from "./CatalogueFilterMenu";
+import CatalogueSortMenu from "./CatalogueSortMenu";
 
-const CardCatalogueActionButtons = () => {
-  const ctx = useContext(CardsContext);
+const CardCatalogueActionButtons = (props) => {
+  const [modalVisible, setModalVisible] = useState(null);
 
-  const modalVisibilityHandler = (modalType) => {
-    if (modalType === "filters") {
-      ctx.setModalVisible("filters");
-    }
-    if (modalType === "sorting") {
-      ctx.setModalVisible("sorting");
-    }
+  const closeModalHandler = () => {
+    setModalVisible(null);
   };
 
   return (
     <>
-      {ctx.modalVisible && (
-        <Modal modalTitle="Card Filters">
-          <CatalogueFilterMenu />
+      {modalVisible === "filters" && (
+        <Modal modalTitle="Card Filters" closeModalHandler={closeModalHandler}>
+          <CatalogueFilterMenu dispatchCardData={props.dispatchCardData} />
+        </Modal>
+      )}
+      {modalVisible === "sorting" && (
+        <Modal modalTitle="Card Sorting" closeModalHandler={closeModalHandler}>
+          <CatalogueSortMenu />
         </Modal>
       )}
       <RectangularButton
-        onButtonClick={() => modalVisibilityHandler("filters")}
+        onButtonClick={() => setModalVisible("filters")}
         imgSrc="None"
         imgAlt="None"
         buttonText="Filter"
       />
       <RectangularButton
-        onButtonClick={() => modalVisibilityHandler("sorting")}
+        onButtonClick={() => setModalVisible("sorting")}
         imgSrc="None"
         imgAlt="None"
         buttonText="Sort"

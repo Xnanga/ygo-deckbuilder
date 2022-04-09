@@ -1,18 +1,15 @@
-import { useContext } from "react";
-
 import styles from "./CardGallery.module.css";
 
-import CardsContext from "../../Context/card-context";
-
 const CardGallery = (props) => {
-  const ctx = useContext(CardsContext);
-
   const cardFocusHandler = (e) => {
     const clickedCardID = +e.target.id;
-    const clickedCardData = ctx.cardData.fifteenCardDataChunk.find(
+    const clickedCardData = props.currentCards.find(
       (card) => card.id === clickedCardID
     );
-    ctx.setFocusedCard(clickedCardData);
+    props.dispatchCardData({
+      type: "updateFocusedCard",
+      data: clickedCardData,
+    });
   };
 
   return (

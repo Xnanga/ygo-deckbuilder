@@ -1,60 +1,55 @@
-import { useContext } from "react";
-
 import styles from "./CatalogueFilterMenu.module.css";
 
-import CardsContext from "../../Context/card-context";
 import RadioButton from "../UI/Buttons/RadioButton";
 import RectangularButton from "../UI/Buttons/RectangularButton";
 
 const CatalogueFilterMenu = () => {
-  const ctx = useContext(CardsContext);
-
   const filterFormSubmitHandler = (e) => {
     e.preventDefault();
-    const buttonId = e.nativeEvent.submitter.id;
+    // const buttonId = e.nativeEvent.submitter.id;
 
-    if (buttonId === "apply-filters") {
-      const allRadioButtons = [...e.target];
-      const allCheckedRadioButtons = allRadioButtons.filter((input) => {
-        return input.checked;
-      });
+    // if (buttonId === "apply-filters") {
+    //   const allRadioButtons = [...e.target];
+    //   const allCheckedRadioButtons = allRadioButtons.filter((input) => {
+    //     return input.checked;
+    //   });
 
-      // Blank filter object to recieve values
-      let filterObj = {
-        cardType: null,
-        monsterType: null,
-        monsterRace: null,
-        monsterLevel: null,
-        monsterRank: null,
-        monsterLinkValue: null,
-        monsterAttribute: null,
-        spellType: null,
-        trapType: null,
-      };
+    //   // Blank filter object to recieve values
+    //   let filterObj = {
+    //     cardType: null,
+    //     monsterType: null,
+    //     monsterRace: null,
+    //     monsterLevel: null,
+    //     monsterRank: null,
+    //     monsterLinkValue: null,
+    //     monsterAttribute: null,
+    //     spellType: null,
+    //     trapType: null,
+    //   };
 
-      // Populate filter object with button values
-      allCheckedRadioButtons.forEach((button) => {
-        if (button.name === "card-type") filterObj.cardType = button.id;
-        if (button.name === "monster-type") filterObj.monsterType = button.id;
-        if (button.name === "monster-race") filterObj.monsterRace = button.id;
-        if (button.name === "monster-level") filterObj.monsterLevel = button.id;
-        if (button.name === "monster-rank") filterObj.monsterRank = button.id;
-        if (button.name === "monster-link-value")
-          filterObj.monsterLinkValue = button.id;
-        if (button.name === "monster-attribute")
-          filterObj.monsterAttribute = button.id;
-      });
+    //   // Populate filter object with button values
+    //   allCheckedRadioButtons.forEach((button) => {
+    //     if (button.name === "card-type") filterObj.cardType = button.id;
+    //     if (button.name === "monster-type") filterObj.monsterType = button.id;
+    //     if (button.name === "monster-race") filterObj.monsterRace = button.id;
+    //     if (button.name === "monster-level") filterObj.monsterLevel = button.id;
+    //     if (button.name === "monster-rank") filterObj.monsterRank = button.id;
+    //     if (button.name === "monster-link-value")
+    //       filterObj.monsterLinkValue = button.id;
+    //     if (button.name === "monster-attribute")
+    //       filterObj.monsterAttribute = button.id;
+    //   });
 
-      // ctx.setActiveCardFilters(filterObj);
-      ctx.dispatchCardData({
-        type: "applyCardFilters",
-        data: filterObj,
-      });
-    }
+    //   ctx.setActiveCardFilters(filterObj);
+    //   ctx.dispatchCardData({
+    //     type: "applyCardFilters",
+    //     data: filterObj,
+    //   });
+    // }
 
-    if (buttonId === "clear-filters") {
-      // ctx.setActiveCardFilters({});
-    }
+    // if (buttonId === "clear-filters") {
+    //   ctx.setActiveCardFilters({});
+    // }
   };
 
   return (

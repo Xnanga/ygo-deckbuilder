@@ -1,15 +1,4 @@
-import React, { useState, useReducer, useEffect } from "react";
-
-const CardsContext = React.createContext({
-  focusedCard: {},
-  modalVisible: "",
-  cardData: [],
-  activeCardFilters: {},
-  setFocusedCard: () => {},
-  setModalVisible: () => {},
-  dispatchCardData: () => {},
-  setActiveCardFilters: () => {},
-});
+import { useReducer, useEffect } from "react";
 
 const noCardDataStateChange = (state) => {
   return {
@@ -19,6 +8,7 @@ const noCardDataStateChange = (state) => {
     currentPaginationpage: state.currentPaginationpage,
     activeFilters: state.activeFilters,
     bookmarkedCardsData: state.bookmarkedCardsData,
+    focusedCard: state.focusedCard,
   };
 };
 
@@ -33,6 +23,7 @@ const paginationStateChange = (state, plusMinus, fifteenCards) => {
     currentPaginationpage: paginationChange,
     activeFilters: state.activeFilters,
     bookmarkedCardsData: state.bookmarkedCardsData,
+    focusedCard: state.focusedCard,
   };
 };
 
@@ -53,6 +44,7 @@ const updateBookmarkedCards = (state, bookmarkData) => {
     currentPaginationpage: state.currentPaginationpage,
     activeFilters: state.activeFilters,
     bookmarkedCardsData: bookmarkData,
+    focusedCard: state.focusedCard,
   };
 };
 
@@ -68,6 +60,7 @@ const cardDataReducer = (state, action) => {
       totalPaginationPages: requiredPages,
       currentPaginationpage: 1,
       bookmarkedCardsData: state.bookmarkedCardsData,
+      focusedCard: state.focusedCard,
     };
   }
 
@@ -114,6 +107,19 @@ const cardDataReducer = (state, action) => {
     }
 
     return paginationStateChange(state, "minus", previousFifteenCards);
+  }
+
+  // Update focusedCard
+  if (action.type === "updateFocusedCard") {
+    return {
+      allCardData: state.allCardData,
+      fifteenCardDataChunk: state.fifteenCardDataChunk,
+      totalPaginationPages: state.totalPaginationPages,
+      currentPaginationpage: state.currentPaginationpage,
+      activeFilters: state.activeFilters,
+      bookmarkedCardsData: state.bookmarkedCardsData,
+      focusedCard: action.data,
+    };
   }
 
   // Update bookmarks
@@ -167,11 +173,7 @@ const cardDataReducer = (state, action) => {
   }
 };
 
-export const CardsContextProvider = (props) => {
-  const [focusedCard, setFocusedCard] = useState({});
-  const [modalVisible, setModalVisible] = useState(null);
-  const [activeCardFilters, setActiveCardFilters] = useState({});
-
+const useCardData = () => {
   const [cardData, dispatchCardData] = useReducer(cardDataReducer, {
     allCardData: [],
     fifteenCardDataChunk: [],
@@ -179,8 +181,10 @@ export const CardsContextProvider = (props) => {
     currentPaginationpage: 0,
     activeFilters: {},
     bookmarkedCardsData: [],
+    focusedCard: {},
   });
 
+  // Get bookmarks from LS on first render
   useEffect(() => {
     const localStorageBookmarkData = localStorage.getItem("cardBookmarks");
     if (localStorageBookmarkData) {
@@ -191,33 +195,17 @@ export const CardsContextProvider = (props) => {
         data: parsedData,
       });
     }
-    console.log("useEffect Fired");
   }, []);
 
+  // Set bookmarks in LS when bookmarks updated
   useEffect(() => {
     const stringifiedBookmarkData = JSON.stringify(
       cardData.bookmarkedCardsData
     );
     localStorage.setItem("cardBookmarks", stringifiedBookmarkData);
-    console.log("useEffect Fired");
   }, [cardData.bookmarkedCardsData]);
 
-  return (
-    <CardsContext.Provider
-      value={{
-        focusedCard: focusedCard,
-        modalVisible: modalVisible,
-        cardData: cardData,
-        activeCardFilters: activeCardFilters,
-        setFocusedCard: setFocusedCard,
-        setModalVisible: setModalVisible,
-        dispatchCardData: dispatchCardData,
-        setActiveCardFilters: setActiveCardFilters,
-      }}
-    >
-      {props.children}
-    </CardsContext.Provider>
-  );
+  return [cardData, dispatchCardData];
 };
 
-export default CardsContext;
+export default useCardData;

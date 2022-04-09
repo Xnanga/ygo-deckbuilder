@@ -1,24 +1,15 @@
-import { useContext } from "react";
 import ReactDOM from "react-dom";
 
 import styles from "./Modal.module.css";
 
-import CardsContext from "../../../Context/card-context";
-
 const Modal = (props) => {
-  const ctx = useContext(CardsContext);
-
   const modalRoot = document.getElementById("modal-root");
-
-  const closeButtonHandler = () => {
-    ctx.setModalVisible(false);
-  };
 
   const modalLayout = (
     <aside className={styles.modal}>
       <button
         className={styles["modal__close-btn"]}
-        onClick={closeButtonHandler}
+        onClick={props.closeModalHandler}
       >
         <img src="/media/icons/cross-icon.png" alt="A Close Window Icon" />
       </button>

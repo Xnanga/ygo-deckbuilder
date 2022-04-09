@@ -1,22 +1,17 @@
-import { useContext } from "react";
-
 import styles from "./PaginationControls.module.css";
 
-import CardsContext from "../../Context/card-context";
 import CircularButton from "./Buttons/CircularButton";
 import PaginationDisplay from "./PaginationDisplay";
 
-const PaginationControls = () => {
-  const ctx = useContext(CardsContext);
-
+const PaginationControls = (props) => {
   const paginationHandler = (direction) => {
     if (direction === "right") {
-      ctx.dispatchCardData({
+      props.dispatchCardData({
         type: "nextFifteenCardDataChunk",
       });
     }
     if (direction === "left") {
-      ctx.dispatchCardData({
+      props.dispatchCardData({
         type: "prevFifteenCardDataChunk",
       });
     }
@@ -37,8 +32,8 @@ const PaginationControls = () => {
         />
       </div>
       <PaginationDisplay
-        currentPage={ctx.cardData?.currentPaginationpage}
-        totalPages={ctx.cardData?.totalPaginationPages}
+        currentPage={props.currentPage}
+        totalPages={props.totalPages}
       />
     </div>
   );

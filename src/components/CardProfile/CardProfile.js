@@ -1,16 +1,11 @@
-import { useContext } from "react";
-
 import styles from "./CardProfile.module.css";
 
 import TitleStripBanner from "../UI/TitleStripBanner";
 import CardProfileActionBar from "./CardProfileActionBar";
 import CardProfileStats from "./CardProfileStats";
 import CardProfileDescription from "./CardProfileDescription";
-import CardsContext from "../../Context/card-context";
 
-const CardProfile = () => {
-  const ctx = useContext(CardsContext);
-
+const CardProfile = (props) => {
   const createImageUrl = (cardId) => {
     return {
       large: `https://storage.googleapis.com/ygoprodeck.com/pics/${cardId}.jpg`,
@@ -21,7 +16,7 @@ const CardProfile = () => {
   const determineSecondaryImg = (type) => {
     if (type === "Spell Card") return "spell";
     if (type === "Trap Card") return "trap";
-    return ctx.focusedCard?.attribute?.toLowerCase();
+    return props.focusedCard?.attribute?.toLowerCase();
   };
 
   const defaultProfileContent = (
@@ -35,36 +30,36 @@ const CardProfile = () => {
   const populatedProfileContent = (
     <>
       <TitleStripBanner
-        title={ctx.focusedCard.name}
+        title={props.focusedCard.name}
         secondaryImgSrc={`/media/icons/${determineSecondaryImg(
-          ctx.focusedCard.type
+          props.focusedCard.type
         )}-attribute-symbol.png`}
-        cardType={ctx.focusedCard.type}
+        cardType={props.focusedCard.type}
       />
       <CardProfileStats
-        cardImgSrc={createImageUrl(ctx.focusedCard.id).large}
-        cardImgAlt={ctx.focusedCard.name}
-        cardStarLevel={ctx.focusedCard.level}
+        cardImgSrc={createImageUrl(props.focusedCard.id).large}
+        cardImgAlt={props.focusedCard.name}
+        cardStarLevel={props.focusedCard.level}
         cardRank="TEST"
-        cardAttack={ctx.focusedCard.atk}
-        cardDefense={ctx.focusedCard.def}
-        cardType={ctx.focusedCard.type}
-        cardRace={ctx.focusedCard.race}
-        cardLinkValue={ctx.focusedCard.linkval}
+        cardAttack={props.focusedCard.atk}
+        cardDefense={props.focusedCard.def}
+        cardType={props.focusedCard.type}
+        cardRace={props.focusedCard.race}
+        cardLinkValue={props.focusedCard.linkval}
       />
       <TitleStripBanner
-        title={`${ctx.focusedCard.race}/${ctx.focusedCard.type}`}
-        cardType={ctx.focusedCard.type}
+        title={`${props.focusedCard.race}/${props.focusedCard.type}`}
+        cardType={props.focusedCard.type}
       />
-      <CardProfileDescription cardDescription={ctx.focusedCard.desc} />
+      <CardProfileDescription cardDescription={props.focusedCard.desc} />
       <CardProfileActionBar />
     </>
   );
 
   return (
     <section className={styles["card-profile"]}>
-      {!ctx.focusedCard.id && defaultProfileContent}
-      {ctx.focusedCard.id && populatedProfileContent}
+      {!props.focusedCard.id && defaultProfileContent}
+      {props.focusedCard.id && populatedProfileContent}
     </section>
   );
 };

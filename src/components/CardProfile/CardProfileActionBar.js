@@ -1,27 +1,22 @@
-import { useContext } from "react";
-
 import styles from "./CardProfileActionBar.module.css";
 
 import CircularButton from "../UI/Buttons/CircularButton";
 import RectangularButton from "../UI/Buttons/RectangularButton";
-import CardsContext from "../../Context/card-context";
 
-const CardProfileActionBar = () => {
-  const ctx = useContext(CardsContext);
-
+const CardProfileActionBar = (props) => {
   const bookmarkButtonClickHandler = () => {
-    const allBookmarks = ctx.cardData.bookmarkedCardsData.slice();
-    if (!allBookmarks.some((card) => card.id === ctx.focusedCard.id)) {
-      ctx.dispatchCardData({
+    const allBookmarks = props.bookmarkedCards.slice();
+    if (!allBookmarks.some((card) => card.id === props.focusedCard.id)) {
+      props.dispatchCardData({
         type: "updateBookmarkedCards",
         update: "add",
-        data: ctx.focusedCard,
+        data: props.focusedCard,
       });
     } else {
-      ctx.dispatchCardData({
+      props.dispatchCardData({
         type: "updateBookmarkedCards",
         update: "remove",
-        data: ctx.focusedCard,
+        data: props.focusedCard,
       });
     }
   };
