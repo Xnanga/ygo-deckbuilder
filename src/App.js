@@ -19,6 +19,7 @@ function App() {
         />
         <DeckHub />
         <CardCatalogue
+          allCards={cardData.allCardData}
           focusedCard={cardData.focusedCard}
           setFocusedCard={cardData.setFocusedCard}
           bookmarkedCards={cardData.bookmarkedCardsData}
@@ -26,6 +27,7 @@ function App() {
           dispatchCardData={dispatchCardData}
           currentPage={cardData.currentPaginationpage}
           totalPages={cardData.totalPaginationPages}
+          activeTab={cardData.activeTab}
         />
       </DeckBuilderMainLayout>
     </div>

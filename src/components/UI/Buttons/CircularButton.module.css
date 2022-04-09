@@ -9,6 +9,10 @@
   transition: all 0.2s ease-in;
 }
 
+.circular-btn--active {
+  border: 2px solid var(--menu-neon-green);
+}
+
 .circular-btn:hover {
   background-color: #161616;
   border: 2px solid #ffffff;

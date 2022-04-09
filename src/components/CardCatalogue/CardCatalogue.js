@@ -10,29 +10,27 @@ import CardGallery from "./CardGallery";
 import PaginationControls from "../UI/PaginationControls";
 
 const CardCatalogue = (props) => {
-  const [activeTab, setActiveTab] = useState("catalogue");
   const [searchError, setSearchError] = useState(false);
   const [currentSearchTerm, setCurrentSearchTerm] = useState("");
 
-  const activeTabHandler = (listItemId) => {
-    if (listItemId === activeTab) return;
-    setActiveTab(listItemId);
+  const activeTabHandler = (tabId) => {
+    if (tabId === props.activeTab) return;
 
-    // Try to make the below update the viewable card data when switching tabs
+    if (tabId === "catalogue") {
+      props.dispatchCardData({
+        type: "updateCatalogueCardData",
+        data: props.allCards,
+        tab: tabId,
+      });
+    }
 
-    // if (listItemId === "bookmarks") {
-    //   ctx.dispatchCardData({
-    //     type: "updateFullCardData",
-    //     data: ctx.cardData.bookmarkedCardsData,
-    //   });
-    // }
-
-    // if (listItemId === "catalogue") {
-    //   ctx.dispatchCardData({
-    //     type: "updateFullCardData",
-    //     data: ctx.cardData.bookmarkedCardsData,
-    //   });
-    // }
+    if (tabId === "bookmarks") {
+      props.dispatchCardData({
+        type: "updateCatalogueCardData",
+        data: props.bookmarkedCards,
+        tab: tabId,
+      });
+    }
   };
 
   const tabMenuData = [
@@ -51,11 +49,20 @@ const CardCatalogue = (props) => {
   ];
 
   const cardSearchHandler = (cardSearchQuery) => {
-    getCardData(`?fname=${cardSearchQuery}`);
+    const searchTerm = cardSearchQuery.toLowerCase();
+    const allMatchingCardsData = props.allCards.filter((card) => {
+      return card.name.toLowerCase().includes(searchTerm);
+    });
+
+    props.dispatchCardData({
+      type: "updateCatalogueCardData",
+      data: allMatchingCardsData,
+    });
+
     setCurrentSearchTerm(cardSearchQuery);
   };
 
-  const getCardData = async (endpParams) => {
+  const fetchCardData = async (endpParams) => {
     try {
       const url = `https://db.ygoprodeck.com/api/v7/cardinfo.php${endpParams}`;
       const res = await fetch(url);
@@ -73,7 +80,7 @@ const CardCatalogue = (props) => {
   };
 
   useEffect(() => {
-    getCardData("?staple=yes");
+    fetchCardData("");
   }, []);
 
   const cardList = (
@@ -101,6 +108,7 @@ const CardCatalogue = (props) => {
   const bookmarks = (
     <>
       <CardGallery
+        dispatchCardData={props.dispatchCardData}
         setFocusedCard={props.setFocusedCard}
         currentCards={props.fifteenCards}
       />
@@ -116,11 +124,11 @@ const CardCatalogue = (props) => {
     <section className={styles["card-catalogue"]}>
       <TabMenu
         listData={tabMenuData}
-        activeTab={activeTab}
+        activeTab={props.activeTab}
         activeTabHandler={activeTabHandler}
       />
-      {activeTab === "catalogue" && cardList}
-      {activeTab === "bookmarks" && bookmarks}
+      {props.activeTab === "catalogue" && cardList}
+      {props.activeTab === "bookmarks" && bookmarks}
     </section>
   );
 };

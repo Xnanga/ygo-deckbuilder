@@ -52,7 +52,11 @@ const CardProfile = (props) => {
         cardType={props.focusedCard.type}
       />
       <CardProfileDescription cardDescription={props.focusedCard.desc} />
-      <CardProfileActionBar />
+      <CardProfileActionBar
+        bookmarkedCards={props.bookmarkedCards}
+        dispatchCardData={props.dispatchCardData}
+        focusedCard={props.focusedCard}
+      />
     </>
   );
 

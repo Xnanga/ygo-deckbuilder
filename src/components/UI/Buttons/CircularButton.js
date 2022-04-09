@@ -1,8 +1,14 @@
 import styles from "./CircularButton.module.css";
 
 const CircularButton = (props) => {
+  const determineActiveClass = () => {
+    return props.active
+      ? `${styles["circular-btn"]} ${styles["circular-btn--active"]}`
+      : styles["circular-btn"];
+  };
+
   return (
-    <button className={styles["circular-btn"]} onClick={props.onButtonClick}>
+    <button className={determineActiveClass()} onClick={props.onButtonClick}>
       <img
         className={styles["circular-btn__img"]}
         src={props.imgSrc}

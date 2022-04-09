@@ -1,12 +1,20 @@
+import { useEffect, useState } from "react";
+
 import styles from "./CardProfileActionBar.module.css";
 
 import CircularButton from "../UI/Buttons/CircularButton";
 import RectangularButton from "../UI/Buttons/RectangularButton";
 
 const CardProfileActionBar = (props) => {
+  const [bookmarkButtonHighlight, setBookmarkButtonHighlight] = useState(false);
+
+  const checkIfCardIsBookmarked = (cardToTest, bookmarksData) => {
+    return bookmarksData.some((card) => card.id === cardToTest.id);
+  };
+
   const bookmarkButtonClickHandler = () => {
     const allBookmarks = props.bookmarkedCards.slice();
-    if (!allBookmarks.some((card) => card.id === props.focusedCard.id)) {
+    if (!checkIfCardIsBookmarked(props.focusedCard, allBookmarks)) {
       props.dispatchCardData({
         type: "updateBookmarkedCards",
         update: "add",
@@ -21,6 +29,12 @@ const CardProfileActionBar = (props) => {
     }
   };
 
+  useEffect(() => {
+    setBookmarkButtonHighlight(
+      checkIfCardIsBookmarked(props.focusedCard, props.bookmarkedCards)
+    );
+  }, [props.focusedCard, props.bookmarkedCards]);
+
   const addRemoveButtonClickHandler = () => {
     console.log("Add or Remove button clicked.");
   };
@@ -31,6 +45,7 @@ const CardProfileActionBar = (props) => {
         onButtonClick={bookmarkButtonClickHandler}
         imgSrc="/media/icons/bookmark-icon.png"
         imgAlt="A bookmark icon"
+        active={bookmarkButtonHighlight}
       />
       <RectangularButton
         onButtonClick={addRemoveButtonClickHandler}

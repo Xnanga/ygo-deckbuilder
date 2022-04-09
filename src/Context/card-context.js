@@ -14,6 +14,7 @@ const CardsContext = React.createContext({
 const noCardDataStateChange = (state) => {
   return {
     allCardData: state.allCardData,
+    catalogueCardData: state.catalogueCardData,
     fifteenCardDataChunk: state.fifteenCardDataChunk,
     totalPaginationPages: state.totalPaginationPages,
     currentPaginationpage: state.currentPaginationpage,
@@ -28,6 +29,7 @@ const paginationStateChange = (state, plusMinus, fifteenCards) => {
   if (plusMinus === "minus") paginationChange = state.currentPaginationpage - 1;
   return {
     allCardData: state.allCardData,
+    catalogueCardData: state.catalogueCardData,
     fifteenCardDataChunk: fifteenCards,
     totalPaginationPages: state.totalPaginationPages,
     currentPaginationpage: paginationChange,
@@ -48,6 +50,7 @@ const getFifteenCardChunk = (data, plusMinus, index) => {
 const updateBookmarkedCards = (state, bookmarkData) => {
   return {
     allCardData: state.allCardData,
+    catalogueCardData: state.catalogueCardData,
     fifteenCardDataChunk: state.fifteenCardDataChunk,
     totalPaginationPages: state.totalPaginationPages,
     currentPaginationpage: state.currentPaginationpage,
@@ -57,13 +60,29 @@ const updateBookmarkedCards = (state, bookmarkData) => {
 };
 
 const cardDataReducer = (state, action) => {
-  // New set of searched card data
+  // Get all card data on init
   if (action.type === "updateFullCardData") {
     const firstFifteenCards = action.data.slice(0, 15);
     const requiredPages = Math.ceil(action.data.length / 15);
 
     return {
       allCardData: action.data,
+      catalogueCardData: action.data,
+      fifteenCardDataChunk: firstFifteenCards,
+      totalPaginationPages: requiredPages,
+      currentPaginationpage: 1,
+      bookmarkedCardsData: state.bookmarkedCardsData,
+    };
+  }
+
+  // New set of catalogue card data
+  if (action.type === "updateCatalogueCardData") {
+    const firstFifteenCards = action.data.slice(0, 15);
+    const requiredPages = Math.ceil(action.data.length / 15);
+
+    return {
+      allCardData: state.allCardData,
+      catalogueCardData: action.data,
       fifteenCardDataChunk: firstFifteenCards,
       totalPaginationPages: requiredPages,
       currentPaginationpage: 1,
@@ -174,6 +193,7 @@ export const CardsContextProvider = (props) => {
 
   const [cardData, dispatchCardData] = useReducer(cardDataReducer, {
     allCardData: [],
+    catalogueCardData: [],
     fifteenCardDataChunk: [],
     totalPaginationPages: 0,
     currentPaginationpage: 0,
