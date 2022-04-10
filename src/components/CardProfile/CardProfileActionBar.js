@@ -14,16 +14,16 @@ const CardProfileActionBar = (props) => {
 
   const bookmarkButtonClickHandler = () => {
     const allBookmarks = props.bookmarkedCards.slice();
-    if (!checkIfCardIsBookmarked(props.focusedCard, allBookmarks)) {
+    if (checkIfCardIsBookmarked(props.focusedCard, allBookmarks)) {
       props.dispatchCardData({
         type: "updateBookmarkedCards",
-        update: "add",
+        update: "remove",
         data: props.focusedCard,
       });
     } else {
       props.dispatchCardData({
         type: "updateBookmarkedCards",
-        update: "remove",
+        update: "add",
         data: props.focusedCard,
       });
     }

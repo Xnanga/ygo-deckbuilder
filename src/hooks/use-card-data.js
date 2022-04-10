@@ -31,6 +31,13 @@ const paginationStateChange = (state, plusMinus, fifteenCards) => {
   };
 };
 
+const removeOneCard = (cardToRemove, cardData) => {
+  const updatedCardData = cardData.filter((card) => {
+    return card.id !== cardToRemove.id;
+  });
+  return updatedCardData;
+};
+
 const getFifteenCardChunk = (data, plusMinus, index) => {
   if (plusMinus === "plus") {
     return data.slice(index + 1, index + 16);
@@ -40,11 +47,22 @@ const getFifteenCardChunk = (data, plusMinus, index) => {
   }
 };
 
-const updateBookmarkedCards = (state, bookmarkData) => {
+const updateBookmarkedCards = (
+  state,
+  bookmarkData,
+  catalogueCards,
+  fifteenCards
+) => {
+  const bookmarksTabActive = state.activeTab === "bookmarks";
+
   return {
     allCardData: state.allCardData,
-    catalogueCardData: state.catalogueCardData,
-    fifteenCardDataChunk: state.fifteenCardDataChunk,
+    catalogueCardData: bookmarksTabActive
+      ? catalogueCards
+      : state.catalogueCardData,
+    fifteenCardDataChunk: bookmarksTabActive
+      ? fifteenCards
+      : state.fifteenCardDataChunk,
     totalPaginationPages: state.totalPaginationPages,
     currentPaginationpage: state.currentPaginationpage,
     activeFilters: state.activeFilters,
@@ -167,11 +185,48 @@ const cardDataReducer = (state, action) => {
 
     if (action.update === "remove") {
       const currentBookmarks = state.bookmarkedCardsData.slice();
-      const updatedBookmarks = currentBookmarks.filter(
-        (card) => card.id !== action.data.id
+      const updatedBookmarks = removeOneCard(action.data, currentBookmarks);
+      if (state.activeTab === "catalogue")
+        return updateBookmarkedCards(state, updatedBookmarks);
+
+      const currentCatalogueCards = state.catalogueCardData.slice();
+      const updatedCatalogueCards = removeOneCard(
+        action.data,
+        currentCatalogueCards
       );
 
-      return updateBookmarkedCards(state, updatedBookmarks);
+      const requiredPages = Math.ceil(updatedCatalogueCards.length / 15);
+      let currentPage = state.currentPaginationpage;
+
+      const decreaseCurrentPageNumber = () => {
+        if (currentPage > requiredPages) {
+          currentPage--;
+          decreaseCurrentPageNumber();
+        } else {
+          return currentPage;
+        }
+      };
+
+      decreaseCurrentPageNumber();
+
+      const indexForNewFifteenCards = (currentPage - 1) * 15 - 1;
+      const newFifteenCards = getFifteenCardChunk(
+        updatedCatalogueCards,
+        "plus",
+        indexForNewFifteenCards
+      );
+
+      return {
+        allCardData: state.allCardData,
+        catalogueCardData: updatedCatalogueCards,
+        fifteenCardDataChunk: newFifteenCards,
+        totalPaginationPages: requiredPages,
+        currentPaginationpage: currentPage,
+        activeFilters: state.activeFilters,
+        bookmarkedCardsData: updatedBookmarks,
+        focusedCard: action.data,
+        activeTab: state.activeTab,
+      };
     }
   }
 
@@ -202,7 +257,6 @@ const cardDataReducer = (state, action) => {
   }
 
   if (action.type === "switchTab") {
-    console.log(action);
     if (action.data === "catalogue") {
       return {
         allCardData: state.allCardData,

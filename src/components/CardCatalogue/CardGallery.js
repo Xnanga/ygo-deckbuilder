@@ -12,11 +12,13 @@ const CardGallery = (props) => {
     });
   };
 
+  // console.log(props.currentCards);
+
   return (
     <div className={styles["card-gallery-container"]}>
       <section className={styles["card-gallery"]}>
         {!props.searchErrorStatus &&
-          props.currentCards.map((card) => {
+          props?.currentCards?.map((card) => {
             return (
               <div
                 key={card.id}
