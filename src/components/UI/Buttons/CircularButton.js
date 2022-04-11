@@ -8,7 +8,11 @@ const CircularButton = (props) => {
   };
 
   return (
-    <button className={determineActiveClass()} onClick={props.onButtonClick}>
+    <button
+      className={determineActiveClass()}
+      onClick={props.onButtonClick}
+      value={props.value}
+    >
       <img
         className={styles["circular-btn__img"]}
         src={props.imgSrc}

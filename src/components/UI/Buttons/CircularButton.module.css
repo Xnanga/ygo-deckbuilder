@@ -6,7 +6,7 @@
   border: 2px solid var(--border-light-grey);
   border-radius: 50%;
 
-  transition: all 0.2s ease-in;
+  transition: hover 0.2s ease-in;
 }
 
 .circular-btn--active {
@@ -15,7 +15,6 @@
 
 .circular-btn:hover {
   background-color: #161616;
-  border: 2px solid #ffffff;
 }
 
 .circular-btn:hover > img {

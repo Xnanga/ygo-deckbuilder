@@ -3,6 +3,7 @@ import { useReducer, useEffect } from "react";
 const noCardDataStateChange = (state) => {
   return {
     allCardData: state.allCardData,
+    searchedCardData: state.searchedCardData,
     catalogueCardData: state.catalogueCardData,
     fifteenCardDataChunk: state.fifteenCardDataChunk,
     totalPaginationPages: state.totalPaginationPages,
@@ -20,6 +21,7 @@ const paginationStateChange = (state, plusMinus, fifteenCards) => {
   if (plusMinus === "minus") paginationChange = state.currentPaginationpage - 1;
   return {
     allCardData: state.allCardData,
+    searchedCardData: state.searchedCardData,
     catalogueCardData: state.catalogueCardData,
     fifteenCardDataChunk: fifteenCards,
     totalPaginationPages: state.totalPaginationPages,
@@ -57,6 +59,7 @@ const updateBookmarkedCards = (
 
   return {
     allCardData: state.allCardData,
+    searchedCardData: state.searchedCardData,
     catalogueCardData: bookmarksTabActive
       ? catalogueCards
       : state.catalogueCardData,
@@ -80,6 +83,7 @@ const cardDataReducer = (state, action) => {
 
     return {
       allCardData: action.data,
+      searchedCardData: [],
       catalogueCardData: action.data,
       fifteenCardDataChunk: firstFifteenCards,
       totalPaginationPages: requiredPages,
@@ -90,22 +94,65 @@ const cardDataReducer = (state, action) => {
     };
   }
 
-  // New set of catalogue card data
-  if (action.type === "updateCatalogueCardData") {
-    const firstFifteenCards = action.data.slice(0, 15);
-    const requiredPages = Math.ceil(action.data.length / 15);
-    const newTab = action.tab ? action.tab : state.activeTab;
+  // Reset all data
+  if (action.type === "resetCardData") {
+    const firstFifteenCards = state.allCardData.slice(0, 15);
+    const requiredPages = Math.ceil(state.allCardData.length / 15);
 
     return {
       allCardData: state.allCardData,
-      catalogueCardData: action.data,
+      searchedCardData: [],
+      catalogueCardData: state.allCardData,
       fifteenCardDataChunk: firstFifteenCards,
       totalPaginationPages: requiredPages,
       currentPaginationpage: 1,
+      activeFilters: state.activeFilters,
       bookmarkedCardsData: state.bookmarkedCardsData,
       focusedCard: state.focusedCard,
-      activeTab: newTab,
+      activeTab: state.activeTab,
     };
+  }
+
+  // New set of catalogue card data
+  if (action.type === "updateCatalogueCardData") {
+    if (action.method === "cardSearch") {
+      const firstFifteenCards = action.data.slice(0, 15);
+      const requiredPages = Math.ceil(action.data.length / 15);
+
+      return {
+        allCardData: state.allCardData,
+        searchedCardData: action.data,
+        catalogueCardData: action.data,
+        fifteenCardDataChunk: firstFifteenCards,
+        totalPaginationPages: requiredPages,
+        currentPaginationpage: 1,
+        bookmarkedCardsData: state.bookmarkedCardsData,
+        focusedCard: state.focusedCard,
+        activeTab: state.activeTab,
+      };
+    }
+
+    if (action.method === "tabChange") {
+      let data =
+        action.tab === "catalogue"
+          ? state.searchedCardData
+          : state.bookmarkedCardsData;
+      if (data.length < 1) data = state.allCardData;
+      const firstFifteenCards = data.slice(0, 15);
+      const requiredPages = Math.ceil(data.length / 15);
+
+      return {
+        allCardData: state.allCardData,
+        searchedCardData: state.searchedCardData,
+        catalogueCardData: data,
+        fifteenCardDataChunk: firstFifteenCards,
+        totalPaginationPages: requiredPages,
+        currentPaginationpage: 1,
+        bookmarkedCardsData: state.bookmarkedCardsData,
+        focusedCard: state.focusedCard,
+        activeTab: action.tab,
+      };
+    }
   }
 
   // Show new 15 card chunk when moving one page forward
@@ -157,6 +204,7 @@ const cardDataReducer = (state, action) => {
   if (action.type === "updateFocusedCard") {
     return {
       allCardData: state.allCardData,
+      searchedCardData: state.searchedCardData,
       catalogueCardData: state.catalogueCardData,
       fifteenCardDataChunk: state.fifteenCardDataChunk,
       totalPaginationPages: state.totalPaginationPages,
@@ -218,6 +266,7 @@ const cardDataReducer = (state, action) => {
 
       return {
         allCardData: state.allCardData,
+        searchedCardData: state.searchedCardData,
         catalogueCardData: updatedCatalogueCards,
         fifteenCardDataChunk: newFifteenCards,
         totalPaginationPages: requiredPages,
@@ -256,11 +305,14 @@ const cardDataReducer = (state, action) => {
     return noCardDataStateChange(state);
   }
 
+  // Switch tab
   if (action.type === "switchTab") {
+    console.log(state.searchedCardData);
     if (action.data === "catalogue") {
       return {
         allCardData: state.allCardData,
-        catalogueCardData: state.catalogueCardData,
+        searchedCardData: state.searchedCardData,
+        catalogueCardData: state.searchedCardData,
         fifteenCardDataChunk: state.fifteenCardDataChunk,
         totalPaginationPages: state.totalPaginationPages,
         currentPaginationpage: state.currentPaginationpage,
@@ -274,6 +326,7 @@ const cardDataReducer = (state, action) => {
     if (action.data === "bookmarks") {
       return {
         allCardData: state.allCardData,
+        searchedCardData: state.searchedCardData,
         catalogueCardData: state.bookmarkedCardsData,
         fifteenCardDataChunk: state.fifteenCardDataChunk,
         totalPaginationPages: state.totalPaginationPages,
@@ -290,6 +343,7 @@ const cardDataReducer = (state, action) => {
 const useCardData = () => {
   const [cardData, dispatchCardData] = useReducer(cardDataReducer, {
     allCardData: [],
+    searchedCardData: [],
     catalogueCardData: [],
     fifteenCardDataChunk: [],
     totalPaginationPages: 0,

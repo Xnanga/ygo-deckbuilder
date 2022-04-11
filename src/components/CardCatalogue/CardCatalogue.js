@@ -13,6 +13,10 @@ const CardCatalogue = (props) => {
   const [searchError, setSearchError] = useState(false);
   const [currentSearchTerm, setCurrentSearchTerm] = useState("");
 
+  const searchInputHandler = (e) => {
+    setCurrentSearchTerm(e.target.value);
+  };
+
   const activeTabHandler = (tabId) => {
     if (tabId === props.activeTab) return;
 
@@ -20,6 +24,7 @@ const CardCatalogue = (props) => {
       props.dispatchCardData({
         type: "updateCatalogueCardData",
         data: props.allCards,
+        method: "tabChange",
         tab: tabId,
       });
     }
@@ -28,6 +33,7 @@ const CardCatalogue = (props) => {
       props.dispatchCardData({
         type: "updateCatalogueCardData",
         data: props.bookmarkedCards,
+        method: "tabChange",
         tab: tabId,
       });
     }
@@ -48,18 +54,26 @@ const CardCatalogue = (props) => {
     },
   ];
 
-  const cardSearchHandler = (cardSearchQuery) => {
-    const searchTerm = cardSearchQuery.toLowerCase();
-    const allMatchingCardsData = props.allCards.filter((card) => {
-      return card.name.toLowerCase().includes(searchTerm);
-    });
+  const cardSearchHandler = (cardSearchQuery, clickedButton) => {
+    if (clickedButton === "submitSearchButton") {
+      const searchTerm = cardSearchQuery.toLowerCase();
+      const allMatchingCardsData = props.allCards.filter((card) => {
+        return card.name.toLowerCase().includes(searchTerm);
+      });
 
-    props.dispatchCardData({
-      type: "updateCatalogueCardData",
-      data: allMatchingCardsData,
-    });
+      props.dispatchCardData({
+        type: "updateCatalogueCardData",
+        data: allMatchingCardsData,
+        method: "cardSearch",
+      });
+    }
 
-    setCurrentSearchTerm(cardSearchQuery);
+    if (clickedButton === "clearSearchButton") {
+      setCurrentSearchTerm("");
+      props.dispatchCardData({
+        type: "resetCardData",
+      });
+    }
   };
 
   const fetchCardData = async (endpParams) => {
@@ -86,8 +100,10 @@ const CardCatalogue = (props) => {
   const cardList = (
     <>
       <CatalogueTextSearch
-        inputValue={currentSearchTerm}
         cardSearchHandler={cardSearchHandler}
+        searchedCards={props.searchedCards}
+        searchInput={currentSearchTerm}
+        searchInputHandler={searchInputHandler}
       />
       <div className={styles["card-catalogue__action-btns"]}>
         <CardCatalogueActionButtons dispatchCardData={props.dispatchCardData} />

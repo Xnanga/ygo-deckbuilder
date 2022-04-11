@@ -20,6 +20,7 @@ function App() {
         <DeckHub />
         <CardCatalogue
           allCards={cardData.allCardData}
+          searchedCards={cardData.searchedCardData}
           focusedCard={cardData.focusedCard}
           setFocusedCard={cardData.setFocusedCard}
           bookmarkedCards={cardData.bookmarkedCardsData}
