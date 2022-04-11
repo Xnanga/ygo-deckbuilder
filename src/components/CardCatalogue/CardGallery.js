@@ -1,5 +1,7 @@
 import styles from "./CardGallery.module.css";
 
+import LoadingGif from "../UI/LoadingGif";
+
 const CardGallery = (props) => {
   const cardFocusHandler = (e) => {
     const clickedCardID = +e.target.id;
@@ -12,8 +14,6 @@ const CardGallery = (props) => {
     });
   };
 
-  // console.log(props.currentCards);
-
   return (
     <div className={styles["card-gallery-container"]}>
       <section className={styles["card-gallery"]}>
@@ -25,12 +25,16 @@ const CardGallery = (props) => {
                 className={styles["card-gallery__card"]}
                 onClick={(e) => cardFocusHandler(e)}
               >
-                <img
-                  id={card.id}
-                  className={styles["card-gallery__card-img"]}
-                  src={`https://storage.googleapis.com/ygoprodeck.com/pics_small/${card.id}.jpg`}
-                  alt={card.name}
-                />
+                {!card.id ? (
+                  <LoadingGif />
+                ) : (
+                  <img
+                    id={card.id}
+                    className={styles["card-gallery__card-img"]}
+                    src={`https://storage.googleapis.com/ygoprodeck.com/pics_small/${card.id}.jpg`}
+                    alt={card.name}
+                  />
+                )}
               </div>
             );
           })}

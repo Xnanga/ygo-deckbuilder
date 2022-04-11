@@ -305,6 +305,14 @@ const cardDataReducer = (state, action) => {
     return noCardDataStateChange(state);
   }
 
+  // Sort current cards
+
+  // atk
+  // def
+  // level
+  // rank
+  // link value
+
   // Switch tab
   if (action.type === "switchTab") {
     console.log(state.searchedCardData);

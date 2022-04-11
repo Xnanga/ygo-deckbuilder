@@ -12,6 +12,7 @@ import PaginationControls from "../UI/PaginationControls";
 const CardCatalogue = (props) => {
   const [searchError, setSearchError] = useState(false);
   const [currentSearchTerm, setCurrentSearchTerm] = useState("");
+  const [searchMade, setSearchMade] = useState(false);
 
   const searchInputHandler = (e) => {
     setCurrentSearchTerm(e.target.value);
@@ -104,6 +105,8 @@ const CardCatalogue = (props) => {
         searchedCards={props.searchedCards}
         searchInput={currentSearchTerm}
         searchInputHandler={searchInputHandler}
+        searchMade={searchMade}
+        setSearchMade={setSearchMade}
       />
       <div className={styles["card-catalogue__action-btns"]}>
         <CardCatalogueActionButtons dispatchCardData={props.dispatchCardData} />
