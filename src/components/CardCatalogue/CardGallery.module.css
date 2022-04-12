@@ -6,6 +6,8 @@
 }
 
 .card-gallery {
+  position: relative;
+
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-template-rows: repeat(3, 13rem);
@@ -31,4 +33,14 @@
 
 .card-gallery__card-img {
   width: 100%;
+}
+
+.card-gallery__error-text {
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  color: var(--menu-neon-green);
+  font-size: 3rem;
 }

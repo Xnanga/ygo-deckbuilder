@@ -113,6 +113,28 @@ const cardDataReducer = (state, action) => {
     };
   }
 
+  if (action.type === "returnToSearchedData") {
+    const dataToDisplay =
+      state.searchedCardData.length > 0
+        ? state.searchedCardData
+        : state.allCardData;
+    const firstFifteenCards = dataToDisplay.slice(0, 15);
+    const requiredPages = Math.ceil(dataToDisplay.length / 15);
+
+    return {
+      allCardData: state.allCardData,
+      searchedCardData: state.searchedCardData,
+      catalogueCardData: dataToDisplay,
+      fifteenCardDataChunk: firstFifteenCards,
+      totalPaginationPages: requiredPages,
+      currentPaginationpage: 1,
+      activeFilters: [],
+      bookmarkedCardsData: state.bookmarkedCardsData,
+      focusedCard: state.focusedCard,
+      activeTab: state.activeTab,
+    };
+  }
+
   // New set of catalogue card data
   if (action.type === "updateCatalogueCardData") {
     if (action.method === "cardSearch") {
@@ -281,28 +303,35 @@ const cardDataReducer = (state, action) => {
 
   // Apply card filters
   if (action.type === "applyCardFilters") {
-    const currentCardData = state.allCardData.slice();
-    let filteredCardData = [];
+    const filterMapData = action.data;
+    let filteredCardData;
+    state.searchedCardData.length < 1
+      ? (filteredCardData = state.allCardData.slice())
+      : (filteredCardData = state.searchedCardData.slice());
 
-    // Key: cardType
-    // Value: "trap-card"
+    // console.log(action.data);
 
-    for (const key in action.data) {
-      if (!action.data[key]) return;
-
-      // Does this need done conditionally for all fields?
-      currentCardData.forEach((card) => {
-        console.log(`card.type:${card.type}`);
-        console.log(`key.value:${action.data[key]}`);
-
-        // Will names need to be changed to match things up?
-        if (card.type.includes(action.data[key])) {
-          filteredCardData.push(card);
-        }
+    action.data.forEach((val, key) => {
+      filteredCardData = filteredCardData.filter((card) => {
+        return card[key].toString().toLowerCase().includes(val);
       });
-    }
+    });
 
-    return noCardDataStateChange(state);
+    const firstFifteenCards = filteredCardData.slice(0, 15);
+    const requiredPages = Math.ceil(filteredCardData.length / 15);
+
+    return {
+      allCardData: state.allCardData,
+      searchedCardData: state.searchedCardData,
+      catalogueCardData: filteredCardData,
+      fifteenCardDataChunk: firstFifteenCards,
+      totalPaginationPages: requiredPages,
+      currentPaginationpage: 1,
+      activeFilters: filterMapData,
+      bookmarkedCardsData: state.bookmarkedCardsData,
+      focusedCard: state.focusedCard,
+      activeTab: state.activeTab,
+    };
   }
 
   // Sort current cards

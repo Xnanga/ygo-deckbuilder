@@ -1,6 +1,7 @@
+import { useState } from "react";
+
 import styles from "./CardCatalogueActionButtons.module.css";
 
-import { useState } from "react";
 import RectangularButton from "../UI/Buttons/RectangularButton";
 import Modal from "../UI/Modals/Modal";
 import CatalogueFilterMenu from "./CatalogueFilterMenu";
@@ -13,16 +14,28 @@ const CardCatalogueActionButtons = (props) => {
     setModalVisible(null);
   };
 
+  const removeFilteringSorting = () => {
+    props.dispatchCardData({
+      type: "returnToSearchedData",
+    });
+  };
+
   return (
     <div className={styles["action-buttons-container"]}>
       {modalVisible === "filters" && (
         <Modal modalTitle="Card Filters" closeModalHandler={closeModalHandler}>
-          <CatalogueFilterMenu dispatchCardData={props.dispatchCardData} />
+          <CatalogueFilterMenu
+            dispatchCardData={props.dispatchCardData}
+            closeModalHandler={closeModalHandler}
+          />
         </Modal>
       )}
       {modalVisible === "sorting" && (
         <Modal modalTitle="Card Sorting" closeModalHandler={closeModalHandler}>
-          <CatalogueSortMenu />
+          <CatalogueSortMenu
+            dispatchCardData={props.dispatchCardData}
+            closeModalHandler={closeModalHandler}
+          />
         </Modal>
       )}
       <RectangularButton
@@ -38,7 +51,7 @@ const CardCatalogueActionButtons = (props) => {
         buttonText="Sort"
       />
       <RectangularButton
-        onButtonClick={() => console.log("Reset Filters")}
+        onButtonClick={removeFilteringSorting}
         imgSrc="/media/icons/trash-icon.png"
         imgAlt="A rubbish bin icon"
         buttonText="Clear"
