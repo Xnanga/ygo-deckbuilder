@@ -1,5 +1,6 @@
 import styles from "./CardProfileStats.module.css";
 
+import CardProfileImage from "./CardProfileImage";
 import LoadingGif from "../UI/LoadingGif";
 
 const isZeroOrAbove = (num) => {
@@ -122,15 +123,10 @@ const CardProfileStats = (props) => {
   return (
     <div className={styles["card-profile-stats"]}>
       <div className={styles["card-profile-stats__img-section"]}>
-        {!props.cardImgSrc ? (
-          <LoadingGif />
-        ) : (
-          <img
-            className={styles["card-profile-stats__img"]}
-            src={props.cardImgSrc}
-            alt={props.cardImgAlt}
-          />
-        )}
+        <CardProfileImage
+          cardImgSrc={props.cardImgSrc}
+          cardImgAlt={props.cardImgAlt}
+        />
       </div>
       {isMonsterCard !== -1 && basicMonsterStats}
       {isMonsterCard === -1 && nonMonsterStats}

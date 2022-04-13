@@ -1,3 +1,6 @@
+.catalogue-filter-menu {
+}
+
 .catalogue-filter-menu > h2,
 h3 {
   margin-top: 2rem;
@@ -47,12 +50,15 @@ h3 {
   max-width: 34rem;
 
   margin: 0 auto;
-  margin-top: 15rem;
+  margin-top: 3rem;
   padding: 1rem;
 
   border-radius: 5px;
+  border: 2px solid var(--border-light-grey);
 
   background-color: var(--background-dark-grey);
+
+  box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
 }
 
 .catalogue-filter-menu__submit-container > button:not(:last-child) {

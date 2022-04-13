@@ -9,6 +9,7 @@ const RadioButton = (props) => {
           type="radio"
           id={props.id}
           name={props.name}
+          value={props.value}
         />
         <span className={styles["checkbox-text"]}>{props.label}</span>
         <img

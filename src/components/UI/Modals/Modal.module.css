@@ -18,6 +18,7 @@
 
 .modal__close-btn {
   position: sticky;
+  top: 1rem;
   margin-left: auto;
   margin-top: 1rem;
 
@@ -37,4 +38,6 @@
   padding: 1rem;
 
   background-color: var(--menu-cobalt);
+
+  box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
 }

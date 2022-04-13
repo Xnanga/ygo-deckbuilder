@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import styles from "./CardGallery.module.css";
 
 import CardGalleryImage from "./CardGalleryImage";
-import LoadingGif from "../UI/LoadingGif";
 
 const CardGallery = (props) => {
   const [errorMessage, setErrorMessage] = useState(null);
@@ -20,7 +19,6 @@ const CardGallery = (props) => {
   };
 
   useEffect(() => {
-    console.log("UseEffect");
     if (props.currentCards.length < 1) {
       setErrorMessage(
         <span className={styles["card-gallery__error-text"]}>
