@@ -309,8 +309,6 @@ const cardDataReducer = (state, action) => {
       ? (filteredCardData = state.allCardData.slice())
       : (filteredCardData = state.searchedCardData.slice());
 
-    // console.log(action.data);
-
     action.data.forEach((val, key) => {
       filteredCardData = filteredCardData.filter((card) => {
         return card[key].toString().toLowerCase().includes(val);
@@ -344,7 +342,6 @@ const cardDataReducer = (state, action) => {
 
   // Switch tab
   if (action.type === "switchTab") {
-    console.log(state.searchedCardData);
     if (action.data === "catalogue") {
       return {
         allCardData: state.allCardData,

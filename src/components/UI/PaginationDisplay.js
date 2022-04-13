@@ -5,10 +5,12 @@ const PaginationDisplay = (props) => {
 
   return (
     <>
-      {pageDataAvailable && (
+      {pageDataAvailable ? (
         <span className={styles["pagination-text"]}>
           Page {props.currentPage} of {props.totalPages}
         </span>
+      ) : (
+        ""
       )}
     </>
   );

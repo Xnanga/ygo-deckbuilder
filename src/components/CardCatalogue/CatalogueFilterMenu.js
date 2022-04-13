@@ -72,7 +72,6 @@ const CatalogueFilterMenu = (props) => {
       </div>
       {selectedTypeMonster && (
         <>
-          <h2 className={styles["catalogue-filter-menu__title"]}>Monsters</h2>
           <h3 className={styles["catalogue-filter-menu__title--sub"]}>Race</h3>
           <div className={styles["catalogue-filter-menu__btns"]}>
             <RadioButton id="aqua" name="race" label="Aqua" />

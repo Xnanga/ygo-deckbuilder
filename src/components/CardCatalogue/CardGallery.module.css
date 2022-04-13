@@ -9,7 +9,8 @@
   position: relative;
 
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  /* grid-template-columns: repeat(5, 1fr); */
+  grid-template-columns: repeat(5, 8.8rem);
   grid-template-rows: repeat(3, 13rem);
   gap: 1rem;
   align-items: start;
@@ -20,19 +21,7 @@
   margin-top: 1rem;
 
   overflow-y: auto;
-}
-
-.card-gallery__card {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-
-  cursor: pointer;
-}
-
-.card-gallery__card-img {
-  width: 100%;
+  overflow-x: hidden;
 }
 
 .card-gallery__error-text {

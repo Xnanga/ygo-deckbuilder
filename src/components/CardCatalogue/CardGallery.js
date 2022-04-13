@@ -1,7 +1,9 @@
+import { useEffect, useState } from "react";
+
 import styles from "./CardGallery.module.css";
 
+import CardGalleryImage from "./CardGalleryImage";
 import LoadingGif from "../UI/LoadingGif";
-import { useEffect, useState } from "react";
 
 const CardGallery = (props) => {
   const [errorMessage, setErrorMessage] = useState(null);
@@ -18,14 +20,22 @@ const CardGallery = (props) => {
   };
 
   useEffect(() => {
-    if (props.currentCards.length < 1)
+    console.log("UseEffect");
+    if (props.currentCards.length < 1) {
       setErrorMessage(
         <span className={styles["card-gallery__error-text"]}>
           No Cards Found
         </span>
       );
-    else if (props.currentCards) setErrorMessage(null);
-  }, [props.currentCards]);
+    }
+    if (props.currentCards.length > 0) setErrorMessage(null);
+    if (props.searchErrorStatus)
+      setErrorMessage(
+        <span className={styles["card-gallery__error-text"]}>
+          Something went wrong...
+        </span>
+      );
+  }, [props.currentCards, props.searchErrorStatus]);
 
   return (
     <div className={styles["card-gallery-container"]}>
@@ -34,25 +44,14 @@ const CardGallery = (props) => {
           ? errorMessage
           : props?.currentCards?.map((card) => {
               return (
-                <div
+                <CardGalleryImage
                   key={card.id}
-                  className={styles["card-gallery__card"]}
-                  onClick={(e) => cardFocusHandler(e)}
-                >
-                  {!card.id ? (
-                    <LoadingGif />
-                  ) : (
-                    <img
-                      id={card.id}
-                      className={styles["card-gallery__card-img"]}
-                      src={`https://storage.googleapis.com/ygoprodeck.com/pics_small/${card.id}.jpg`}
-                      alt={card.name}
-                    />
-                  )}
-                </div>
+                  cardId={card.id}
+                  cardName={card.name}
+                  cardFocusHandler={cardFocusHandler}
+                />
               );
             })}
-        {props.searchErrorStatus && <p>No cards found - please try again</p>}
       </section>
     </div>
   );

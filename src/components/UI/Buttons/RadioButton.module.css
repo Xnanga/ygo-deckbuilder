@@ -7,7 +7,14 @@
   user-select: none;
   background-color: var(--menu-cobalt);
   padding: 1rem;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  border-radius: 3px;
+
+  box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
+}
+
+.checkbox-label:hover > .checkbox-text {
+  color: var(--menu-neon-green);
 }
 
 .checkbox-label input {

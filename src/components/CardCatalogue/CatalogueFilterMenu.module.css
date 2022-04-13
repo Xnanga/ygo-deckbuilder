@@ -1,7 +1,20 @@
-.catalogue-filter-menu {
+.catalogue-filter-menu > h2,
+h3 {
+  margin-top: 2rem;
 }
 
-.catalogue-filter-menu__title {
+.catalogue-filter-menu__title,
+.catalogue-filter-menu__title--sub {
+  display: inline-block;
+
+  font-weight: 500;
+
+  margin-bottom: 0;
+  padding: 1rem;
+  border: 2px solid var(--border-light-grey);
+  border-bottom: 2px solid var(--menu-cobalt);
+
+  background-color: var(--menu-cobalt);
 }
 
 .catalogue-filter-menu__tagline {
@@ -12,6 +25,12 @@
 .catalogue-filter-menu__btns {
   display: flex;
   flex-wrap: wrap;
+  padding: 1.5rem 1rem;
+  padding-bottom: 0;
+
+  border: 2px solid var(--border-light-grey);
+
+  background-color: var(--background-dark-grey);
 }
 
 .catalogue-filter-menu__btns > label:not(:last-child) {

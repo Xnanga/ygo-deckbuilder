@@ -1,0 +1,36 @@
+@keyframes pulseIn {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.025);
+  }
+  100% {
+    transform: rotate(1);
+  }
+}
+
+.card-gallery-card {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+
+  cursor: pointer;
+}
+
+.card-gallery-card__img {
+  width: 100%;
+
+  animation-name: pulseIn;
+  animation-duration: 0.3s;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-out;
+  /* animation-delay: 0.2s; */
+}
+
+.card-gallery-card__img--hidden {
+  visibility: hidden;
+}
