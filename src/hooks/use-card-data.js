@@ -332,6 +332,44 @@ const cardDataReducer = (state, action) => {
     };
   }
 
+  // Apply card sorting
+  if (action.type === "applyCardSorting") {
+    const cardDataToSort = state.catalogueCardData.slice();
+    const attribute = action.attribute;
+    const direction = action.direction;
+    let sortedCards = [];
+
+    if (direction === "ascending") {
+      sortedCards = cardDataToSort.sort((a, z) => {
+        console.log(a[attribute]);
+        return (a[attribute] || 0) - (z[attribute] || 0);
+      });
+    }
+
+    if (direction === "descending") {
+      sortedCards = cardDataToSort.sort((a, z) => {
+        return (z[attribute] || 0) - (a[attribute] || 0);
+      });
+    }
+
+    console.log(sortedCards);
+
+    const firstFifteenCards = sortedCards.slice(0, 15);
+
+    return {
+      allCardData: state.allCardData,
+      searchedCardData: state.searchedCardData,
+      catalogueCardData: sortedCards,
+      fifteenCardDataChunk: firstFifteenCards,
+      totalPaginationPages: state.totalPaginationPages,
+      currentPaginationpage: 1,
+      activeFilters: state.activeFilters,
+      bookmarkedCardsData: state.bookmarkedCardsData,
+      focusedCard: state.focusedCard,
+      activeTab: state.activeTab,
+    };
+  }
+
   // Sort current cards
 
   // atk

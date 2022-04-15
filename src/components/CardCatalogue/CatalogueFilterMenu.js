@@ -39,8 +39,6 @@ const CatalogueFilterMenu = (props) => {
       filterMap.set(filter.value, filter.id);
     });
 
-    console.log(filterMap);
-
     props.dispatchCardData({
       type: "applyCardFilters",
       data: filterMap,
