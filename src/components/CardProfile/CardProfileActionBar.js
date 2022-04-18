@@ -29,15 +29,28 @@ const CardProfileActionBar = (props) => {
     }
   };
 
+  const deckButtonsClickHandler = (action) => {
+    if (action === "add") {
+      props.dispatchDeckData({
+        type: "updateDeck",
+        update: "add",
+        data: props.focusedCard,
+      });
+    }
+    if (action === "remove") {
+      props.dispatchDeckData({
+        type: "updateDeck",
+        update: "remove",
+        data: props.focusedCard,
+      });
+    }
+  };
+
   useEffect(() => {
     setBookmarkButtonHighlight(
       checkIfCardIsBookmarked(props.focusedCard, props.bookmarkedCards)
     );
   }, [props.focusedCard, props.bookmarkedCards]);
-
-  const addRemoveButtonClickHandler = () => {
-    console.log("Add or Remove button clicked.");
-  };
 
   return (
     <div className={styles["card-profile-action-bar"]}>
@@ -48,13 +61,13 @@ const CardProfileActionBar = (props) => {
         active={bookmarkButtonHighlight}
       />
       <RectangularButton
-        onButtonClick={addRemoveButtonClickHandler}
+        onButtonClick={() => deckButtonsClickHandler("remove")}
         imgSrc="/media/icons/card-back-icon.png"
         imgAlt="A bookmark icon"
         buttonText="-1"
       />
       <RectangularButton
-        onButtonClick={addRemoveButtonClickHandler}
+        onButtonClick={() => deckButtonsClickHandler("add")}
         imgSrc="/media/icons/card-back-icon.png"
         imgAlt="A bookmark icon"
         buttonText="+1"

@@ -5,3 +5,13 @@
   border: 2px solid grey;
   padding: 2px;
 }
+
+.deck-hub__main-deck-section {
+  height: 70%;
+  overflow: hidden;
+}
+
+.deck-hub__extra-deck-section {
+  height: 30%;
+  overflow: hidden;
+}

@@ -58,6 +58,7 @@ const CardProfile = (props) => {
         <CardProfileActionBar
           bookmarkedCards={props.bookmarkedCards}
           dispatchCardData={props.dispatchCardData}
+          dispatchDeckData={props.dispatchDeckData}
           focusedCard={props.focusedCard}
         />
       </>

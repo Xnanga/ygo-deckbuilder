@@ -5,9 +5,11 @@ import DeckBuilderMainLayout from "./components/UI/DeckBuilderMainLayout";
 import CardProfile from "./components/CardProfile/CardProfile";
 import DeckHub from "./components/DeckHub/DeckHub";
 import CardCatalogue from "./components/CardCatalogue/CardCatalogue";
+import useDeckData from "./hooks/use-deck-data";
 
 function App() {
   const [cardData, dispatchCardData] = useCardData();
+  const [deckData, dispatchDeckData] = useDeckData();
 
   return (
     <div className="app">
@@ -16,8 +18,9 @@ function App() {
           focusedCard={cardData.focusedCard}
           bookmarkedCards={cardData.bookmarkedCardsData}
           dispatchCardData={dispatchCardData}
+          dispatchDeckData={dispatchDeckData}
         />
-        <DeckHub />
+        <DeckHub deckData={deckData} dispatchDeckData={dispatchDeckData} />
         <CardCatalogue
           allCards={cardData.allCardData}
           searchedCards={cardData.searchedCardData}

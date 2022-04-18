@@ -1,6 +1,7 @@
 .title-strip-banner {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
 
   height: 6rem;
   width: 100%;
@@ -47,12 +48,15 @@
   margin: 0;
 }
 
-.title-strip-banner__number {
-}
-
 .title-strip-banner__secondary-img {
   margin-left: auto;
 
   height: 4rem;
   width: 4rem;
+}
+
+.title-strip-banner__secondary-span {
+  margin-left: auto;
+
+  font-size: 2rem;
 }

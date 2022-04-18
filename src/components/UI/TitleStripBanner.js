@@ -40,6 +40,11 @@ const TitleStripBanner = (props) => {
           alt={props.secondaryImgAlt}
         />
       )}
+      {props.secondarySpan && (
+        <span className={styles["title-strip-banner__secondary-span"]}>
+          {props.secondarySpan}
+        </span>
+      )}
     </div>
   );
 };

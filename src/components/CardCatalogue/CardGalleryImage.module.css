@@ -21,6 +21,10 @@
   overflow: hidden;
 }
 
+.card-gallery-card:hover {
+  box-shadow: 0px 0px 10px 0px rgba(203, 251, 15, 0.75);
+}
+
 .card-gallery-card__img {
   width: 100%;
 
