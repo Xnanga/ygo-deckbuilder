@@ -19,20 +19,23 @@ const CardGallery = (props) => {
   };
 
   useEffect(() => {
-    if (props.currentCards.length < 1) {
+    if (!props.currentCards || props.currentCards.length < 1) {
       setErrorMessage(
         <span className={styles["card-gallery__error-text"]}>
           No Cards Found
         </span>
       );
+      return;
     }
     if (props.currentCards.length > 0) setErrorMessage(null);
-    if (props.searchErrorStatus)
+    if (props.searchErrorStatus) {
       setErrorMessage(
         <span className={styles["card-gallery__error-text"]}>
           Something went wrong...
         </span>
       );
+      return;
+    }
   }, [props.currentCards, props.searchErrorStatus]);
 
   return (
@@ -40,7 +43,7 @@ const CardGallery = (props) => {
       <section className={styles["card-gallery"]}>
         {errorMessage
           ? errorMessage
-          : props?.currentCards?.map((card) => {
+          : props.currentCards.map((card) => {
               return (
                 <CardGalleryImage
                   key={card.id}

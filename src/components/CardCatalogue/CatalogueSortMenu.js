@@ -4,8 +4,6 @@ import RadioButton from "../UI/Buttons/RadioButton";
 import RectangularButton from "../UI/Buttons/RectangularButton";
 
 const CatalogueSortMenu = (props) => {
-  console.log(props);
-
   const sortFormSubmitHandler = (e) => {
     e.preventDefault();
     const allSortOptions = [...e.target];

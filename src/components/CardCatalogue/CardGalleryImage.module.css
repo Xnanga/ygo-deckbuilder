@@ -18,6 +18,7 @@
   width: 100%;
 
   cursor: pointer;
+  overflow: hidden;
 }
 
 .card-gallery-card__img {

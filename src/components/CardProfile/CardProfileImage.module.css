@@ -1,8 +1,10 @@
-@keyframes fadeIn {
+@keyframes pulseIn {
   0% {
-    opacity: 0;
+    transform: scale(1.1);
+    opacity: 0.2;
   }
   100% {
+    transform: rotate(1);
     opacity: 1;
   }
 }
@@ -10,8 +12,8 @@
 .card-profile-image {
   width: 100%;
 
-  animation-name: fadeIn;
-  animation-duration: 1.5s;
+  animation-name: pulseIn;
+  animation-duration: 0.5s;
   animation-iteration-count: 1;
   animation-timing-function: ease-out;
 }

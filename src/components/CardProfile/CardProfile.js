@@ -27,43 +27,47 @@ const CardProfile = (props) => {
     </>
   );
 
-  const populatedProfileContent = (
-    <>
-      <TitleStripBanner
-        title={props.focusedCard.name}
-        secondaryImgSrc={`/media/icons/${determineSecondaryImg(
-          props.focusedCard.type
-        )}-attribute-symbol.png`}
-        cardType={props.focusedCard.type}
-      />
-      <CardProfileStats
-        cardImgSrc={createImageUrl(props.focusedCard.id).large}
-        cardImgAlt={props.focusedCard.name}
-        cardStarLevel={props.focusedCard.level}
-        cardRank="TEST"
-        cardAttack={props.focusedCard.atk}
-        cardDefense={props.focusedCard.def}
-        cardType={props.focusedCard.type}
-        cardRace={props.focusedCard.race}
-        cardLinkValue={props.focusedCard.linkval}
-      />
-      <TitleStripBanner
-        title={`${props.focusedCard.race}/${props.focusedCard.type}`}
-        cardType={props.focusedCard.type}
-      />
-      <CardProfileDescription cardDescription={props.focusedCard.desc} />
-      <CardProfileActionBar
-        bookmarkedCards={props.bookmarkedCards}
-        dispatchCardData={props.dispatchCardData}
-        focusedCard={props.focusedCard}
-      />
-    </>
-  );
+  let populatedProfileContent;
+
+  if (props.focusedCard) {
+    populatedProfileContent = (
+      <>
+        <TitleStripBanner
+          title={props.focusedCard.name}
+          secondaryImgSrc={`/media/icons/${determineSecondaryImg(
+            props.focusedCard.type
+          )}-attribute-symbol.png`}
+          cardType={props.focusedCard.type}
+        />
+        <CardProfileStats
+          cardImgSrc={createImageUrl(props.focusedCard.id).large}
+          cardImgAlt={props.focusedCard.name}
+          cardStarLevel={props.focusedCard.level}
+          cardRank="TEST"
+          cardAttack={props.focusedCard.atk}
+          cardDefense={props.focusedCard.def}
+          cardType={props.focusedCard.type}
+          cardRace={props.focusedCard.race}
+          cardLinkValue={props.focusedCard.linkval}
+        />
+        <TitleStripBanner
+          title={`${props.focusedCard.race}/${props.focusedCard.type}`}
+          cardType={props.focusedCard.type}
+        />
+        <CardProfileDescription cardDescription={props.focusedCard.desc} />
+        <CardProfileActionBar
+          bookmarkedCards={props.bookmarkedCards}
+          dispatchCardData={props.dispatchCardData}
+          focusedCard={props.focusedCard}
+        />
+      </>
+    );
+  }
 
   return (
     <section className={styles["card-profile"]}>
-      {!props.focusedCard.id && defaultProfileContent}
-      {props.focusedCard.id && populatedProfileContent}
+      {!props?.focusedCard?.id && defaultProfileContent}
+      {props?.focusedCard?.id && populatedProfileContent}
     </section>
   );
 };

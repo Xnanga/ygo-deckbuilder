@@ -155,11 +155,17 @@ const cardDataReducer = (state, action) => {
     }
 
     if (action.method === "tabChange") {
-      let data =
-        action.tab === "catalogue"
-          ? state.searchedCardData
-          : state.bookmarkedCardsData;
-      if (data.length < 1) data = state.allCardData;
+      let data = [];
+      if (action.tab === "catalogue") {
+        data =
+          state.searchedCardData.length > 0
+            ? state.searchedCardData
+            : state.allCardData;
+      }
+      if (action.tab === "bookmarks") {
+        data = state.bookmarkedCardsData;
+      }
+
       const firstFifteenCards = data.slice(0, 15);
       const requiredPages = Math.ceil(data.length / 15);
 
@@ -171,7 +177,7 @@ const cardDataReducer = (state, action) => {
         totalPaginationPages: requiredPages,
         currentPaginationpage: 1,
         bookmarkedCardsData: state.bookmarkedCardsData,
-        focusedCard: state.focusedCard,
+        focusedCard: data[0],
         activeTab: action.tab,
       };
     }
@@ -295,7 +301,7 @@ const cardDataReducer = (state, action) => {
         currentPaginationpage: currentPage,
         activeFilters: state.activeFilters,
         bookmarkedCardsData: updatedBookmarks,
-        focusedCard: action.data,
+        focusedCard: updatedCatalogueCards[0],
         activeTab: state.activeTab,
       };
     }
@@ -352,8 +358,6 @@ const cardDataReducer = (state, action) => {
       });
     }
 
-    console.log(sortedCards);
-
     const firstFifteenCards = sortedCards.slice(0, 15);
 
     return {
@@ -368,47 +372,6 @@ const cardDataReducer = (state, action) => {
       focusedCard: state.focusedCard,
       activeTab: state.activeTab,
     };
-  }
-
-  // Sort current cards
-
-  // atk
-  // def
-  // level
-  // rank
-  // link value
-
-  // Switch tab
-  if (action.type === "switchTab") {
-    if (action.data === "catalogue") {
-      return {
-        allCardData: state.allCardData,
-        searchedCardData: state.searchedCardData,
-        catalogueCardData: state.searchedCardData,
-        fifteenCardDataChunk: state.fifteenCardDataChunk,
-        totalPaginationPages: state.totalPaginationPages,
-        currentPaginationpage: state.currentPaginationpage,
-        activeFilters: state.activeFilters,
-        bookmarkedCardsData: state.bookmarkedCardsData,
-        focusedCard: state.focusedCard,
-        activeTab: action.data,
-      };
-    }
-
-    if (action.data === "bookmarks") {
-      return {
-        allCardData: state.allCardData,
-        searchedCardData: state.searchedCardData,
-        catalogueCardData: state.bookmarkedCardsData,
-        fifteenCardDataChunk: state.fifteenCardDataChunk,
-        totalPaginationPages: state.totalPaginationPages,
-        currentPaginationpage: state.currentPaginationpage,
-        activeFilters: state.activeFilters,
-        bookmarkedCardsData: state.bookmarkedCardsData,
-        focusedCard: state.focusedCard,
-        activeTab: action.data,
-      };
-    }
   }
 };
 

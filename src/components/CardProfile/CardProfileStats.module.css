@@ -12,15 +12,13 @@
 .card-profile-stats {
   display: flex;
 
-  height: 77rem;
-
   padding: 1rem;
 }
 
 .card-profile-stats__img-section {
   position: relative;
 
-  width: 45%;
+  width: 50%;
 }
 
 .card-profile-stats__icon {

@@ -1,7 +1,11 @@
 .main-layout {
   display: grid;
   /* grid-template-columns: 4rem 1fr 2.5rem 1fr 1fr 2.5rem 1.25fr 4rem; */
-  grid-template-columns: 4rem 45rem 2.5rem 1fr 1fr 2.5rem 50rem 4rem;
+  /* grid-template-columns: 4rem 45rem 2.5rem 1fr 1fr 2.5rem 50rem 4rem; */
+  grid-template-columns: 4rem minmax(45rem, 1.25fr) 2.5rem 1fr 1fr 2.5rem minmax(
+      50rem,
+      1.25fr
+    ) 4rem;
   grid-template-rows: 5% 90% 5%;
 
   height: 100%;
