@@ -43,7 +43,7 @@ const CardGallery = (props) => {
       <section className={styles["card-gallery"]}>
         {errorMessage
           ? errorMessage
-          : props.currentCards.map((card) => {
+          : props?.currentCards?.map((card) => {
               return (
                 <CardGalleryImage
                   key={card.id}

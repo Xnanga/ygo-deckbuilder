@@ -20,7 +20,11 @@ function App() {
           dispatchCardData={dispatchCardData}
           dispatchDeckData={dispatchDeckData}
         />
-        <DeckHub deckData={deckData} dispatchDeckData={dispatchDeckData} />
+        <DeckHub
+          deckData={deckData}
+          dispatchDeckData={dispatchDeckData}
+          dispatchCardData={dispatchCardData}
+        />
         <CardCatalogue
           allCards={cardData.allCardData}
           searchedCards={cardData.searchedCardData}

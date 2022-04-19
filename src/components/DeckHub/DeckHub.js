@@ -11,14 +11,20 @@ const DeckHub = (props) => {
           title="Main Deck"
           secondarySpan={`${props.deckData.mainDeckCardCount}/60`}
         />
-        <DeckHubGallery currentCards={props.deckData?.mainDeckCards} />
+        <DeckHubGallery
+          currentCards={props.deckData?.mainDeckCards}
+          dispatchCardData={props.dispatchCardData}
+        />
       </div>
       <div className={styles["deck-hub__extra-deck-section"]}>
         <TitleStripBanner
           title="Extra Deck"
           secondarySpan={`${props.deckData.extraDeckCardCount}/15`}
         />
-        <DeckHubGallery currentCards={props.deckData?.extraDeckCards} />
+        <DeckHubGallery
+          currentCards={props.deckData?.extraDeckCards}
+          dispatchCardData={props.dispatchCardData}
+        />
       </div>
     </section>
   );

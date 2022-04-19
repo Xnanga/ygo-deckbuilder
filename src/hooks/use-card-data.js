@@ -55,24 +55,35 @@ const updateBookmarkedCards = (
   catalogueCards,
   fifteenCards
 ) => {
-  const bookmarksTabActive = state.activeTab === "bookmarks";
+  if (state.activeTab === "bookmarks") {
+    return {
+      allCardData: state.allCardData,
+      searchedCardData: state.searchedCardData,
+      catalogueCardData: catalogueCards,
+      fifteenCardDataChunk: fifteenCards,
+      totalPaginationPages: state.totalPaginationPages,
+      currentPaginationpage: state.currentPaginationpage,
+      activeFilters: state.activeFilters,
+      bookmarkedCardsData: bookmarkData,
+      focusedCard: state.focusedCard,
+      activeTab: state.activeTab,
+    };
+  }
 
-  return {
-    allCardData: state.allCardData,
-    searchedCardData: state.searchedCardData,
-    catalogueCardData: bookmarksTabActive
-      ? catalogueCards
-      : state.catalogueCardData,
-    fifteenCardDataChunk: bookmarksTabActive
-      ? fifteenCards
-      : state.fifteenCardDataChunk,
-    totalPaginationPages: state.totalPaginationPages,
-    currentPaginationpage: state.currentPaginationpage,
-    activeFilters: state.activeFilters,
-    bookmarkedCardsData: bookmarkData,
-    focusedCard: state.focusedCard,
-    activeTab: state.activeTab,
-  };
+  if (state.activeTab === "catalogue") {
+    return {
+      allCardData: state.allCardData,
+      searchedCardData: state.searchedCardData,
+      catalogueCardData: state.catalogueCardData,
+      fifteenCardDataChunk: state.fifteenCardDataChunk,
+      totalPaginationPages: state.totalPaginationPages,
+      currentPaginationpage: state.currentPaginationpage,
+      activeFilters: state.activeFilters,
+      bookmarkedCardsData: bookmarkData,
+      focusedCard: state.focusedCard,
+      activeTab: state.activeTab,
+    };
+  }
 };
 
 const cardDataReducer = (state, action) => {
@@ -255,8 +266,24 @@ const cardDataReducer = (state, action) => {
     if (action.update === "add") {
       const bookmarkedCards = state.bookmarkedCardsData.slice();
       bookmarkedCards.push(action.data);
+      let indexForNewFifteenCards;
+      if (bookmarkedCards.length > 1) {
+        indexForNewFifteenCards = (state.currentPaginationpage - 1) * 15 - 1;
+      } else {
+        indexForNewFifteenCards = -1;
+      }
+      const newFifteenCards = getFifteenCardChunk(
+        bookmarkedCards,
+        "plus",
+        indexForNewFifteenCards
+      );
 
-      return updateBookmarkedCards(state, bookmarkedCards);
+      return updateBookmarkedCards(
+        state,
+        bookmarkedCards,
+        bookmarkedCards,
+        newFifteenCards
+      );
     }
 
     if (action.update === "remove") {
