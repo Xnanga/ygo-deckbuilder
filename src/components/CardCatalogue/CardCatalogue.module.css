@@ -16,3 +16,10 @@
 .card-catalogue__action-btns {
   display: flex;
 }
+
+@media (max-width: 93.75em) {
+  .card-catalogue {
+    grid-row: 4 / 5;
+    grid-column: 2 / 3;
+  }
+}

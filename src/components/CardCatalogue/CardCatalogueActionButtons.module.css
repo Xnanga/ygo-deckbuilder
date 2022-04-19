@@ -4,3 +4,9 @@
 
   width: 100%;
 }
+
+@media (max-width: 93.75em) {
+  .action-buttons-container {
+    display: none;
+  }
+}

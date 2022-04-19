@@ -1,6 +1,4 @@
 {
   "short_name": "YGO Deckbuilder",
-  "name": "Yu-Gi-Oh! Deckbuilder",
-  "display": "standalone",
-  "orientation": "landscape"
+  "name": "Yu-Gi-Oh! Deckbuilder"
 }

@@ -25,3 +25,9 @@
 .catalogue-form > button {
   margin-left: 1rem;
 }
+
+@media (max-width: 93.75em) {
+  .catalogue-form {
+    margin-bottom: 0;
+  }
+}

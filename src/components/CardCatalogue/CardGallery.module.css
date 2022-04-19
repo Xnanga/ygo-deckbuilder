@@ -8,18 +8,26 @@
 .card-gallery {
   position: relative;
 
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: flex-start;
   gap: 1rem;
-  align-content: start;
 
   width: 100%;
   height: calc(100% - 8rem);
 
   margin-top: 1rem;
+  padding: 0 0.5rem;
+  padding-top: 1rem;
 
   overflow-y: auto;
   overflow-x: hidden;
+}
+
+.card-gallery__card-container {
+  width: 18%;
+  max-width: 8rem;
 }
 
 .card-gallery__error-text {
@@ -30,4 +38,10 @@
 
   color: var(--menu-neon-green);
   font-size: 3rem;
+}
+
+@media (max-width: 93.75em) {
+  .card-gallery {
+    justify-content: flex-start;
+  }
 }

@@ -43,14 +43,19 @@ const CardGallery = (props) => {
       <section className={styles["card-gallery"]}>
         {errorMessage
           ? errorMessage
-          : props?.currentCards?.map((card) => {
+          : props?.currentCards?.map((card, index) => {
               return (
-                <CardGalleryImage
-                  key={card.id}
-                  cardId={card.id}
-                  cardName={card.name}
-                  cardFocusHandler={cardFocusHandler}
-                />
+                <div
+                  key={card.id + index}
+                  className={styles["card-gallery__card-container"]}
+                >
+                  <CardGalleryImage
+                    key={card.id}
+                    cardId={card.id}
+                    cardName={card.name}
+                    cardFocusHandler={cardFocusHandler}
+                  />
+                </div>
               );
             })}
       </section>

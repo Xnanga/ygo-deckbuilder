@@ -37,6 +37,9 @@ $bp-smallest: 31.25em; // 500px
   --background-dark-grey: #232c33;
   --menu-cobalt: #173446;
   --menu-neon-green: #cbfb0f;
+
+  /* Breakpoints */
+  --bp-medium: 93.75em;
 }
 
 /* Reset */
