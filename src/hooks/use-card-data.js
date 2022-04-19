@@ -328,7 +328,7 @@ const cardDataReducer = (state, action) => {
         currentPaginationpage: currentPage,
         activeFilters: state.activeFilters,
         bookmarkedCardsData: updatedBookmarks,
-        focusedCard: updatedCatalogueCards[0],
+        focusedCard: state.focusedCard,
         activeTab: state.activeTab,
       };
     }
