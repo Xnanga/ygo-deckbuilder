@@ -42,3 +42,38 @@
   letter-spacing: 0.08rem;
   margin-left: 1rem;
 }
+
+.nav__list-item__extra-span {
+  font-size: 1.6rem;
+  margin-left: auto;
+}
+
+@media (max-width: 46.875em) {
+  .nav__list-item__label {
+    font-size: 1.6rem;
+  }
+
+  .nav__list-item__img {
+    height: 2rem;
+    width: 2rem;
+  }
+
+  .nav__list-item__extra-span {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 21.25em) {
+  .nav__list-item__label {
+    font-size: 1.2rem;
+  }
+
+  .nav__list-item__img {
+    height: 1.5rem;
+    width: 1.5rem;
+  }
+
+  .nav__list-item__extra-span {
+    font-size: 1rem;
+  }
+}

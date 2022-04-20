@@ -16,14 +16,21 @@ const TabMenu = (props) => {
         key={listItem.id}
         onClick={() => props.activeTabHandler(listItem.id)}
       >
-        <img
-          className={styles["nav__list-item__img"]}
-          src={listItem.imgSrc}
-          alt={listItem.imgAlt}
-        />
+        {listItem.imgSrc && (
+          <img
+            className={styles["nav__list-item__img"]}
+            src={listItem.imgSrc}
+            alt={listItem.imgAlt}
+          />
+        )}
         {listItem.label && (
           <span className={styles["nav__list-item__label"]}>
             {listItem.label}
+          </span>
+        )}
+        {listItem.extraSpan && (
+          <span className={styles["nav__list-item__extra-span"]}>
+            {listItem.extraSpan}
           </span>
         )}
       </li>

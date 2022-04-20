@@ -3,7 +3,7 @@
   grid-template-columns:
     4rem minmax(45rem, 1.25fr) 2.5rem 1fr 1fr 2.5rem minmax(50rem, 1.25fr)
     4rem;
-  grid-template-rows: 5% 90% 5%;
+  grid-template-rows: 10% 87.5% 2.5%;
 
   height: 100%;
 }
@@ -11,6 +11,6 @@
 @media (max-width: 93.75em) {
   .main-layout {
     grid-template-columns: 2% 96% 2%;
-    grid-template-rows: 5% 46.5% 1% 46.5% 1%;
+    grid-template-rows: 10% 31.5% 1% 56.5% 1%;
   }
 }

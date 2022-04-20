@@ -8,8 +8,8 @@
   overflow: hidden;
 }
 
-@media (max-width: 93.75em) {
+/* @media (max-width: 93.75em) {
   .card-profile {
     display: none;
   }
-}
+} */

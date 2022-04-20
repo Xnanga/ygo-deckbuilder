@@ -1,0 +1,38 @@
+.app-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+
+  height: 8rem;
+
+  user-select: none;
+}
+
+.app-logo__container {
+}
+
+.app-logo__img {
+  max-width: 15rem;
+}
+
+.app-logo__text {
+  display: inline-block;
+  font-size: 3rem;
+}
+
+@media (max-width: 46.875em) {
+  .app-logo {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .app-logo__img {
+    width: 8rem;
+  }
+
+  .app-logo__text {
+    font-size: 1.6rem;
+  }
+}
