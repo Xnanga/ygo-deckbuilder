@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 
 import styles from "./CardGallery.module.css";
 
+import useScreenWidth from "../../hooks/use-screen-width";
 import CardGalleryImage from "./CardGalleryImage";
 
 const CardGallery = (props) => {
+  const screenWidth = useScreenWidth(1500);
   const [errorMessage, setErrorMessage] = useState(null);
 
   const cardFocusHandler = (e) => {
@@ -16,6 +18,10 @@ const CardGallery = (props) => {
       type: "updateFocusedCard",
       data: clickedCardData,
     });
+
+    if (!screenWidth) {
+      props.cardProfileModalVisibilityHandler(true);
+    }
   };
 
   useEffect(() => {

@@ -1,8 +1,11 @@
 import styles from "./DeckHubGallery.module.css";
 
+import useScreenWidth from "../../hooks/use-screen-width";
 import CardGalleryImage from "../CardCatalogue/CardGalleryImage";
 
 const DeckHubGallery = (props) => {
+  const screenWidth = useScreenWidth(1500);
+
   const cardFocusHandler = (e) => {
     const clickedCardID = +e.target.id;
     const clickedCardData = props.currentCards.find(
@@ -12,6 +15,10 @@ const DeckHubGallery = (props) => {
       type: "updateFocusedCard",
       data: clickedCardData,
     });
+
+    if (!screenWidth) {
+      props.cardProfileModalVisibilityHandler(true);
+    }
   };
 
   return (

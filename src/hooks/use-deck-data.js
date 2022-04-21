@@ -27,6 +27,10 @@ const checkIfDeckIsFull = (mainDeckCardCount, extraDeckCardCount, deckType) => {
   }
 };
 
+const sortDeckById = (deckData) => {
+  return deckData.sort((a, z) => a.id - z.id);
+};
+
 const deckDataReducer = (state, action) => {
   const determineDeckToUpdate = (cardType) => {
     if (
@@ -66,6 +70,8 @@ const deckDataReducer = (state, action) => {
         return noDeckDataStateChange(state);
       }
       allCurrentCards.push(action.data);
+
+      sortDeckById(allCurrentCards);
 
       return {
         mainDeckCards:
@@ -164,7 +170,6 @@ const useDeckData = () => {
     localStorage.setItem("extraDeckCards", stringifiedExtraDeckData);
   }, [deckData.mainDeckCards, deckData.extraDeckCards]);
 
-  // Sort cards in each deck by name and type
   // Allow adding/removing by dragging
 
   return [deckData, dispatchDeckData];

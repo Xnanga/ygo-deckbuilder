@@ -1,8 +1,11 @@
 import styles from "./CatalogueTextSearch.module.css";
 
+import useScreenWidth from "../../hooks/use-screen-width";
 import CircularButton from "../UI/Buttons/CircularButton";
 
 const CatalogueTextSearch = (props) => {
+  const screenWidth = useScreenWidth(1500);
+
   const cardSearchSubmitHandler = (e) => {
     e.preventDefault();
     const cardSearchSubmission = e.target[0].value;
@@ -39,6 +42,13 @@ const CatalogueTextSearch = (props) => {
           imgAlt="A cross symbol"
           value="clearSearchButton"
           active={true}
+        />
+      )}
+      {!screenWidth && (
+        <CircularButton
+          imgSrc="/media/icons/ellipsis-icon.png"
+          imgAlt="An ellipsis symbol"
+          value="clearSearchButton"
         />
       )}
     </form>

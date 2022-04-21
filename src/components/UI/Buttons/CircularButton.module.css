@@ -1,6 +1,6 @@
 .circular-btn {
-  height: 5rem;
-  width: 5rem;
+  min-height: 5rem;
+  min-width: 5rem;
   background-color: #000000;
 
   border: 2px solid var(--border-light-grey);

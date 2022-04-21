@@ -1,10 +1,14 @@
 import styles from "./RectangularButton.module.css";
 
 const RectangularButton = (props) => {
+  const determineButtonClass = props.buttonInactive
+    ? `${styles["rectangular-btn"]} ${styles["rectangular-btn--inactive"]}`
+    : styles["rectangular-btn"];
+
   return (
     <button
       id={props.buttonId}
-      className={styles["rectangular-btn"]}
+      className={determineButtonClass}
       onClick={props.onButtonClick}
     >
       {props.imgSrc && (

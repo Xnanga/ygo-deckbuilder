@@ -35,3 +35,9 @@
 
   font-size: 2rem;
 }
+
+.rectangular-btn--inactive {
+  opacity: 0.5;
+
+  pointer-events: none;
+}

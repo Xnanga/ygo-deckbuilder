@@ -66,6 +66,10 @@ a:focus {
   text-decoration: none;
 }
 
+input {
+  min-width: 0;
+}
+
 /* Global Styles */
 
 h1 {

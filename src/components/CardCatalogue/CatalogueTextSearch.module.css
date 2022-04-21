@@ -8,8 +8,9 @@
 
 .catalogue-form__input {
   height: 5rem;
-  width: 90%;
-  max-width: 90%;
+  /* width: 90%;
+  max-width: 90%; */
+  flex-grow: 1;
   font-size: 2.75rem;
   color: #f0f0f0;
   padding: 0.5rem;

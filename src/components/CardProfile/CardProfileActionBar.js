@@ -7,9 +7,19 @@ import RectangularButton from "../UI/Buttons/RectangularButton";
 
 const CardProfileActionBar = (props) => {
   const [bookmarkButtonHighlight, setBookmarkButtonHighlight] = useState(false);
+  const [addCardButtonInactive, setAddCardButtonInactive] = useState(false);
+  const [removeCardButtonInactive, setRemoveCardButtonInactive] =
+    useState(false);
 
   const checkIfCardIsBookmarked = (cardToTest, bookmarksData) => {
     return bookmarksData.some((card) => card.id === cardToTest.id);
+  };
+
+  const checkHowManyCopiesInDeck = (card, deckData) => {
+    const matchingCards = deckData.filter((cardInDeck) => {
+      return card.id === cardInDeck.id;
+    });
+    return matchingCards.length;
   };
 
   const bookmarkButtonClickHandler = () => {
@@ -52,6 +62,29 @@ const CardProfileActionBar = (props) => {
     );
   }, [props.focusedCard, props.bookmarkedCards]);
 
+  useEffect(() => {
+    const copiesInMainDeck = checkHowManyCopiesInDeck(
+      props.focusedCard,
+      props.mainDeckData
+    );
+    const copiesInExtraDeck = checkHowManyCopiesInDeck(
+      props.focusedCard,
+      props.extraDeckData
+    );
+
+    if (copiesInMainDeck >= 3 || copiesInExtraDeck >= 3) {
+      setAddCardButtonInactive(true);
+    } else {
+      setAddCardButtonInactive(false);
+    }
+
+    if (copiesInMainDeck <= 0 && copiesInExtraDeck <= 0) {
+      setRemoveCardButtonInactive(true);
+    } else {
+      setRemoveCardButtonInactive(false);
+    }
+  }, [props.focusedCard, props.mainDeckData, props.extraDeckData]);
+
   return (
     <div className={styles["card-profile-action-bar"]}>
       <CircularButton
@@ -65,12 +98,14 @@ const CardProfileActionBar = (props) => {
         imgSrc="/media/icons/card-back-icon.png"
         imgAlt="A bookmark icon"
         buttonText="-1"
+        buttonInactive={removeCardButtonInactive}
       />
       <RectangularButton
         onButtonClick={() => deckButtonsClickHandler("add")}
         imgSrc="/media/icons/card-back-icon.png"
         imgAlt="A bookmark icon"
         buttonText="+1"
+        buttonInactive={addCardButtonInactive}
       />
     </div>
   );

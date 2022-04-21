@@ -9,3 +9,11 @@
 
   background-color: var(--background-dark-grey);
 }
+
+@media (max-width: 93.75em) {
+  .card-profile-action-bar {
+    height: auto;
+    padding: 0.25rem;
+    justify-content: space-between;
+  }
+}

@@ -115,6 +115,9 @@ const CardCatalogue = (props) => {
         dispatchCardData={props.dispatchCardData}
         currentCards={props.fifteenCards}
         searchErrorStatus={searchError}
+        cardProfileModalVisibilityHandler={
+          props.cardProfileModalVisibilityHandler
+        }
       />
       <PaginationControls
         dispatchCardData={props.dispatchCardData}

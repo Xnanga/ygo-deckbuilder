@@ -1,12 +1,15 @@
 .title-strip-banner {
+  position: relative;
+
   display: flex;
   align-items: center;
   flex-wrap: wrap;
 
-  height: 6rem;
+  min-height: 6rem;
   width: 100%;
 
   padding: 1rem;
+  padding-right: 3rem;
   background: var(--menu-cobalt);
 }
 
@@ -49,7 +52,9 @@
 }
 
 .title-strip-banner__secondary-img {
-  margin-left: auto;
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
 
   height: 4rem;
   width: 4rem;

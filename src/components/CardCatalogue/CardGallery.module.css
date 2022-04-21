@@ -43,6 +43,7 @@
 @media (max-width: 93.75em) {
   .card-gallery {
     justify-content: center;
+    padding-top: 0;
   }
 
   .card-gallery__card-container {

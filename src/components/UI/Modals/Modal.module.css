@@ -28,7 +28,7 @@
   align-items: center;
   justify-content: center;
 
-  padding: 1rem;
+  padding-top: 1.5rem;
 }
 
 .modal__close-btn > img {
@@ -40,4 +40,16 @@
   background-color: var(--menu-cobalt);
 
   box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
+}
+
+@media (max-width: 93.75em) {
+  .modal {
+    height: 100vh;
+    width: 100vw;
+    padding: 1rem;
+  }
+
+  .modal__close-btn {
+    margin-bottom: 4rem;
+  }
 }

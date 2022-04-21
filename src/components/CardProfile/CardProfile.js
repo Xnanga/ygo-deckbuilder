@@ -1,11 +1,23 @@
+import { useState, useEffect } from "react";
+
 import styles from "./CardProfile.module.css";
 
 import TitleStripBanner from "../UI/TitleStripBanner";
 import CardProfileActionBar from "./CardProfileActionBar";
 import CardProfileStats from "./CardProfileStats";
 import CardProfileDescription from "./CardProfileDescription";
+import Modal from "../UI/Modals/Modal";
+import useScreenWidth from "../../hooks/use-screen-width";
 
 const CardProfile = (props) => {
+  const screenWidth = useScreenWidth(1500);
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const closeModalHandler = () => {
+    setModalVisible(false);
+    props.cardProfileModalVisibilityHandler(false);
+  };
+
   const createImageUrl = (cardId) => {
     return {
       large: `https://storage.googleapis.com/ygoprodeck.com/pics/${cardId}.jpg`,
@@ -59,17 +71,35 @@ const CardProfile = (props) => {
           bookmarkedCards={props.bookmarkedCards}
           dispatchCardData={props.dispatchCardData}
           dispatchDeckData={props.dispatchDeckData}
+          mainDeckData={props.mainDeckData}
+          extraDeckData={props.extraDeckData}
           focusedCard={props.focusedCard}
         />
       </>
     );
   }
 
+  useEffect(() => {
+    setModalVisible(props.modalVisible);
+  }, [props.modalVisible]);
+
   return (
-    <section className={styles["card-profile"]}>
-      {!props?.focusedCard?.id && defaultProfileContent}
-      {props?.focusedCard?.id && populatedProfileContent}
-    </section>
+    <>
+      {screenWidth && (
+        <section className={styles["card-profile"]}>
+          {!props?.focusedCard?.id && defaultProfileContent}
+          {props?.focusedCard?.id && populatedProfileContent}
+        </section>
+      )}
+      {!screenWidth && modalVisible && (
+        <Modal closeModalHandler={closeModalHandler}>
+          <section className={styles["card-profile"]}>
+            {!props?.focusedCard?.id && defaultProfileContent}
+            {props?.focusedCard?.id && populatedProfileContent}
+          </section>
+        </Modal>
+      )}
+    </>
   );
 };
 

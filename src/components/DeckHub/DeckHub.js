@@ -65,6 +65,9 @@ const DeckHub = (props) => {
     <DeckHubGallery
       currentCards={props.deckData?.mainDeckCards}
       dispatchCardData={props.dispatchCardData}
+      cardProfileModalVisibilityHandler={
+        props.cardProfileModalVisibilityHandler
+      }
     />
   );
 
@@ -72,6 +75,9 @@ const DeckHub = (props) => {
     <DeckHubGallery
       currentCards={props.deckData?.extraDeckCards}
       dispatchCardData={props.dispatchCardData}
+      cardProfileModalVisibilityHandler={
+        props.cardProfileModalVisibilityHandler
+      }
     />
   );
 
