@@ -9,8 +9,6 @@ import CardProfile from "./components/CardProfile/CardProfile";
 import DeckHub from "./components/DeckHub/DeckHub";
 import CardCatalogue from "./components/CardCatalogue/CardCatalogue";
 import useDeckData from "./hooks/use-deck-data";
-import AppLogo from "./components/UI/AppLogo";
-import RectangularButton from "./components/UI/Buttons/RectangularButton";
 
 function App() {
   const [cardData, dispatchCardData] = useCardData();
@@ -24,19 +22,7 @@ function App() {
   return (
     <div className="app">
       <DeckBuilderMainLayout>
-        <HeaderBar>
-          <AppLogo
-            imgSrc="/media/icons/ygo-logo.png"
-            imgAlt="The Yu-Gi-Oh! Logo"
-            optionalText="Deckbuilder"
-          />
-          <RectangularButton
-            onButtonClick={() => console.log("Export Button Click")}
-            imgSrc="/media/icons/sort-icon.png"
-            imgAlt="A sort icon"
-            buttonText="Export"
-          />
-        </HeaderBar>
+        <HeaderBar dispatchDeckData={dispatchDeckData} />
         <CardProfile
           focusedCard={cardData.focusedCard}
           bookmarkedCards={cardData.bookmarkedCardsData}

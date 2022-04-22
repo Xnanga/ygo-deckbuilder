@@ -10,7 +10,7 @@
 
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
   align-content: flex-start;
   gap: 1rem;
 
@@ -18,15 +18,13 @@
   height: calc(100% - 8rem);
 
   margin-top: 1rem;
-  padding: 0 0.5rem;
-  padding-top: 1rem;
+  padding: 0 2rem;
 
   overflow-y: auto;
   overflow-x: hidden;
 }
 
 .card-gallery__card-container {
-  width: 18%;
   max-width: 8rem;
 }
 
@@ -36,14 +34,18 @@
   left: 50%;
   transform: translate(-50%, -50%);
 
+  width: 100%;
+
   color: var(--menu-neon-green);
+
   font-size: 3rem;
+  text-align: center;
 }
 
 @media (max-width: 93.75em) {
   .card-gallery {
     justify-content: center;
-    padding-top: 0;
+    padding: 0;
   }
 
   .card-gallery__card-container {

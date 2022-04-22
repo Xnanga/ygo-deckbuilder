@@ -41,3 +41,18 @@
 
   pointer-events: none;
 }
+
+@media (max-width: 46.875em) {
+  .rectangular-btn {
+    flex-wrap: wrap;
+
+    min-width: 8rem;
+    max-width: auto;
+
+    padding: 0.75rem;
+  }
+
+  .rectangular-btn__text {
+    font-size: 1.3rem;
+  }
+}

@@ -1,7 +1,6 @@
 .header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
 
   width: 100%;
 
@@ -9,6 +8,14 @@
   grid-column: 2 / 8;
 
   overflow: hidden;
+}
+
+.header > div {
+  margin-right: auto;
+}
+
+.header > button {
+  margin-left: 1rem;
 }
 
 @media (max-width: 93.75em) {

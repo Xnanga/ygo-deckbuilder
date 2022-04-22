@@ -4,10 +4,12 @@ import styles from "./CardGallery.module.css";
 
 import useScreenWidth from "../../hooks/use-screen-width";
 import CardGalleryImage from "./CardGalleryImage";
+import LoadingGif from "../UI/LoadingGif";
 
 const CardGallery = (props) => {
   const screenWidth = useScreenWidth(1500);
   const [errorMessage, setErrorMessage] = useState(null);
+  const [galleryLoading, setGalleryLoading] = useState(true);
 
   const cardFocusHandler = (e) => {
     const clickedCardID = +e.target.id;
@@ -25,7 +27,7 @@ const CardGallery = (props) => {
   };
 
   useEffect(() => {
-    if (!props.currentCards || props.currentCards.length < 1) {
+    if (props.currentCards.length < 1) {
       setErrorMessage(
         <span className={styles["card-gallery__error-text"]}>
           No Cards Found
@@ -33,7 +35,15 @@ const CardGallery = (props) => {
       );
       return;
     }
-    if (props.currentCards.length > 0) setErrorMessage(null);
+    if (!props.currentCards) {
+      setGalleryLoading(true);
+    }
+
+    if (props.currentCards.length > 0) {
+      setErrorMessage(null);
+      setGalleryLoading(false);
+    }
+
     if (props.searchErrorStatus) {
       setErrorMessage(
         <span className={styles["card-gallery__error-text"]}>
@@ -44,26 +54,30 @@ const CardGallery = (props) => {
     }
   }, [props.currentCards, props.searchErrorStatus]);
 
+  const mappedCardGalleryContent = props?.currentCards?.map((card, index) => {
+    return (
+      <div
+        key={card.id + index}
+        className={styles["card-gallery__card-container"]}
+      >
+        <CardGalleryImage
+          key={card.id}
+          cardId={card.id}
+          cardName={card.name}
+          cardFocusHandler={cardFocusHandler}
+        />
+      </div>
+    );
+  });
+
   return (
     <div className={styles["card-gallery-container"]}>
       <section className={styles["card-gallery"]}>
-        {errorMessage
-          ? errorMessage
-          : props?.currentCards?.map((card, index) => {
-              return (
-                <div
-                  key={card.id + index}
-                  className={styles["card-gallery__card-container"]}
-                >
-                  <CardGalleryImage
-                    key={card.id}
-                    cardId={card.id}
-                    cardName={card.name}
-                    cardFocusHandler={cardFocusHandler}
-                  />
-                </div>
-              );
-            })}
+        {galleryLoading ? (
+          <LoadingGif />
+        ) : (
+          errorMessage || mappedCardGalleryContent
+        )}
       </section>
     </div>
   );

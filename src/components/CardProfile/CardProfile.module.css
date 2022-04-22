@@ -1,15 +1,19 @@
 .card-profile {
   display: flex;
   flex-direction: column;
+
   grid-row: 2 / 3;
   grid-column: 2 / 3;
+
+  max-width: 45rem;
+
   border: 2px solid grey;
   padding: 2px;
   overflow: hidden;
 }
 
-/* @media (max-width: 93.75em) {
+@media (max-width: 93.75em) {
   .card-profile {
-    display: none;
+    margin: 0 auto;
   }
-} */
+}

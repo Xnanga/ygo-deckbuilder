@@ -9,6 +9,15 @@ const noDeckDataStateChange = (state) => {
   };
 };
 
+const resetAllDeckData = () => {
+  return {
+    mainDeckCards: [],
+    mainDeckCardCount: 0,
+    extraDeckCards: [],
+    extraDeckCardCount: 0,
+  };
+};
+
 const checkForMultipleCards = (cardData, card) => {
   const allMatchingCards = cardData.filter(
     (cardInList) => cardInList.id === card.id
@@ -127,6 +136,10 @@ const deckDataReducer = (state, action) => {
         extraDeckCardCount: action.data.length,
       };
     }
+  }
+
+  if (action.type === "resetAllDeckData") {
+    return resetAllDeckData();
   }
 };
 

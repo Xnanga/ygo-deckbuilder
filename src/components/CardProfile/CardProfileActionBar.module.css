@@ -14,6 +14,6 @@
   .card-profile-action-bar {
     height: auto;
     padding: 0.25rem;
-    justify-content: space-between;
+    justify-content: space-evenly;
   }
 }
