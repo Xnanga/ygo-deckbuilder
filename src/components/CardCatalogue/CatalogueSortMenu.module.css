@@ -60,3 +60,9 @@
 .catalogue-sort-menu__submit-container > button:not(:last-child) {
   margin-right: 1.5rem;
 }
+
+@media (max-width: 93.75em) {
+  .catalogue-sort-menu__title {
+    font-size: 2rem;
+  }
+}

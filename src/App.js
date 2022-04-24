@@ -9,16 +9,16 @@ import CardProfile from "./components/CardProfile/CardProfile";
 import DeckHub from "./components/DeckHub/DeckHub";
 import CardCatalogue from "./components/CardCatalogue/CardCatalogue";
 import useDeckData from "./hooks/use-deck-data";
+
 import useZipcelx from "./hooks/use-zipcelx";
 
 function App() {
   const [cardData, dispatchCardData] = useCardData();
   const [deckData, dispatchDeckData] = useDeckData();
   const [cardProfileModalVisible, setCardProfileModalVisible] = useState(false);
-  const [exportData, generateXlsx] = useZipcelx();
+  const [, generateXlsx] = useZipcelx();
 
   const exportDeckDataHandler = () => {
-    console.log("Export!");
     generateXlsx(deckData);
   };
 

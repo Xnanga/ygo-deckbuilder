@@ -64,3 +64,14 @@ h3 {
 .catalogue-filter-menu__submit-container > button:not(:last-child) {
   margin-right: 1.5rem;
 }
+
+@media (max-width: 93.75em) {
+  .catalogue-filter-menu > h2,
+  h3 {
+    font-size: 2rem;
+  }
+
+  .catalogue-filter-menu__tagline {
+    margin-bottom: 0;
+  }
+}

@@ -1,7 +1,6 @@
 import styles from "./CardProfileStats.module.css";
 
 import CardProfileImage from "./CardProfileImage";
-import LoadingGif from "../UI/LoadingGif";
 
 const isZeroOrAbove = (num) => {
   if (num >= 0) {
@@ -98,11 +97,6 @@ const CardProfileStats = (props) => {
       <div className={styles["card-profile-stats__text-section-line"]}>
         {props.cardLinkValue && (
           <>
-            {/* <img
-              className={styles["card-profile-stats__icon"]}
-              src="/media/icons/defense-symbol.png"
-              alt="Card Defense Symbol"
-            /> */}
             <span className={styles["card-profile-stats__numbers"]}>
               {`Link: ${props.cardLinkValue}`}
             </span>
