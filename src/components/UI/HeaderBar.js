@@ -7,16 +7,14 @@ import RectangularButton from "./Buttons/RectangularButton";
 import MiniModal from "./Modals/MiniModal";
 
 const HeaderBar = (props) => {
-  const [miniModalVisible, setMiniModalVisible] = useState(false);
+  const [miniModalVisible, setMiniModalVisible] = useState(null);
 
-  const miniModalVisibilityHandler = (bool) => {
-    if (typeof bool !== "boolean") return;
-    setMiniModalVisible(bool);
+  const miniModalVisibilityHandler = (miniModalName) => {
+    setMiniModalVisible(miniModalName);
   };
 
   const clearAllDeckDataHandler = (buttonValue) => {
-    console.log(buttonValue);
-    if (buttonValue === "ClearDeckData") {
+    if (buttonValue === "clearDeckData") {
       props.dispatchDeckData({
         type: "resetAllDeckData",
       });
@@ -24,7 +22,14 @@ const HeaderBar = (props) => {
     setMiniModalVisible(false);
   };
 
-  const miniModalButtonData = [
+  const exportAllDeckDataHandler = (buttonValue) => {
+    if (buttonValue === "exportDeckData") {
+      props.exportDeckDataHandler();
+    }
+    setMiniModalVisible(false);
+  };
+
+  const clearDeckMiniModalButtonData = [
     {
       id: "Do Not Clear Deck Data",
       label: "No",
@@ -34,18 +39,40 @@ const HeaderBar = (props) => {
     {
       id: "Clear Deck Data",
       label: "Yes",
-      value: "ClearDeckData",
+      value: "clearDeckData",
       additionalClass: "red",
+    },
+  ];
+
+  const exportDeckMiniModalButtonData = [
+    {
+      id: "Do Not Export Deck Data",
+      label: "No",
+      value: "doNotExportDeckData",
+      additionalClass: "red",
+    },
+    {
+      id: "Export Deck Data",
+      label: "Yes",
+      value: "exportDeckData",
+      additionalClass: "green",
     },
   ];
 
   return (
     <header className={styles.header}>
-      {miniModalVisible && (
+      {miniModalVisible === "clearDeckMiniModal" && (
         <MiniModal
           message="Are you sure you want to clear all deck data?"
-          buttonsData={miniModalButtonData}
+          buttonsData={clearDeckMiniModalButtonData}
           buttonAction={clearAllDeckDataHandler}
+        />
+      )}
+      {miniModalVisible === "exportDeckMiniModal" && (
+        <MiniModal
+          message="Export all deck data to XLSX?"
+          buttonsData={exportDeckMiniModalButtonData}
+          buttonAction={exportAllDeckDataHandler}
         />
       )}
       <AppLogo
@@ -54,11 +81,11 @@ const HeaderBar = (props) => {
         optionalText="Deckbuilder"
       />
       <RectangularButton
-        onButtonClick={() => miniModalVisibilityHandler(true)}
+        onButtonClick={() => miniModalVisibilityHandler("clearDeckMiniModal")}
         buttonText="Clear Deck Data"
       />
       <RectangularButton
-        onButtonClick={() => console.log("Export Button Click")}
+        onButtonClick={() => miniModalVisibilityHandler("exportDeckMiniModal")}
         buttonText="Export Deck Data"
       />
     </header>

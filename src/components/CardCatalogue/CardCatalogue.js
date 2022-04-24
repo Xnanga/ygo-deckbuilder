@@ -13,9 +13,24 @@ const CardCatalogue = (props) => {
   const [searchError, setSearchError] = useState(false);
   const [currentSearchTerm, setCurrentSearchTerm] = useState("");
   const [searchMade, setSearchMade] = useState(false);
+  const [modalVisible, setModalVisible] = useState(null);
 
   const searchInputHandler = (e) => {
     setCurrentSearchTerm(e.target.value);
+  };
+
+  const openModalHandler = (modalName) => {
+    setModalVisible(modalName);
+  };
+
+  const closeModalHandler = () => {
+    setModalVisible(null);
+  };
+
+  const removeFilteringSortingHandler = () => {
+    props.dispatchCardData({
+      type: "returnToSearchedData",
+    });
   };
 
   const activeTabHandler = (tabId) => {
@@ -107,9 +122,18 @@ const CardCatalogue = (props) => {
         searchInputHandler={searchInputHandler}
         searchMade={searchMade}
         setSearchMade={setSearchMade}
+        openModalHandler={openModalHandler}
+        closeModalHandler={closeModalHandler}
+        removeFilteringSortingHandler={removeFilteringSortingHandler}
       />
       <div className={styles["card-catalogue__action-btns"]}>
-        <CardCatalogueActionButtons dispatchCardData={props.dispatchCardData} />
+        <CardCatalogueActionButtons
+          dispatchCardData={props.dispatchCardData}
+          modalVisible={modalVisible}
+          openModalHandler={openModalHandler}
+          closeModalHandler={closeModalHandler}
+          removeFilteringSortingHandler={removeFilteringSortingHandler}
+        />
       </div>
       <CardGallery
         dispatchCardData={props.dispatchCardData}

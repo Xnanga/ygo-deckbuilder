@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import styles from "./CardCatalogueActionButtons.module.css";
 
 import RectangularButton from "../UI/Buttons/RectangularButton";
@@ -8,50 +6,44 @@ import CatalogueFilterMenu from "./CatalogueFilterMenu";
 import CatalogueSortMenu from "./CatalogueSortMenu";
 
 const CardCatalogueActionButtons = (props) => {
-  const [modalVisible, setModalVisible] = useState(null);
-
-  const closeModalHandler = () => {
-    setModalVisible(null);
-  };
-
-  const removeFilteringSorting = () => {
-    props.dispatchCardData({
-      type: "returnToSearchedData",
-    });
-  };
-
   return (
     <div className={styles["action-buttons-container"]}>
-      {modalVisible === "filters" && (
-        <Modal modalTitle="Card Filters" closeModalHandler={closeModalHandler}>
+      {props.modalVisible === "filters" && (
+        <Modal
+          modalTitle="Card Filters"
+          closeModalHandler={props.closeModalHandler}
+        >
           <CatalogueFilterMenu
             dispatchCardData={props.dispatchCardData}
-            closeModalHandler={closeModalHandler}
+            closeModalHandler={props.closeModalHandler}
           />
         </Modal>
       )}
-      {modalVisible === "sorting" && (
-        <Modal modalTitle="Card Sorting" closeModalHandler={closeModalHandler}>
+      {props.modalVisible === "sorting" && (
+        <Modal
+          modalTitle="Card Sorting"
+          closeModalHandler={props.closeModalHandler}
+        >
           <CatalogueSortMenu
             dispatchCardData={props.dispatchCardData}
-            closeModalHandler={closeModalHandler}
+            closeModalHandler={props.closeModalHandler}
           />
         </Modal>
       )}
       <RectangularButton
-        onButtonClick={() => setModalVisible("filters")}
+        onButtonClick={() => props.openModalHandler("filters")}
         imgSrc="/media/icons/filter-icon.png"
         imgAlt="A filter icon"
         buttonText="Filter"
       />
       <RectangularButton
-        onButtonClick={() => setModalVisible("sorting")}
+        onButtonClick={() => props.openModalHandler("sorting")}
         imgSrc="/media/icons/sort-icon.png"
         imgAlt="A sort icon"
         buttonText="Sort"
       />
       <RectangularButton
-        onButtonClick={removeFilteringSorting}
+        onButtonClick={props.removeFilteringSortingHandler}
         imgSrc="/media/icons/trash-icon.png"
         imgAlt="A rubbish bin icon"
         buttonText="Clear"

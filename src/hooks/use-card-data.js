@@ -374,7 +374,6 @@ const cardDataReducer = (state, action) => {
 
     if (direction === "ascending") {
       sortedCards = cardDataToSort.sort((a, z) => {
-        console.log(a[attribute]);
         return (a[attribute] || 0) - (z[attribute] || 0);
       });
     }

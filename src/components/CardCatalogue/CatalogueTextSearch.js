@@ -14,15 +14,16 @@ const CatalogueTextSearch = (props) => {
     e.preventDefault();
 
     const cardSearchSubmission = e.target[0].value;
-    const clickedButtonValue = e.target[1].value;
-    const optionsButtonValue = e.target[2].value;
+    const clickedButtonValue = e.nativeEvent.submitter.value;
 
-    if (optionsButtonValue === "openOptionsButton") {
+    if (clickedButtonValue === "openOptionsButton") {
       setOptionsModalVisible(true);
+      return;
     }
 
-    if (!cardSearchSubmission && clickedButtonValue !== "clearSearchButton")
+    if (!cardSearchSubmission && clickedButtonValue !== "clearSearchButton") {
       return;
+    }
 
     props.setSearchMade((prevState) => !prevState);
     props.cardSearchHandler(cardSearchSubmission, clickedButtonValue);
@@ -47,7 +48,24 @@ const CatalogueTextSearch = (props) => {
   ];
 
   const actionButtonClickHandler = (buttonId) => {
-    console.log("Tested");
+    switch (buttonId) {
+      case "displayFilterModal":
+        props.openModalHandler("filters");
+        break;
+
+      case "displaySortModal":
+        props.openModalHandler("sorting");
+        break;
+
+      case "clearFilters":
+        props.removeFilteringSortingHandler();
+        break;
+
+      default:
+        console.error("Problem with action selection...");
+    }
+
+    setOptionsModalVisible(false);
   };
 
   return (

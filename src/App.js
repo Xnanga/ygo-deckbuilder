@@ -9,11 +9,18 @@ import CardProfile from "./components/CardProfile/CardProfile";
 import DeckHub from "./components/DeckHub/DeckHub";
 import CardCatalogue from "./components/CardCatalogue/CardCatalogue";
 import useDeckData from "./hooks/use-deck-data";
+import useZipcelx from "./hooks/use-zipcelx";
 
 function App() {
   const [cardData, dispatchCardData] = useCardData();
   const [deckData, dispatchDeckData] = useDeckData();
   const [cardProfileModalVisible, setCardProfileModalVisible] = useState(false);
+  const [exportData, generateXlsx] = useZipcelx();
+
+  const exportDeckDataHandler = () => {
+    console.log("Export!");
+    generateXlsx(deckData);
+  };
 
   const cardProfileModalVisibilityHandler = (bool) => {
     setCardProfileModalVisible(bool);
@@ -22,7 +29,10 @@ function App() {
   return (
     <div className="app">
       <DeckBuilderMainLayout>
-        <HeaderBar dispatchDeckData={dispatchDeckData} />
+        <HeaderBar
+          dispatchDeckData={dispatchDeckData}
+          exportDeckDataHandler={exportDeckDataHandler}
+        />
         <CardProfile
           focusedCard={cardData.focusedCard}
           bookmarkedCards={cardData.bookmarkedCardsData}
