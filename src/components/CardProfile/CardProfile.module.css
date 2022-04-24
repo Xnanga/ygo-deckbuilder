@@ -5,8 +5,6 @@
   grid-row: 2 / 3;
   grid-column: 2 / 3;
 
-  max-width: 45rem;
-
   border: 2px solid grey;
   padding: 2px;
   overflow: hidden;
@@ -15,5 +13,6 @@
 @media (max-width: 93.75em) {
   .card-profile {
     margin: 0 auto;
+    max-width: 45rem;
   }
 }
