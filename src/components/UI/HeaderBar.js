@@ -59,6 +59,9 @@ const HeaderBar = (props) => {
     },
   ];
 
+  const deckHeaderButtonsVisible =
+    props.deckData.mainDeckCardCount > 0 ? true : false;
+
   return (
     <header className={styles.header}>
       {miniModalVisible === "clearDeckMiniModal" && (
@@ -80,14 +83,22 @@ const HeaderBar = (props) => {
         imgAlt="The Yu-Gi-Oh! Logo"
         optionalText="Deckbuilder"
       />
-      <RectangularButton
-        onButtonClick={() => miniModalVisibilityHandler("clearDeckMiniModal")}
-        buttonText="Clear Deck Data"
-      />
-      <RectangularButton
-        onButtonClick={() => miniModalVisibilityHandler("exportDeckMiniModal")}
-        buttonText="Export Deck Data"
-      />
+      {deckHeaderButtonsVisible && (
+        <>
+          <RectangularButton
+            onButtonClick={() =>
+              miniModalVisibilityHandler("clearDeckMiniModal")
+            }
+            buttonText="Clear Deck Data"
+          />
+          <RectangularButton
+            onButtonClick={() =>
+              miniModalVisibilityHandler("exportDeckMiniModal")
+            }
+            buttonText="Export Deck Data"
+          />
+        </>
+      )}
     </header>
   );
 };

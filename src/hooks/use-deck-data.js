@@ -64,8 +64,9 @@ const deckDataReducer = (state, action) => {
     const mainDeckCountChange = deckToUpdate === "main" ? 1 : 0;
     const extraDeckCountChange = deckToUpdate === "extra" ? 1 : 0;
 
-    // Add cards
+    // Add cards to deck
     if (action.update === "add") {
+      // No change if deck is full
       if (
         checkIfDeckIsFull(
           state.mainDeckCardCount,
@@ -75,11 +76,13 @@ const deckDataReducer = (state, action) => {
       ) {
         return noDeckDataStateChange(state);
       }
+
+      // No change if 3 or more card copies already in deck
       if (checkForMultipleCards(allCurrentCards, action.data) >= 3) {
         return noDeckDataStateChange(state);
       }
-      allCurrentCards.push(action.data);
 
+      allCurrentCards.push(action.data);
       sortDeckById(allCurrentCards);
 
       return {
@@ -94,6 +97,7 @@ const deckDataReducer = (state, action) => {
 
     // Remove cards
     if (action.update === "remove") {
+      // No change if 0 card copies already in deck
       if (checkForMultipleCards(allCurrentCards, action.data) <= 0) {
         return noDeckDataStateChange(state);
       }
@@ -101,6 +105,8 @@ const deckDataReducer = (state, action) => {
       const cardToRemoveIndex = allCurrentCards.findIndex(
         (card) => card.id === action.data.id
       );
+
+      // If card not found in deck, no change
       if (cardToRemoveIndex === -1) {
         return noDeckDataStateChange(state);
       }
@@ -118,6 +124,7 @@ const deckDataReducer = (state, action) => {
     }
   }
 
+  // Get deck data from LS
   if (action.type === "getLocalStorage") {
     if (action.deckType === "mainDeck") {
       return {

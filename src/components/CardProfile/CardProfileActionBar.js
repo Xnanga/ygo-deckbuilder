@@ -56,12 +56,15 @@ const CardProfileActionBar = (props) => {
     }
   };
 
+  // Highlight bookmark button if card is bookmarked on load
   useEffect(() => {
     setBookmarkButtonHighlight(
       checkIfCardIsBookmarked(props.focusedCard, props.bookmarkedCards)
     );
   }, [props.focusedCard, props.bookmarkedCards]);
 
+  // Conditionally make add and remove buttons non-interactive
+  // depending on number of copies in either deck
   useEffect(() => {
     const copiesInMainDeck = checkHowManyCopiesInDeck(
       props.focusedCard,

@@ -12,9 +12,11 @@ const CatalogueSortMenu = (props) => {
     });
     const sortKey = selectedSort[0].value;
     const sortValue = selectedSort[0].id;
+
     let direction = "";
     const sortMap = new Map();
     sortMap.set(sortKey, sortValue);
+
     if (sortMap.get(sortKey).includes("ascending")) direction = "ascending";
     if (sortMap.get(sortKey).includes("descending")) direction = "descending";
 
@@ -35,10 +37,7 @@ const CatalogueSortMenu = (props) => {
       <p className={styles["catalogue-sort-menu__tagline"]}>
         Sort cards by common attributes
       </p>
-      <div
-        className={styles["catalogue-sort-menu__section"]}
-        onChange={(e) => console.log("Button Press")}
-      >
+      <div className={styles["catalogue-sort-menu__section"]}>
         <h2 className={styles["catalogue-sort-menu__title"]}>Level/Rank:</h2>
         <div className={styles["catalogue-sort-menu__btns"]}>
           <RadioButton
@@ -55,10 +54,7 @@ const CatalogueSortMenu = (props) => {
           />
         </div>
       </div>
-      <div
-        className={styles["catalogue-sort-menu__section"]}
-        onChange={(e) => console.log("Button Press")}
-      >
+      <div className={styles["catalogue-sort-menu__section"]}>
         <h2 className={styles["catalogue-sort-menu__title"]}>Attack:</h2>
         <div className={styles["catalogue-sort-menu__btns"]}>
           <RadioButton
@@ -75,10 +71,7 @@ const CatalogueSortMenu = (props) => {
           />
         </div>
       </div>
-      <div
-        className={styles["catalogue-sort-menu__section"]}
-        onChange={(e) => console.log("Button Press")}
-      >
+      <div className={styles["catalogue-sort-menu__section"]}>
         <h2 className={styles["catalogue-sort-menu__title"]}>Defense:</h2>
         <div className={styles["catalogue-sort-menu__btns"]}>
           <RadioButton

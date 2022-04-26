@@ -1,3 +1,5 @@
+// Deprecated, switched to prop drilling and custom hooks
+
 import React, { useState, useReducer, useEffect } from "react";
 
 const CardsContext = React.createContext({

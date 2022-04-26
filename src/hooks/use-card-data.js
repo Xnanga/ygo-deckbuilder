@@ -86,11 +86,19 @@ const updateBookmarkedCards = (
   }
 };
 
+const handleFirstPageOfCards = (cardData) => {
+  const firstFifteenCards = cardData.slice(0, 15);
+  const requiredPages = Math.ceil(cardData.length / 15);
+
+  return [firstFifteenCards, requiredPages];
+};
+
 const cardDataReducer = (state, action) => {
   // Get all card data on init
   if (action.type === "updateFullCardData") {
-    const firstFifteenCards = action.data.slice(0, 15);
-    const requiredPages = Math.ceil(action.data.length / 15);
+    const [firstFifteenCards, requiredPages] = handleFirstPageOfCards(
+      action.data
+    );
 
     return {
       allCardData: action.data,
@@ -107,8 +115,9 @@ const cardDataReducer = (state, action) => {
 
   // Reset all data
   if (action.type === "resetCardData") {
-    const firstFifteenCards = state.allCardData.slice(0, 15);
-    const requiredPages = Math.ceil(state.allCardData.length / 15);
+    const [firstFifteenCards, requiredPages] = handleFirstPageOfCards(
+      state.allCardData
+    );
 
     return {
       allCardData: state.allCardData,
@@ -124,13 +133,16 @@ const cardDataReducer = (state, action) => {
     };
   }
 
+  // Show searched card data
   if (action.type === "returnToSearchedData") {
+    // Show all card data if no searched card data
     const dataToDisplay =
       state.searchedCardData.length > 0
         ? state.searchedCardData
         : state.allCardData;
-    const firstFifteenCards = dataToDisplay.slice(0, 15);
-    const requiredPages = Math.ceil(dataToDisplay.length / 15);
+
+    const [firstFifteenCards, requiredPages] =
+      handleFirstPageOfCards(dataToDisplay);
 
     return {
       allCardData: state.allCardData,
@@ -146,11 +158,13 @@ const cardDataReducer = (state, action) => {
     };
   }
 
-  // New set of catalogue card data
+  // Create new set of catalogue card data
   if (action.type === "updateCatalogueCardData") {
+    // When a card is searched via text search
     if (action.method === "cardSearch") {
-      const firstFifteenCards = action.data.slice(0, 15);
-      const requiredPages = Math.ceil(action.data.length / 15);
+      const [firstFifteenCards, requiredPages] = handleFirstPageOfCards(
+        action.data
+      );
 
       return {
         allCardData: state.allCardData,
@@ -165,6 +179,7 @@ const cardDataReducer = (state, action) => {
       };
     }
 
+    // When active tab is changed in the catalogue
     if (action.method === "tabChange") {
       let data = [];
       if (action.tab === "catalogue") {
@@ -177,8 +192,9 @@ const cardDataReducer = (state, action) => {
         data = state.bookmarkedCardsData;
       }
 
-      const firstFifteenCards = data.slice(0, 15);
-      const requiredPages = Math.ceil(data.length / 15);
+      const [firstFifteenCards, requiredPages] = handleFirstPageOfCards(
+        action.data
+      );
 
       return {
         allCardData: state.allCardData,
@@ -196,7 +212,6 @@ const cardDataReducer = (state, action) => {
 
   // Show new 15 card chunk when moving one page forward
   if (action.type === "nextFifteenCardDataChunk") {
-    // If on last pagination page, no state changes
     if (state.currentPaginationpage === state.totalPaginationPages) {
       return noCardDataStateChange(state);
     }
@@ -232,6 +247,7 @@ const cardDataReducer = (state, action) => {
       firstCardIndexInAllCardData
     );
 
+    // If no cards in previous fifteen chunk, no state changes
     if (previousFifteenCards.length < 15) {
       return noCardDataStateChange(state);
     }
@@ -239,7 +255,7 @@ const cardDataReducer = (state, action) => {
     return paginationStateChange(state, "minus", previousFifteenCards);
   }
 
-  // Update focusedCard
+  // Update card shown in card profile
   if (action.type === "updateFocusedCard") {
     return {
       allCardData: state.allCardData,
@@ -255,23 +271,27 @@ const cardDataReducer = (state, action) => {
     };
   }
 
-  // Update bookmarks
+  // Update bookmarked cards
   if (action.type === "updateBookmarkedCards") {
+    // Retrieve bookmarked card data from LS
     if (action.update === "getLocalStorage") {
       const sourcedBookmarkData = action.data;
 
       return updateBookmarkedCards(state, sourcedBookmarkData);
     }
 
+    // When a bookmark is added
     if (action.update === "add") {
       const bookmarkedCards = state.bookmarkedCardsData.slice();
       bookmarkedCards.push(action.data);
       let indexForNewFifteenCards;
+
       if (bookmarkedCards.length > 1) {
         indexForNewFifteenCards = (state.currentPaginationpage - 1) * 15 - 1;
       } else {
         indexForNewFifteenCards = -1;
       }
+
       const newFifteenCards = getFifteenCardChunk(
         bookmarkedCards,
         "plus",
@@ -286,6 +306,7 @@ const cardDataReducer = (state, action) => {
       );
     }
 
+    // When a bookmark is removed
     if (action.update === "remove") {
       const currentBookmarks = state.bookmarkedCardsData.slice();
       const updatedBookmarks = removeOneCard(action.data, currentBookmarks);
@@ -348,8 +369,8 @@ const cardDataReducer = (state, action) => {
       });
     });
 
-    const firstFifteenCards = filteredCardData.slice(0, 15);
-    const requiredPages = Math.ceil(filteredCardData.length / 15);
+    const [firstFifteenCards, requiredPages] =
+      handleFirstPageOfCards(filteredCardData);
 
     return {
       allCardData: state.allCardData,
@@ -369,16 +390,15 @@ const cardDataReducer = (state, action) => {
   if (action.type === "applyCardSorting") {
     const cardDataToSort = state.catalogueCardData.slice();
     const attribute = action.attribute;
-    const direction = action.direction;
     let sortedCards = [];
 
-    if (direction === "ascending") {
+    if (action.direction === "ascending") {
       sortedCards = cardDataToSort.sort((a, z) => {
         return (a[attribute] || 0) - (z[attribute] || 0);
       });
     }
 
-    if (direction === "descending") {
+    if (action.direction === "descending") {
       sortedCards = cardDataToSort.sort((a, z) => {
         return (z[attribute] || 0) - (a[attribute] || 0);
       });

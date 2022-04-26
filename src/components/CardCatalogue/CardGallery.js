@@ -27,10 +27,6 @@ const CardGallery = (props) => {
   };
 
   useEffect(() => {
-    if (props.currentCards) {
-      setGalleryLoading(false);
-    }
-
     if (props.currentCards.length < 1) {
       setErrorMessage(
         <span className={styles["card-gallery__error-text"]}>
@@ -38,6 +34,10 @@ const CardGallery = (props) => {
         </span>
       );
       return;
+    }
+
+    if (props.currentCards) {
+      setGalleryLoading(false);
     }
 
     if (props.currentCards.length > 0) {

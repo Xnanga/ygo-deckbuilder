@@ -6,14 +6,15 @@ const useZipcelx = () => {
   const [exportData, setExportData] = useState({});
 
   const generateXlsx = (data) => {
+    if (!data.mainDeckCards || data.mainDeckCards.length < 1) return;
+
     setExportData(data);
     let formattedConfigData = [];
 
     const generatedConfigFile = (data) => {
       const { mainDeckCards, extraDeckCards } = data;
 
-      if (!mainDeckCards || mainDeckCards.length < 1) return;
-
+      // Combine main and extra deck
       let allCards = mainDeckCards.slice();
       allCards.push(...extraDeckCards);
 
@@ -52,6 +53,7 @@ const useZipcelx = () => {
         // Create a new map with data to remove duplicates
       }, new Map());
 
+      // Use created map to create XLSX data
       consolidatedDeckData.forEach((card) => {
         formattedConfigData.push([
           {
@@ -76,6 +78,7 @@ const useZipcelx = () => {
 
     generatedConfigFile(data);
 
+    // Default XLSX layout for exports
     const config = {
       filename: "my-ygo-deck-export",
       sheet: {

@@ -30,6 +30,7 @@ function App() {
     <div className="app">
       <DeckBuilderMainLayout>
         <HeaderBar
+          deckData={deckData}
           dispatchDeckData={dispatchDeckData}
           exportDeckDataHandler={exportDeckDataHandler}
         />
