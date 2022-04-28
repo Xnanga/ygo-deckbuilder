@@ -9,7 +9,9 @@ const Modal = (props) => {
   const screenWidth = useScreenWidth(1500);
   const modalRoot = document.getElementById("modal-root");
 
-  let inlineHeightStyling = !screenWidth ? { height: `${screenHeight}px` } : {};
+  let inlineHeightStyling = !screenWidth
+    ? { height: `${screenHeight - 40}px` }
+    : {};
 
   useEffect(() => {
     const handleWindowResize = () => {
@@ -27,16 +29,25 @@ const Modal = (props) => {
   }, [screenWidth]);
 
   const modalLayout = (
-    <aside className={styles.modal} style={inlineHeightStyling}>
-      <button
-        className={styles["modal__close-btn"]}
-        onClick={props.closeModalHandler}
-      >
-        <img src="/media/icons/cross-icon.png" alt="A Close Window Icon" />
-      </button>
-      <h1 className={styles["modal__heading"]}>{props.modalTitle}</h1>
-      <div className={styles["modal__content"]}>{props.children}</div>
-    </aside>
+    <div className={styles["modal__container"]}>
+      <aside className={styles.modal} style={inlineHeightStyling}>
+        <button
+          className={styles["modal__close-btn"]}
+          onClick={props.closeModalHandler}
+        >
+          <img src="/media/icons/cross-icon.png" alt="A Close Window Icon" />
+        </button>
+        {props.modalTitle && (
+          <h1 className={styles["modal__heading"]}>{props.modalTitle}</h1>
+        )}
+        {props.modalTagline && (
+          <p className={styles["modal__tagline"]}>{props.modalTagline}</p>
+        )}
+        <div className={styles["modal__content-container"]}>
+          {props.children}
+        </div>
+      </aside>
+    </div>
   );
 
   return ReactDOM.createPortal(modalLayout, modalRoot);

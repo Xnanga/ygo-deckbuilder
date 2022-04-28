@@ -34,9 +34,6 @@ const CatalogueSortMenu = (props) => {
       className={styles["catalogue-sort-menu"]}
       onSubmit={(e) => sortFormSubmitHandler(e)}
     >
-      <p className={styles["catalogue-sort-menu__tagline"]}>
-        Sort cards by common attributes
-      </p>
       <div className={styles["catalogue-sort-menu__section"]}>
         <h2 className={styles["catalogue-sort-menu__title"]}>Level/Rank:</h2>
         <div className={styles["catalogue-sort-menu__btns"]}>

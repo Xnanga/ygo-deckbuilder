@@ -29,6 +29,7 @@
 
 .catalogue-sort-menu__btns {
   display: flex;
+  flex-wrap: wrap;
   margin: 0 auto;
 }
 
@@ -62,7 +63,16 @@
 }
 
 @media (max-width: 93.75em) {
+  .catalogue-sort-menu {
+    padding-bottom: 8rem;
+  }
+
   .catalogue-sort-menu__title {
     font-size: 2rem;
+  }
+
+  .catalogue-sort-menu__submit-container {
+    bottom: 10rem;
+    margin-top: 3rem;
   }
 }

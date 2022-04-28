@@ -1,7 +1,7 @@
 .catalogue-filter-menu {
 }
 
-.catalogue-filter-menu > h2,
+.catalogue-filter-menu > h2:not(:first-child),
 h3 {
   margin-top: 2rem;
 }
@@ -66,6 +66,9 @@ h3 {
 }
 
 @media (max-width: 93.75em) {
+  .catalogue-filter-menu {
+    padding-bottom: 8rem;
+  }
   .catalogue-filter-menu > h2,
   h3 {
     font-size: 2rem;
@@ -73,5 +76,10 @@ h3 {
 
   .catalogue-filter-menu__tagline {
     margin-bottom: 0;
+  }
+
+  .catalogue-filter-menu__submit-container {
+    bottom: 10rem;
+    margin-top: 3rem;
   }
 }

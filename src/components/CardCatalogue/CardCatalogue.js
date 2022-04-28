@@ -157,6 +157,9 @@ const CardCatalogue = (props) => {
         dispatchCardData={props.dispatchCardData}
         setFocusedCard={props.setFocusedCard}
         currentCards={props.fifteenCards}
+        cardProfileModalVisibilityHandler={
+          props.cardProfileModalVisibilityHandler
+        }
       />
       <PaginationControls
         dispatchCardData={props.dispatchCardData}

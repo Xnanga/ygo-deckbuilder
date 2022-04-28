@@ -70,9 +70,6 @@ const CatalogueFilterMenu = (props) => {
       className={styles["catalogue-filter-menu"]}
       onSubmit={(e) => filterFormSubmitHandler(e)}
     >
-      <p className={styles["catalogue-filter-menu__tagline"]}>
-        Only cards matching all filter conditions will be displayed
-      </p>
       <h2 className={styles["catalogue-filter-menu__title"]}>Card Type</h2>
       <div
         className={styles["catalogue-filter-menu__btns"]}

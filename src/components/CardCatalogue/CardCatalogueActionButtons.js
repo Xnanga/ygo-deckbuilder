@@ -11,6 +11,7 @@ const CardCatalogueActionButtons = (props) => {
       {props.modalVisible === "filters" && (
         <Modal
           modalTitle="Card Filters"
+          modalTagline="Only cards matching all filter conditions will be displayed"
           closeModalHandler={props.closeModalHandler}
         >
           <CatalogueFilterMenu
@@ -23,6 +24,7 @@ const CardCatalogueActionButtons = (props) => {
         <Modal
           modalTitle="Card Sorting"
           closeModalHandler={props.closeModalHandler}
+          modalTagline="Sort cards by common attributes"
         >
           <CatalogueSortMenu
             dispatchCardData={props.dispatchCardData}
