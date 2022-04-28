@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 import styles from "./CatalogueFilterMenu.module.css";
 
@@ -8,6 +8,7 @@ import RectangularButton from "../UI/Buttons/RectangularButton";
 
 const CatalogueFilterMenu = (props) => {
   const [selectedType, setSelectedType] = useState(null);
+  const formElement = useRef(null);
   const selectedTypeMonster =
     selectedType !== "trap" && selectedType !== "spell" && selectedType !== null
       ? true
@@ -21,11 +22,8 @@ const CatalogueFilterMenu = (props) => {
     e.preventDefault();
     const buttonClicked = e.nativeEvent.submitter.id;
 
-    if (buttonClicked === "clear-filters") {
-      props.dispatchCardData({
-        type: "returnToSearchedData",
-      });
-      props.closeModalHandler();
+    if (buttonClicked === "clear-selection") {
+      uncheckAllRadioButtons();
       return;
     }
 
@@ -65,8 +63,16 @@ const CatalogueFilterMenu = (props) => {
     return renderedButtons;
   };
 
+  const uncheckAllRadioButtons = () => {
+    if (formElement.current === null) return;
+    const allCurrentRadioButtons =
+      formElement.current.querySelectorAll("input");
+    allCurrentRadioButtons.forEach((button) => (button.checked = false));
+  };
+
   return (
     <form
+      ref={formElement}
       className={styles["catalogue-filter-menu"]}
       onSubmit={(e) => filterFormSubmitHandler(e)}
     >
@@ -142,8 +148,8 @@ const CatalogueFilterMenu = (props) => {
           buttonText="Apply Filters"
         />
         <RectangularButton
-          buttonId="clear-filters"
-          buttonText="Clear Filters"
+          buttonId="clear-selection"
+          buttonText="Clear Selection"
         />
       </div>
     </form>
