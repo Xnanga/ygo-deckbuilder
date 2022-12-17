@@ -20,8 +20,8 @@ const CardProfile = (props) => {
 
   const createImageUrl = (cardId) => {
     return {
-      large: `https://storage.googleapis.com/ygoprodeck.com/pics/${cardId}.jpg`,
-      small: `https://storage.googleapis.com/ygoprodeck.com/pics_small/${cardId}.jpg`,
+      large: `https://images.ygoprodeck.com/images/cards/${cardId}.jpg`,
+      small: `https://images.ygoprodeck.com/images/cards_small/${cardId}.jpg`,
     };
   };
 
