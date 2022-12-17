@@ -24,7 +24,7 @@ const CardGalleryImage = (props) => {
       <img
         id={props.cardId}
         className={imgClass}
-        src={`https://storage.googleapis.com/ygoprodeck.com/pics_small/${props.cardId}.jpg`}
+        src={`https://images.ygoprodeck.com/images/cards_small/${props.cardId}.jpg`}
         alt={props.cardName}
         onLoad={handleImageLoading}
       />
